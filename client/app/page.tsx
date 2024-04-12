@@ -4,7 +4,7 @@ export default function Home () {
   return (
     <main>
       <h1>Legend Mama: Under Construction</h1>
-      <h2>Hello there!</h2>
+      <h2>Hello there! Test from dev branch!</h2>
     </main>
   )
 }
