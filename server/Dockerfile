@@ -23,6 +23,7 @@ RUN npm ci
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
+COPY ./data ./data
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
