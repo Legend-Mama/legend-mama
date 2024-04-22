@@ -12,12 +12,8 @@ ENV NODE_ENV production
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Add non-root user
-RUN addgroup -S nodegroup && adduser -S nodeuser -G nodegroup
-RUN chown -R nodeuser:nodegroup /app
-
 # Install dependencies based on the preferred package manager
-COPY --chown=nodeuser:nodegroup package.json package-lock.json* ./
+COPY package.json package-lock.json* ./
 RUN npm ci
 
 # Production image, copy all the files and run next
