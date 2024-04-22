@@ -1,0 +1,17 @@
+{
+  "Lawful": {
+      "Good": "Character does the right thing as expected by society with the goal of relentlessly combatting evil. They tell the truth, keep their word, and strive to help others.",
+      "Neutral": "Character acts within the law, tradition, or personal codes. They value order aboce all else without inclination towards good or evil.",
+      "Evil": "Character methodically takes what they want within the limits of tradition, loyalty, or order."
+    },
+  "Neutral": {
+    "Good": "Character does the best they to help others without real consideration for effects it may have.",
+    "Neutral": "Character does not like to take sides and steers clear of moral questions.",
+    "Evil": "Character does whatever they can get away with. They operate without loyalty or laws they find inconvenient in a given situation."
+  },
+  "Chaotic": {
+    "Good": "Character lets their conscience guide them. They may make split decisions based on whatever is best at the time.",
+    "Neutral": "Character follows their whims without an inclination towards evil or good.",
+    "Evil": "Character acts with aribtrary violence, spurred by greed, hatred or bloodlust."
+  }
+}

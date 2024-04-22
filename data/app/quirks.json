@@ -1,0 +1,47 @@
+{
+  "Quirks": {
+    "definition": "Unusual or idiosyncratic behaviors, habits, or characteristics that are distinctive to an individual.",
+    "quirks": [
+      {
+        "name": "Memento",
+        "description": "Carries a vial of sand from every beach they've visited, labeling each one with the location and date."
+      },
+      {
+        "name": "Communicative",
+        "description": "Talks to animals as if they can understand."
+      },
+      {
+        "name": "Collector",
+        "description": "Collects interesting rocks and pebbles from their travels, assigning each one a unique meaning or memory."
+      },
+      {
+        "name": "Seasoning",
+        "description": "Always carries a small pouch of assorted spices and seasonings, adding them to meals regardless of the cuisine."
+      },
+      {
+        "name": "Botanist",
+        "description": "Keeps a collection of pressed flowers from significant moments in their life, carefully organizing them in a journal."
+      },
+      {
+        "name": "Doodler",
+        "description": "Has a habit of doodling intricate designs whenever they're deep in thought or listening intently."
+      },
+      {
+        "name": "Astronomer",
+        "description": "Carries a small telescope or binoculars everywhere they go, always ready to stargaze or birdwatch."
+      },
+      {
+        "name": "Quotidian",
+        "description": "Keeps a list of favorite quotes or passages from books, movies, and speeches, referring to them for inspiration."
+      },
+      {
+        "name": "Chronicler",
+        "description": "Writes letters to themselves and seals them in envelopes, to be opened on specific future dates as a form of reflection."
+      },
+      {
+        "name": "Illustrator",
+        "description": "Carries a pocket-sized sketchbook and pencils, capturing scenes and moments from their daily life through drawings."
+      }
+    ]
+  }
+}
