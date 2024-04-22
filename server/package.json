@@ -4,9 +4,13 @@
   "description": "Backend implementation for Legend Mama, a roleplay driven character creator",
   "main": "server.js",
   "private": true,
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "format": "prettier --write {**/,}*.js",
+    "lint": "prettier --check {**/,}*.js"
   },
   "author": "F. Cacho, K. Chou, M. Wooley",
   "license": "ISC",
@@ -16,8 +20,11 @@
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
     "express-validator": "^7.0.1",
-    "nodemon": "^3.1.0",
     "openai": "^4.37.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "prettier": "^2.8.8"
   },
   "engines": {
     "node": "^20.12.2"
