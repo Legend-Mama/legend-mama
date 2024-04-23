@@ -114,7 +114,7 @@ jobs:
       # END - Docker auth and build
 
       - name: Deploy Client to Cloud Run
-        id: deploy
+        id: deploy-client
         uses: google-github-actions/deploy-cloudrun@v2.3.0
         with:
           service: ${{ env.CLIENT_SERVICE }}
@@ -124,7 +124,7 @@ jobs:
           flags: '--allow-unauthenticated'
 
       - name: Deploy Server to Cloud Run
-        id: deploy
+        id: deploy-server
         uses: google-github-actions/deploy-cloudrun@v2.3.0
         with:
           service: ${{ env.SERVER_SERVICE }}
@@ -144,4 +144,5 @@ jobs:
             ### Preview Deployment
 
             **Your preview deployment is hosted at:**
-            :sparkles: ${{ steps.deploy.outputs.url }} :sparkles:
+            :sparkles: ${{ steps.deploy-client.outputs.url }} :sparkles:
+            :sparkles: ${{ steps.deploy-server.outputs.url }} :sparkles:
