@@ -56,6 +56,8 @@ env:
   GAR_LOCATION: ${{ vars.GAR_LOCATION }} # TODO: update Artifact Registry location
   CLIENT_SERVICE: client-${{ github.head_ref }}-${{ github.sha }}
   CLIENT_IMAGE: ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/client-${{ github.head_ref }}-${{ github.sha }}
+  SERVER_SERVICE: server-${{ github.head_ref }}-${{ github.sha }}
+  SERVER_IMAGE: ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/server-${{ github.head_ref }}-${{ github.sha }}
   REGION: ${{ vars.GCR_LOCATION }} # TODO: update Cloud Run service region
 
 jobs:
@@ -103,6 +105,12 @@ jobs:
           docker build -t "${{ env.CLIENT_IMAGE }}:latest" --cache-from "${{ env.CLIENT_IMAGE }}:latest" ./client
           docker push "${{ env.CLIENT_IMAGE }}"
 
+      - name: Build and Push Server Container
+        run: |-
+          bash -c 'docker pull "${{ env.SERVER_IMAGE }}:latest" || exit 0'
+          docker build -t "${{ env.SERVER_IMAGE }}:latest" --cache-from "${{ env.SERVER_IMAGE }}:latest" ./server
+          docker push "${{ env.SERVER_IMAGE }}"
+
       # END - Docker auth and build
 
       - name: Deploy Client to Cloud Run
@@ -113,6 +121,16 @@ jobs:
           region: ${{ env.REGION }}
           # NOTE: If using a pre-built image, update the image name here
           image: ${{ env.CLIENT_IMAGE }}
+          flags: '--allow-unauthenticated'
+
+      - name: Deploy Server to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2.3.0
+        with:
+          service: ${{ env.SERVER_SERVICE }}
+          region: ${{ env.REGION }}
+          # NOTE: If using a pre-built image, update the image name here
+          image: ${{ env.SERVER_IMAGE }}
           flags: '--allow-unauthenticated'
 
       # If required, use the Cloud Run url output in later steps

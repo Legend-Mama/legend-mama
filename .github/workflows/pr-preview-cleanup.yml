@@ -57,6 +57,8 @@ env:
   GAR_LOCATION: ${{ vars.GAR_LOCATION }} # TODO: update Artifact Registry location
   CLIENT_SERVICE: client-${{ github.head_ref }}
   CLIENT_IMAGE: ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/client-${{ github.head_ref }}
+  SERVER_SERVICE: server-${{ github.head_ref }}
+  SERVER_IMAGE: ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/server-${{ github.head_ref }}
   REGION: ${{ vars.GCR_LOCATION }} # TODO: update Cloud Run service region
 
 jobs:
@@ -84,11 +86,17 @@ jobs:
         id: sdk
         uses: 'google-github-actions/setup-gcloud@v2'
 
-      - name: Clean up Artifact Registry
+      - name: Clean up Client Artifact Registry
         run: 'bash -c "gcloud artifacts docker images delete ${{ env.CLIENT_IMAGE }} || exit 0"'
 
-      - name: Clean up Cloud Run service
+      - name: Clean up Server Artifact Registry
+        run: 'bash -c "gcloud artifacts docker images delete ${{ env.SERVER_IMAGE }} || exit 0"'
+
+      - name: Clean up Client Cloud Run service
         run: 'bash -c "gcloud run services delete ${{ env.CLIENT_SERVICE }} --region=${{ env.REGION }} --quiet || exit 0"'
+
+      - name: Clean up Server Cloud Run service
+        run: 'bash -c "gcloud run services delete ${{ env.SERVER_SERVICE }} --region=${{ env.REGION }} --quiet || exit 0"'
 
       - name: Remove PR comment
         run: gh pr comment "$NUMBER" --edit-last --body "$BODY"

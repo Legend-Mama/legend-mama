@@ -1,17 +1,40 @@
 {
-  "Lawful": {
-      "Good": "Character does the right thing as expected by society with the goal of relentlessly combatting evil. They tell the truth, keep their word, and strive to help others.",
-      "Neutral": "Character acts within the law, tradition, or personal codes. They value order aboce all else without inclination towards good or evil.",
-      "Evil": "Character methodically takes what they want within the limits of tradition, loyalty, or order."
+  "alignments": [
+    {
+      "name": "Lawful Good",
+      "description": "Devoted and principled, you always strive to do the right thing as expected by society. Some may call you a goody two-shoes, but you are seen as a beacon of reliability and righteousness."
     },
-  "Neutral": {
-    "Good": "Character does the best they to help others without real consideration for effects it may have.",
-    "Neutral": "Character does not like to take sides and steers clear of moral questions.",
-    "Evil": "Character does whatever they can get away with. They operate without loyalty or laws they find inconvenient in a given situation."
-  },
-  "Chaotic": {
-    "Good": "Character lets their conscience guide them. They may make split decisions based on whatever is best at the time.",
-    "Neutral": "Character follows their whims without an inclination towards evil or good.",
-    "Evil": "Character acts with aribtrary violence, spurred by greed, hatred or bloodlust."
-  }
+    {
+      "name": "Neutral Good",
+      "description": "Dedicated to doing good, you navigate the complexities of morality with a flexible approach. You understand that doing the right thing often means bending or occasionally breaking rules when the greater good demands it."
+    },
+    {
+      "name": "Chaotic Good",
+      "description": "Guided by a strong moral compass, you do what you believe is right, often disregarding established laws if they conflict with your personal sense of justice. Fearless in your pursuit of doing good, you trust in your own judgment and are unafraid to defy convention."
+    },
+    {
+      "name": "Lawful Neutral",
+      "description": "Orderly and structured, you follow laws, codes, or traditions without bias towards good or evil. Your commitment is to uphold the order and rules set before you, often regardless of the moral outcomes of such adherence."
+    },
+    {
+      "name": "Neutral",
+      "description": "Self-reliant and pragmatic, you are guided primarily by your own needs and desires, staying detached from moral extremes. You consider what is best for you above all, neither swayed by the rules of society nor driven by a moral agenda."
+    },
+    {
+      "name": "Chaotic Neutral",
+      "description": "Unpredictable and independent, you act on impulse, embracing your freedom to do as you wish. You are driven by your own desires, indifferent to laws and morals, making decisions that can seem random or driven by a momentary whim."
+    },
+    {
+      "name": "Lawful Evil",
+      "description": "Manipulative and domineering, you use the laws and structures of society to further your own selfish ambitions, often at the expense of others. You exploit every loophole, enforce harsh judgments, and strive for power and control."
+    },
+    {
+      "name": "Neutral Evil",
+      "description": "Driven by self-interest, you are unbound by any scruples or societal rules. You prioritize your own gain over everything else, using any means necessary to achieve your ends."
+    },
+    {
+      "name": "Chaotic Evil",
+      "description": "Reveling in chaos and destruction, you follow your own whims and impulses, causing harm and disorder wherever you go. You oppose any authority, reject all rules, and relish the suffering of others."
+    }
+  ]
 }
