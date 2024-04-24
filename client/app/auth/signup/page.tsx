@@ -152,17 +152,22 @@ export default function SignUp() {
             </form.Field>
             <Stack direction="row" justifyContent="center" mt={6}>
               <form.Subscribe
-                selector={(state) => [
-                  state.canSubmit,
-                  state.isSubmitting,
-                  state.isPristine,
-                ]}
+                selector={({
+                  canSubmit,
+                  isSubmitting,
+                  isPristine,
+                  values,
+                }) => ({ canSubmit, isSubmitting, isPristine, values })}
               >
-                {([canSubmit, isSubmitting, isPristine]) => (
+                {({ canSubmit, isSubmitting, isPristine, values }) => (
                   <Button
                     type="submit"
                     width={200}
-                    isDisabled={isPristine || !canSubmit}
+                    isDisabled={
+                      isPristine ||
+                      !canSubmit ||
+                      Object.values(values).some((val) => !val)
+                    }
                     isLoading={isSubmitting}
                   >
                     Sign Up
