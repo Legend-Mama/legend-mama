@@ -1,12 +1,32 @@
-import { type ReactNode } from "react";
-import { Container, Image, Stack } from "@chakra-ui/react";
+"use client";
+
+import { Container, FormControl, Image, Stack } from "@chakra-ui/react";
 import Text from "@/components/typography/Text";
 import Header from "@/components/typography/Header";
 import Button from "@/components/Button";
 import InputGroup from "@/components/input/InputGroup";
 import GPToken from "@/components/icons/GPToken";
+import { createFormFactory, useForm } from "@tanstack/react-form";
 
-export default function Home() {
+interface Signup {
+  nickname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export default function SignUp() {
+  const formFactory = createFormFactory<Signup>({
+    defaultValues: {
+      nickname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+  const form = formFactory.useForm({
+    onSubmit: async ({ value }) => alert(`form data: ${JSON.stringify(value)}`),
+  });
   return (
     <>
       <Container as="main" maxWidth="container.lg" pt={12}>
@@ -23,46 +43,132 @@ export default function Home() {
           </Button>
         </div>
         <Container mb={16}>
-          <InputGroup
-            name="nickname"
-            leftWidth={140}
-            stackPosition="top"
-            left="Nickname"
-            placeholder="e.g. The Great Bartholomew"
-          />
-          <InputGroup
-            name="email"
-            leftWidth={140}
-            stackPosition="mid"
-            left="Email"
-            autoComplete="email"
-          />
-          <InputGroup
-            name="password"
-            leftWidth={140}
-            stackPosition="mid"
-            left="Password"
-            type="password"
-          />
-          <InputGroup
-            name="confirmPassword"
-            leftWidth={140}
-            stackPosition="bottom"
-            left="Confirm Password"
-            type="password"
-          />
-          <Stack direction="row" justifyContent="center" mt={6}>
-            <Button width={200}>Sign Up</Button>
-            <Button secondary width={200}>
-              Continue with Google (temp)
-            </Button>
-          </Stack>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              form.handleSubmit();
+            }}
+          >
+            <form.Field
+              name="nickname"
+              validators={{
+                onChange: ({ value, fieldApi }) =>
+                  fieldApi.state.meta.isTouched && !value
+                    ? "Please enter a nickname"
+                    : null,
+              }}
+            >
+              {(field) => (
+                <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                  <InputGroup
+                    name="nickname"
+                    leftWidth={140}
+                    stackPosition="top"
+                    left="Nickname"
+                    placeholder="e.g. The Great Bartholomew"
+                    value={field.state.value}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                </FormControl>
+              )}
+            </form.Field>
+            <form.Field
+              name="email"
+              validators={{
+                onChange: ({ value, fieldApi }) =>
+                  fieldApi.state.meta.isTouched && !value
+                    ? "Please enter a valid email"
+                    : null,
+              }}
+            >
+              {(field) => (
+                <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                  <InputGroup
+                    name="email"
+                    leftWidth={140}
+                    stackPosition="mid"
+                    left="Email"
+                    autoComplete="email"
+                    value={field.state.value}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                </FormControl>
+              )}
+            </form.Field>
+            <form.Field
+              name="password"
+              validators={{
+                onChange: ({ value, fieldApi }) =>
+                  fieldApi.state.meta.isTouched && !value
+                    ? "Please enter a password"
+                    : null,
+              }}
+            >
+              {(field) => (
+                <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                  <InputGroup
+                    name="password"
+                    leftWidth={140}
+                    stackPosition="mid"
+                    left="Password"
+                    type="password"
+                    value={field.state.value}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                </FormControl>
+              )}
+            </form.Field>
+            <form.Field
+              name="confirmPassword"
+              validators={{
+                onChangeListenTo: ["password"],
+                onChange: ({ value, fieldApi }) => {
+                  const password = fieldApi.form.getFieldValue("password");
+                  return fieldApi.state.meta.isTouched &&
+                    password &&
+                    password != value
+                    ? "Passwords do not match"
+                    : null;
+                },
+              }}
+            >
+              {(field) => (
+                <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                  <InputGroup
+                    name="confirmPassword"
+                    leftWidth={140}
+                    stackPosition="bottom"
+                    left="Confirm Password"
+                    type="password"
+                    value={field.state.value}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                </FormControl>
+              )}
+            </form.Field>
+            <Stack direction="row" justifyContent="center" mt={6}>
+              <form.Subscribe
+                selector={(state) => [state.canSubmit, state.isSubmitting, state.isPristine]}
+              >
+                {([canSubmit, isSubmitting, isPristine]) => (
+                  <Button type="submit" width={200} isDisabled={isPristine || !canSubmit} isLoading={isSubmitting}>
+                    Sign Up
+                  </Button>
+                )}
+              </form.Subscribe>
+              <Button secondary width={200}>
+                Continue with Google (temp)
+              </Button>
+            </Stack>
+          </form>
         </Container>
         <Header as="h2">Pricing Details</Header>
         <Text>
-          All accounts have 3 gold pieces (<GPToken />GP) to spend on character generation
-          per day. At midnight UTC, if you used any of your free GP, you will be
-          topped off back to <GPToken />3 GP. Legend Mama requires <GPToken />1 GP for each character
+          All accounts have 3 gold pieces (<GPToken />
+          GP) to spend on character generation per day. At midnight UTC, if you
+          used any of your free GP, you will be topped off back to <GPToken />3
+          GP. Legend Mama requires <GPToken />1 GP for each character
           generation.
         </Text>
         <Text>
