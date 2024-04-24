@@ -40,6 +40,11 @@ export default function InputGroup({
         borderTopRightRadius: 0,
         ...(left && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
       };
+      break;
+    case "alone":
+      inputBorders = {
+        ...(left && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
+      };
   }
 
   const placeholderStyles = {

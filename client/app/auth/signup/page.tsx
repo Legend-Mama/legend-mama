@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import InputGroup from "@/components/input/InputGroup";
 import GPToken from "@/components/icons/GPToken";
 import { createFormFactory, useForm } from "@tanstack/react-form";
+import { Link } from "@chakra-ui/next-js";
 
 interface Signup {
   nickname: string;
@@ -38,9 +39,11 @@ export default function SignUp() {
             Your adventurer awaits! All visitors to Legend Mama’s tavern must be
             registered. Create a free account to enter.
           </Text>
-          <Button secondary mb={6}>
-            Already have an account?
-          </Button>
+          <Link href="/auth/login" _hover={{ textDecoration: "unset" }}>
+            <Button secondary mb={6}>
+              Already have an account?
+            </Button>
+          </Link>
         </div>
         <Container mb={16}>
           <form
@@ -149,10 +152,19 @@ export default function SignUp() {
             </form.Field>
             <Stack direction="row" justifyContent="center" mt={6}>
               <form.Subscribe
-                selector={(state) => [state.canSubmit, state.isSubmitting, state.isPristine]}
+                selector={(state) => [
+                  state.canSubmit,
+                  state.isSubmitting,
+                  state.isPristine,
+                ]}
               >
                 {([canSubmit, isSubmitting, isPristine]) => (
-                  <Button type="submit" width={200} isDisabled={isPristine || !canSubmit} isLoading={isSubmitting}>
+                  <Button
+                    type="submit"
+                    width={200}
+                    isDisabled={isPristine || !canSubmit}
+                    isLoading={isSubmitting}
+                  >
                     Sign Up
                   </Button>
                 )}

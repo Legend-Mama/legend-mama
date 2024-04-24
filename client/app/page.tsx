@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { type ReactNode } from "react";
 import { Container, Image, Stack } from "@chakra-ui/react";
@@ -27,14 +27,16 @@ export default function Home() {
             alt="Legend Mama logo"
             mb={4}
           />
-          <Link href="/signup" _hover={{ textDecoration: "unset" }}>
+          <Link href="/auth/signup" _hover={{ textDecoration: "unset" }}>
             <Header as="h1" size="2xl" glow mb="4">
               Start your legend
             </Header>
           </Link>
-          <Header as="h2" glow color="white">
-            Sign In
-          </Header>
+          <Link href="/auth/login" _hover={{ textDecoration: "unset" }}>
+            <Header as="h2" glow color="white">
+              Sign In
+            </Header>
+          </Link>
         </div>
       </header>
       <Container as="main" maxWidth="container.lg" pt={12}>
