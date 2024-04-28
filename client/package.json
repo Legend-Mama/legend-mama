@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "emulate": "firebase emulators:start",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -14,11 +15,12 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@tanstack/react-form": "^0.19.2",
+    "@types/node": "^20",
+    "firebase": "^10.11.1",
     "framer-motion": "^11.0.28",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
-    "@types/node": "^20",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
