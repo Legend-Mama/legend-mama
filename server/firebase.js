@@ -1,7 +1,7 @@
-import firebase from 'firebase-admin';
+import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 dotenv.config();
 
-firebase.initializeApp();
-export const firestore = firebase.firestore();
-export const firebaseAuth = firebase.auth();
+admin.initializeApp();
+export const firestore = admin.firestore();
+export const firebaseAuth = admin.auth();

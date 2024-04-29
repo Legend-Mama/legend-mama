@@ -21,7 +21,7 @@
 #
 #    Cloud Run
 #      roles/run.admin
-#      roles/iam.serviceAccountUser     (to act as the Cloud Run runtime service account)
+#      roles/iam.serviceAccountUser     (to act as the Cloud Run runtime service account.js)
 #
 #    Artifact Registry
 #      roles/artifactregistry.admin     (project or repository level)
@@ -79,7 +79,7 @@ jobs:
         with:
           token_format: 'access_token'
           workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
-          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account.js@my-project.iam.gserviceaccount.com
 
       # NOTE: Alternative option - authentication via credentials json
       # - name: Google Auth
