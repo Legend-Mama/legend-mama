@@ -2,7 +2,8 @@
 Routes for interacting with account resources
  */
 import express from 'express';
-import * as controller from '../controllers/accountController';
+import * as controller from '../controllers/accountController.js';
+
 const router = express.Router();
 
 // Create an account
@@ -18,10 +19,10 @@ router.get("/gold-balance", controller.getGoldBalance);
 router.post("/character-sheets", controller.saveCharacterSheet);
 
 // List account character sheets
-router.get("/character-sheets", controller.getCharacterSheet);
+router.get("/character-sheets", controller.listCharacterSheets);
 
 // Get an account character sheet
-router.get("character-sheets/:character_sheet_id", controller.getCharacterSheet);
+router.get("/character-sheets/:character_sheet_id", controller.getCharacterSheet);
 
 // Update an account character sheet
 router.put("/character-sheets/:character_sheet_id", controller.updateCharacterSheet);
