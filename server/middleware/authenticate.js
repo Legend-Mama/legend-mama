@@ -14,10 +14,10 @@ const authenticateJWT = asyncHandler(async (req, res, next) => {
             .verifyIdToken(token)
             .then(decodedToken => {
                 req.uid = decodedToken.uid;
+                console.log("Authentication got UID from token: ", req.uid);
                 next();
             })
             .catch(err => {
-                req.logger.error(`Error with authentication: ${err}`);
                 throw new ForbiddenError();
             });
     } else {

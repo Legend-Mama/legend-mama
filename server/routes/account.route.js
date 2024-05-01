@@ -2,7 +2,7 @@
 Routes for interacting with account resources
  */
 import express from 'express';
-import * as controller from '../controllers/accountController.js';
+import * as controller from '../controllers/account.controller.js';
 
 const router = express.Router();
 

@@ -3,17 +3,23 @@ Controller for account related operations
  */
 import asyncHandler from "express-async-handler";
 import {firestore} from "../firebase.js";
-import {NotFoundError} from "../middleware/errorHandlers.js";
+import {NotFoundError, ForbiddenError} from "../middleware/errorHandlers.js";
 
 export const createAccount = asyncHandler(async (req, res, next) => {
     const docRef = firestore.doc(`accounts/${req.uid}`);
-    await docRef.set({
-        goldBalance: 3
-    });
+    const doc = await docRef.get();
 
-    const successMsg = "Account created successfully";
-    console.log(successMsg);
-    res.status(201).send(successMsg);
+    if (!doc.exists) {
+        await docRef.set({
+            goldBalance: 3
+        });
+
+        const successMsg = "Account created successfully";
+        console.log(successMsg);
+        res.status(201).send(successMsg);
+    } else {
+        throw new ForbiddenError("Account already exists");
+    }
 })
 
 export const deleteAccount = asyncHandler(async (req, res, next) => {
