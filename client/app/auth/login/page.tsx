@@ -19,6 +19,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/app/providers/AuthProvider";
 import useGoogleSignin from "@/lib/auth/useGoogleSignin";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 interface Login {
   email: string;
@@ -158,9 +159,7 @@ function MainLogin({
                       </Button>
                     )}
                   </form.Subscribe>
-                  <Button onClick={handleGoogleSignup} secondary width={200}>
-                    Continue with Google
-                  </Button>
+                  <GoogleSignInButton onClick={handleGoogleSignup} />
                 </Stack>
               </form>
               <Button

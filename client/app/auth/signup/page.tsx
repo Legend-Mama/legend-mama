@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useContext, useState } from "react";
 import { AuthContext } from "@/app/providers/AuthProvider";
 import useGoogleSignin from "@/lib/auth/useGoogleSignin";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 interface Signup {
   nickname: string;
@@ -203,9 +204,7 @@ export default function SignUp() {
                     </Button>
                   )}
                 </form.Subscribe>
-                <Button onClick={handleGoogleSignup} secondary width={200}>
-                  Continue with Google
-                </Button>
+                <GoogleSignInButton onClick={handleGoogleSignup} />
               </Stack>
             </form>
           ) : (
