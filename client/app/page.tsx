@@ -16,7 +16,7 @@ export default function Home() {
       <header
         style={{
           height: 480,
-          width: "100vw",
+          width: "100%",
           background: "url('/img/bg-castle-yuliya-pauliukevich-vecteezy.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
