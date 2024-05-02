@@ -2,13 +2,13 @@
   "name": "legend-mama-server",
   "version": "0.1.0",
   "description": "Backend implementation for Legend Mama, a roleplay driven character creator",
-  "main": "server.js",
+  "main": "index.js",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "test": "mocha --file ./tests/setup.js ./tests/*.test.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "format": "prettier --write {**/,}*.js",
     "lint": "prettier --check {**/,}*.js"
   },
@@ -23,8 +23,12 @@
     "openai": "^4.37.1"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^3.0.2",
+    "chai": "^5.1.0",
+    "mocha": "^10.4.0",
     "nodemon": "^3.1.0",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "supertest": "^7.0.0"
   },
   "engines": {
     "node": "^20.12.2"

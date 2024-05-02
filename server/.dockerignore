@@ -6,3 +6,8 @@ npm-debug.log
 README.md
 .env
 .git
+firebase.json
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebaserc

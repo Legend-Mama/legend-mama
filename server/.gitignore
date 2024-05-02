@@ -6,3 +6,8 @@
 
 # local env files
 .env
+/firebase.json
+/firebase-debug.log
+/firestore-debug.log
+/ui-debug.log
+/.firebaserc
