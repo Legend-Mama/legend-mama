@@ -9,15 +9,11 @@ export default function useGoogleSignin() {
 
   const [waitingForGoogle, setWaitingForGoogle] = useState<boolean>(false);
 
-  if (auth.loggedIn) {
-    router.replace("/");
-  }
-
   const handleGoogleSignup = useCallback(() => {
     setWaitingForGoogle(true);
     signInWithPopup(auth.auth!, auth.providers.google!)
       .then((userCredential) => {
-        router.push("/");
+        router.push("/tavern");
       })
       .catch((err) => {
         console.error(err.message);

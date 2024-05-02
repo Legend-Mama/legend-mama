@@ -32,7 +32,7 @@ export default function SignUp() {
   const { waitingForGoogle, handleGoogleSignup } = useGoogleSignin();
 
   if (auth.loggedIn) {
-    router.replace("/");
+    router.replace("/tavern");
   }
 
   const formFactory = createFormFactory<Signup>({
@@ -50,7 +50,7 @@ export default function SignUp() {
           updateProfile(userCredential.user, { displayName: value.nickname });
         })
         .then(() => {
-          router.push("/");
+          router.push("/tavern");
         })
         .catch((err) => {
           console.error(err.message);

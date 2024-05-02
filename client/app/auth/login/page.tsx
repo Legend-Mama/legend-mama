@@ -49,7 +49,7 @@ function MainLogin({
   const { waitingForGoogle, handleGoogleSignup } = useGoogleSignin();
 
   if (auth.loggedIn) {
-    router.replace("/");
+    router.replace("/tavern");
   }
 
   const formFactory = createFormFactory<Login>({
@@ -62,7 +62,7 @@ function MainLogin({
     onSubmit: ({ value }) => {
       signInWithEmailAndPassword(auth.auth!, value.email, value.password)
         .then((userCredential) => {
-          router.push("/");
+          router.push("/tavern");
         })
         .catch((err) => {
           console.error(err.message);
