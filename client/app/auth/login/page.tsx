@@ -15,7 +15,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/app/providers/AuthProvider";
 import useGoogleSignin from "@/lib/auth/useGoogleSignin";
@@ -196,13 +199,28 @@ function Recovery({
 }: {
   setView: Dispatch<SetStateAction<"main" | "recovery">>;
 }) {
+  const auth = useContext(AuthContext);
+
+  const [emailSendStatus, setEmailSendStatus] = useState<
+    "not sent" | "sent" | "error"
+  >("not sent");
+
   const formFactory = createFormFactory<{ email: string }>({
     defaultValues: {
       email: "",
     },
   });
   const form = formFactory.useForm({
-    onSubmit: async ({ value }) => alert(`form data: ${JSON.stringify(value)}`),
+    onSubmit: ({ value }) => {
+      sendPasswordResetEmail(auth.auth!, value.email)
+        .then(() => {
+          setEmailSendStatus("sent");
+        })
+        .catch((err) => {
+          console.error(err.message);
+          setEmailSendStatus("error");
+        });
+    },
   });
   return (
     <>
@@ -219,65 +237,77 @@ function Recovery({
           </Text>
         </div>
         <Container mb={16}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              form.handleSubmit();
-            }}
-          >
-            <form.Field
-              name="email"
-              validators={{
-                onChange: ({ value, fieldApi }) =>
-                  fieldApi.state.meta.isTouched && !value
-                    ? "Please enter your email"
-                    : null,
+          {emailSendStatus === "not sent" ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                form.handleSubmit();
               }}
             >
-              {(field) => (
-                <FormControl isInvalid={field.state.meta.errors.length > 0}>
-                  <InputGroup
-                    name="email"
-                    leftWidth={140}
-                    stackPosition="alone"
-                    left="Email"
-                    autoComplete="email"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </FormControl>
-              )}
-            </form.Field>
-            <Stack direction="row" justifyContent="center" mt={6}>
-              <form.Subscribe
-                selector={({
-                  canSubmit,
-                  isSubmitting,
-                  isPristine,
-                  values,
-                }) => ({ canSubmit, isSubmitting, isPristine, values })}
+              <form.Field
+                name="email"
+                validators={{
+                  onChange: ({ value, fieldApi }) =>
+                    fieldApi.state.meta.isTouched && !value
+                      ? "Please enter your email"
+                      : null,
+                }}
               >
-                {({ canSubmit, isSubmitting, isPristine, values }) => (
-                  <Button
-                    type="submit"
-                    width={200}
-                    isDisabled={
-                      isPristine ||
-                      !canSubmit ||
-                      Object.values(values).some((val) => !val)
-                    }
-                    isLoading={isSubmitting}
-                  >
-                    Send Password Recovery
-                  </Button>
+                {(field) => (
+                  <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                    <InputGroup
+                      name="email"
+                      leftWidth={140}
+                      stackPosition="alone"
+                      left="Email"
+                      autoComplete="email"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                  </FormControl>
                 )}
-              </form.Subscribe>
-              <Button secondary width={200} onClick={() => setView("main")}>
-                Cancel
-              </Button>
-            </Stack>
-          </form>
+              </form.Field>
+              <Stack direction="row" justifyContent="center" mt={6}>
+                <form.Subscribe
+                  selector={({
+                    canSubmit,
+                    isSubmitting,
+                    isPristine,
+                    values,
+                  }) => ({ canSubmit, isSubmitting, isPristine, values })}
+                >
+                  {({ canSubmit, isSubmitting, isPristine, values }) => (
+                    <Button
+                      type="submit"
+                      width={200}
+                      isDisabled={
+                        isPristine ||
+                        !canSubmit ||
+                        Object.values(values).some((val) => !val)
+                      }
+                      isLoading={isSubmitting}
+                    >
+                      Send Password Recovery
+                    </Button>
+                  )}
+                </form.Subscribe>
+                <Button secondary width={200} onClick={() => setView("main")}>
+                  Cancel
+                </Button>
+              </Stack>
+            </form>
+          ) : emailSendStatus === "sent" ? (
+            <Text textAlign="center">
+              Your password recovery email is on its way! Please look for an
+              email from <strong>noreply@legend-mama.firebaseapp.com</strong> and follow the link to reset your password.
+            </Text>
+          ) : (
+            <Text textAlign="center">
+              There has been an error sending your password reset email. Please
+              refresh and try again. Make sure you are using a valid email.
+            </Text>
+          )}
         </Container>
       </Container>
     </>
