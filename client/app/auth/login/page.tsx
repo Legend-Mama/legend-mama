@@ -9,6 +9,8 @@ import GPToken from "@/components/icons/GPToken";
 import { createFormFactory, useForm } from "@tanstack/react-form";
 import { Link } from "@chakra-ui/next-js";
 import { Dispatch, SetStateAction, useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import auth from "@/lib/auth";
 
 interface Login {
   email: string;
@@ -37,7 +39,15 @@ function MainLogin({
     },
   });
   const form = formFactory.useForm({
-    onSubmit: async ({ value }) => alert(`form data: ${JSON.stringify(value)}`),
+    onSubmit: ({ value }) => {
+      signInWithEmailAndPassword(auth, value.email, value.password)
+        .then((userCredential) => {
+          alert("Welcome, " + JSON.stringify(userCredential.user));
+        })
+        .catch((err) => {
+          console.error(err.message);
+        });
+    },
   });
   return (
     <>
@@ -174,11 +184,16 @@ function Recovery({
   return (
     <>
       <Container as="main" maxWidth="container.lg" pt={12}>
-        <div style={{ width: "100%", textAlign: "center", marginBottom: "1.5em" }}>
+        <div
+          style={{ width: "100%", textAlign: "center", marginBottom: "1.5em" }}
+        >
           <Header as="h1" size="2xl" textAlign="center">
             Password Recovery
           </Header>
-          <Text>Fear not! Our messengers shall send you a password recovery email post haste!</Text>
+          <Text>
+            Fear not! Our messengers shall send you a password recovery email
+            post haste!
+          </Text>
         </div>
         <Container mb={16}>
           <form

@@ -34,7 +34,7 @@ export default function SignUp() {
           alert("hello! " + JSON.stringify(userCredential.user));
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err.message);
         });
     },
   });
