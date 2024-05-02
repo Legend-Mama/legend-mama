@@ -15,15 +15,14 @@ import {
 import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 
 /** These don't have to be secrets per docs: https://firebase.google.com/docs/projects/api-keys
- * But we'll store them in ENV in case they change
  */
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGINGSENDERID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
+  apiKey: "AIzaSyBwVZfuUNAFPesdG2ETmQUiCtnGyS7UTD0",
+  authDomain: "legend-mama.firebaseapp.com",
+  projectId: "legend-mama",
+  storageBucket: "legend-mama.appspot.com",
+  messagingSenderId: "780538328126",
+  appId: "1:780538328126:web:38ddfd7e5e662ddc29cd6f",
 } as const;
 
 interface AuthContextType {
