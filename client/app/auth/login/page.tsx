@@ -8,10 +8,17 @@ import InputGroup from "@/components/input/InputGroup";
 import GPToken from "@/components/icons/GPToken";
 import { createFormFactory, useForm } from "@tanstack/react-form";
 import { Link } from "@chakra-ui/next-js";
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/app/providers/AuthProvider";
+import useGoogleSignin from "@/lib/auth/useGoogleSignin";
 
 interface Login {
   email: string;
@@ -35,6 +42,7 @@ function MainLogin({
 }) {
   const router = useRouter();
   const auth = useContext(AuthContext);
+  const { waitingForGoogle, handleGoogleSignup } = useGoogleSignin();
 
   if (auth.loggedIn) {
     router.replace("/");
@@ -71,105 +79,113 @@ function MainLogin({
           </Link>
         </div>
         <Container mb={16}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              form.handleSubmit();
-            }}
-          >
-            <form.Field
-              name="email"
-              validators={{
-                onChange: ({ value, fieldApi }) =>
-                  fieldApi.state.meta.isTouched && !value
-                    ? "Please enter your email"
-                    : null,
-              }}
-            >
-              {(field) => (
-                <FormControl isInvalid={field.state.meta.errors.length > 0}>
-                  <InputGroup
-                    name="email"
-                    leftWidth={140}
-                    stackPosition="top"
-                    left="Email"
-                    autoComplete="email"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </FormControl>
-              )}
-            </form.Field>
-            <form.Field
-              name="password"
-              validators={{
-                onChange: ({ value, fieldApi }) =>
-                  fieldApi.state.meta.isTouched && !value
-                    ? "Please enter your password"
-                    : null,
-              }}
-            >
-              {(field) => (
-                <FormControl isInvalid={field.state.meta.errors.length > 0}>
-                  <InputGroup
-                    name="password"
-                    leftWidth={140}
-                    stackPosition="bottom"
-                    left="Password"
-                    type="password"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </FormControl>
-              )}
-            </form.Field>
-            <Stack direction="row" justifyContent="center" mt={6}>
-              <form.Subscribe
-                selector={({
-                  canSubmit,
-                  isSubmitting,
-                  isPristine,
-                  values,
-                }) => ({ canSubmit, isSubmitting, isPristine, values })}
+          {!waitingForGoogle ? (
+            <>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  form.handleSubmit();
+                }}
               >
-                {({ canSubmit, isSubmitting, isPristine, values }) => (
-                  <Button
-                    type="submit"
-                    width={200}
-                    isDisabled={
-                      isPristine ||
-                      !canSubmit ||
-                      Object.values(values).some((val) => !val)
-                    }
-                    isLoading={isSubmitting}
+                <form.Field
+                  name="email"
+                  validators={{
+                    onChange: ({ value, fieldApi }) =>
+                      fieldApi.state.meta.isTouched && !value
+                        ? "Please enter your email"
+                        : null,
+                  }}
+                >
+                  {(field) => (
+                    <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                      <InputGroup
+                        name="email"
+                        leftWidth={140}
+                        stackPosition="top"
+                        left="Email"
+                        autoComplete="email"
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                    </FormControl>
+                  )}
+                </form.Field>
+                <form.Field
+                  name="password"
+                  validators={{
+                    onChange: ({ value, fieldApi }) =>
+                      fieldApi.state.meta.isTouched && !value
+                        ? "Please enter your password"
+                        : null,
+                  }}
+                >
+                  {(field) => (
+                    <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                      <InputGroup
+                        name="password"
+                        leftWidth={140}
+                        stackPosition="bottom"
+                        left="Password"
+                        type="password"
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                    </FormControl>
+                  )}
+                </form.Field>
+                <Stack direction="row" justifyContent="center" mt={6}>
+                  <form.Subscribe
+                    selector={({
+                      canSubmit,
+                      isSubmitting,
+                      isPristine,
+                      values,
+                    }) => ({ canSubmit, isSubmitting, isPristine, values })}
                   >
-                    Enter the Tavern
+                    {({ canSubmit, isSubmitting, isPristine, values }) => (
+                      <Button
+                        type="submit"
+                        width={200}
+                        isDisabled={
+                          isPristine ||
+                          !canSubmit ||
+                          Object.values(values).some((val) => !val)
+                        }
+                        isLoading={isSubmitting}
+                      >
+                        Enter the Tavern
+                      </Button>
+                    )}
+                  </form.Subscribe>
+                  <Button onClick={handleGoogleSignup} secondary width={200}>
+                    Continue with Google
                   </Button>
-                )}
-              </form.Subscribe>
-              <Button secondary width={200}>
-                Continue with Google (temp)
+                </Stack>
+              </form>
+              <Button
+                variant="link"
+                fontFamily="var(--font-source-sans)"
+                color="brand.800"
+                bg="unset"
+                border="unset"
+                fontSize="smaller"
+                display="block"
+                mx="auto"
+                _hover={{ background: "unset" }}
+                fontWeight={500}
+                textAlign="center"
+                mt="6"
+                onClick={() => setView("recovery")}
+              >
+                Forgot your password?
               </Button>
-            </Stack>
-          </form>
-          <Button
-            variant="link"
-            fontFamily="var(--font-source-sans)"
-            color="brand.800"
-            bg="unset"
-            border="unset"
-            fontSize="smaller"
-            display="block"
-            mx="auto"
-            _hover={{ background: "unset" }}
-            fontWeight={500}
-            textAlign="center"
-            mt="6"
-            onClick={() => setView("recovery")}
-          >
-            Forgot your password?
-          </Button>
+            </>
+          ) : (
+            <Text textAlign="center">
+              Please sign in with the Google authentication pop-up.
+            </Text>
+          )}
         </Container>
       </Container>
     </>

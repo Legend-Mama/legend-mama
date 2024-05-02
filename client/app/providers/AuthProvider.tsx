@@ -10,6 +10,7 @@ import {
   Auth,
   onAuthStateChanged,
   User,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 
@@ -29,12 +30,14 @@ interface AuthContextType {
   auth: Auth | null;
   loggedIn: boolean;
   user: User | null;
+  providers: { google: GoogleAuthProvider | null };
 }
 
-const defaultContext = {
+const defaultContext: AuthContextType = {
   auth: null,
   loggedIn: false,
   user: null,
+  providers: { google: null },
 } as const;
 
 export const AuthContext = createContext<AuthContextType>(defaultContext);
@@ -44,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const ctx: AuthContextType = { ...defaultContext };
     let app: FirebaseApp;
 
+    // Initialize Firebase auth
     // Try to ensure that we only initialize the Firebase app once - might need debugging
 
     try {
@@ -57,6 +61,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     ctx.auth = getAuth(app);
+
+    // Initialize auth providers
+    const googleAuthProvider = new GoogleAuthProvider();
+    ctx.providers.google = googleAuthProvider;
 
     // Use emulator on local
 
