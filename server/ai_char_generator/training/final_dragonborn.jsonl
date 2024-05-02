@@ -1,0 +1,98 @@
+{
+  "race": "Dragonborn",
+  "traits": {
+    "ability_score_increase": {
+      "strength": 2,
+      "charisma": 1
+    },
+    "age": {
+      "description": "Young dragonborn grow quickly. They walk hours after hatching, attain the size and development of a 10-year-old human child by the age of 3, and reach adulthood by 15. They live to be around 80."
+    },
+    "alignment": {
+      "description": "Dragonborn tend to extremes, making a conscious choice for one side or the other in the cosmic war between good and evil. Most dragonborn are good, but those who side with evil can be terrible villains."
+    },
+    "size": {
+      "description": "Dragonborn are taller and heavier than humans, standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium."
+    },
+    "speed": {
+      "description": "Your base walking speed is 30 feet."
+    },
+    "draconic_ancestry": {
+      "description": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table."
+    },
+    "breath_weapon": {
+      "description": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.",
+      "saving_throw_dc": "8 + your Constitution modifier + your proficiency bonus.",
+      "damage": {
+        "1st_level": "2d6",
+        "6th_level": "3d6",
+        "11th_level": "4d6",
+        "16th_level": "5d6"
+      },
+      "cooldown": "short or long rest"
+    },
+    "damage_resistance": {
+      "description": "You have resistance to the damage type associated with your draconic ancestry."
+    },
+    "languages": {
+      "known": ["Common", "Draconic"],
+      "description": "Draconic is thought to be one of the oldest languages and is often used in the study of magic. The language sounds harsh to most other creatures and includes numerous hard consonants and sibilants."
+    }
+  }
+}
+{
+  "draconic_ancestry_table": {
+    "dragons": [
+      {
+        "type": "Black",
+        "damage_type": "Acid",
+        "breath_weapon": "5 by 30 ft. line (Dex. save)"
+      },
+      {
+        "type": "Blue",
+        "damage_type": "Lightning",
+        "breath_weapon": "5 by 30 ft. line (Dex. save)"
+      },
+      {
+        "type": "Brass",
+        "damage_type": "Fire",
+        "breath_weapon": "5 by 30 ft. line (Dex. save)"
+      },
+      {
+        "type": "Bronze",
+        "damage_type": "Lightning",
+        "breath_weapon": "5 by 30 ft. line (Dex. save)"
+      },
+      {
+        "type": "Copper",
+        "damage_type": "Acid",
+        "breath_weapon": "5 by 30 ft. line (Dex. save)"
+      },
+      {
+        "type": "Gold",
+        "damage_type": "Fire",
+        "breath_weapon": "15 ft. cone (Dex. save)"
+      },
+      {
+        "type": "Green",
+        "damage_type": "Poison",
+        "breath_weapon": "15 ft. cone (Con. save)"
+      },
+      {
+        "type": "Red",
+        "damage_type": "Fire",
+        "breath_weapon": "15 ft. cone (Dex. save)"
+      },
+      {
+        "type": "Silver",
+        "damage_type": "Cold",
+        "breath_weapon": "15 ft. cone (Con. save)"
+      },
+      {
+        "type": "White",
+        "damage_type": "Cold",
+        "breath_weapon": "15 ft. cone (Con. save)"
+      }
+    ]
+  }
+}
