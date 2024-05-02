@@ -8,7 +8,7 @@ import InputGroup from "@/components/input/InputGroup";
 import GPToken from "@/components/icons/GPToken";
 import { createFormFactory, useForm } from "@tanstack/react-form";
 import { Link } from "@chakra-ui/next-js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import auth from "@/lib/auth";
 
 interface Signup {
@@ -31,7 +31,7 @@ export default function SignUp() {
     onSubmit: ({ value }) => {
       createUserWithEmailAndPassword(auth, value.email, value.password)
         .then((userCredential) => {
-          alert("hello! " + JSON.stringify(userCredential.user));
+          updateProfile(userCredential.user, { displayName: value.nickname });
         })
         .catch((err) => {
           console.error(err.message);
