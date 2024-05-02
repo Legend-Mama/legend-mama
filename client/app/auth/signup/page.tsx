@@ -10,6 +10,7 @@ import { createFormFactory, useForm } from "@tanstack/react-form";
 import { Link } from "@chakra-ui/next-js";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import auth from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 interface Signup {
   nickname: string;
@@ -19,6 +20,8 @@ interface Signup {
 }
 
 export default function SignUp() {
+  const router = useRouter();
+
   const formFactory = createFormFactory<Signup>({
     defaultValues: {
       nickname: "",
@@ -32,6 +35,8 @@ export default function SignUp() {
       createUserWithEmailAndPassword(auth, value.email, value.password)
         .then((userCredential) => {
           updateProfile(userCredential.user, { displayName: value.nickname });
+        }).then(() => {
+          router.push("/");
         })
         .catch((err) => {
           console.error(err.message);
