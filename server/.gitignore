@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/local*
+/local
 
 # local env files
 .env

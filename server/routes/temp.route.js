@@ -17,7 +17,7 @@ router.get('/private', authenticateJWT, async (req, res) => {
 router.get('/data', async (req, res) => {
     const name = process.env.NAME || 'World'
     try {
-        let docRef = firestore.collection("accounts").doc("AgTsXlJKPVkHEFxNtZ7M");
+        let docRef = firestore.collection("accounts").doc("djoacbmageb80q8fAhX3");
         const docs = await docRef.get();
         const data = docs.data();
         data['characterSheets'] = [];

@@ -30,7 +30,7 @@ RUN adduser --system --uid 1001 nodeuser
 COPY --chown=nodeuser:nodegroup . .
 USER nodeuser
 
-EXPOSE 8080
-ENV PORT 8080
+EXPOSE 3000
+ENV PORT 3000
 
 CMD ["npm", "start"]
