@@ -8,9 +8,10 @@ import InputGroup from "@/components/input/InputGroup";
 import GPToken from "@/components/icons/GPToken";
 import { createFormFactory, useForm } from "@tanstack/react-form";
 import { Link } from "@chakra-ui/next-js";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import auth from "@/lib/auth";
+import { useRouter } from "next/navigation";
+import { AuthContext } from "@/app/providers/AuthProvider";
 
 interface Login {
   email: string;
@@ -32,6 +33,13 @@ function MainLogin({
 }: {
   setView: Dispatch<SetStateAction<"main" | "recovery">>;
 }) {
+  const router = useRouter();
+  const auth = useContext(AuthContext);
+
+  if (auth.loggedIn) {
+    router.replace("/");
+  }
+
   const formFactory = createFormFactory<Login>({
     defaultValues: {
       email: "",
@@ -40,9 +48,9 @@ function MainLogin({
   });
   const form = formFactory.useForm({
     onSubmit: ({ value }) => {
-      signInWithEmailAndPassword(auth, value.email, value.password)
+      signInWithEmailAndPassword(auth.auth!, value.email, value.password)
         .then((userCredential) => {
-          alert("Welcome, " + JSON.stringify(userCredential.user));
+          router.push("/");
         })
         .catch((err) => {
           console.error(err.message);

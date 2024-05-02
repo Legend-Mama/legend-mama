@@ -1,12 +1,15 @@
 "use client";
 
-import { type ReactNode } from "react";
-import { Container, Image, Stack } from "@chakra-ui/react";
-import Text from "@/components/typography/Text";
 import Header from "@/components/typography/Header";
+import Text from "@/components/typography/Text";
 import { Link } from "@chakra-ui/next-js";
+import { Container, Image, Stack } from "@chakra-ui/react";
+import { useContext } from "react";
+import { AuthContext } from "./providers/AuthProvider";
 
 export default function Home() {
+  const auth = useContext(AuthContext);
+
   return (
     <>
       <header
@@ -32,11 +35,13 @@ export default function Home() {
               Start your legend
             </Header>
           </Link>
-          <Link href="/auth/login" _hover={{ textDecoration: "unset" }}>
-            <Header as="h2" glow color="white">
-              Sign In
-            </Header>
-          </Link>
+          {!auth.loggedIn && (
+            <Link href="/auth/login" _hover={{ textDecoration: "unset" }}>
+              <Header as="h2" glow color="white">
+                Sign In
+              </Header>
+            </Link>
+          )}
         </div>
       </header>
       <Container as="main" maxWidth="container.lg" pt={12}>

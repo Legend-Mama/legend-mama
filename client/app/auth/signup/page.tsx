@@ -9,8 +9,9 @@ import GPToken from "@/components/icons/GPToken";
 import { createFormFactory, useForm } from "@tanstack/react-form";
 import { Link } from "@chakra-ui/next-js";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import auth from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { AuthContext } from "@/app/providers/AuthProvider";
 
 interface Signup {
   nickname: string;
@@ -21,6 +22,11 @@ interface Signup {
 
 export default function SignUp() {
   const router = useRouter();
+  const auth = useContext(AuthContext);
+
+  if (auth.loggedIn) {
+    router.replace("/");
+  }
 
   const formFactory = createFormFactory<Signup>({
     defaultValues: {
@@ -32,10 +38,11 @@ export default function SignUp() {
   });
   const form = formFactory.useForm({
     onSubmit: ({ value }) => {
-      createUserWithEmailAndPassword(auth, value.email, value.password)
+      createUserWithEmailAndPassword(auth.auth!, value.email, value.password)
         .then((userCredential) => {
           updateProfile(userCredential.user, { displayName: value.nickname });
-        }).then(() => {
+        })
+        .then(() => {
           router.push("/");
         })
         .catch((err) => {
