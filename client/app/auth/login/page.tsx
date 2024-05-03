@@ -296,16 +296,27 @@ function Recovery({
               </Stack>
             </form>
           ) : emailSendStatus === "sent" ? (
-            <Text textAlign="center">
-              Your password recovery email is on its way! Please look for an
-              email from <strong>noreply@legend-mama.firebaseapp.com</strong>{" "}
-              and follow the link to reset your password.
-            </Text>
+            <Stack direction="column" alignItems="center" mt={6}>
+              <Text textAlign="center">
+                Your password recovery email is on its way! Please look for an
+                email from <strong>noreply@legend-mama.firebaseapp.com</strong>{" "}
+                and follow the link to reset your password.
+              </Text>
+              <Button secondary width={200} onClick={() => setView("main")}>
+                Back
+              </Button>
+            </Stack>
           ) : (
-            <Text textAlign="center">
-              There has been an error sending your password reset email. Please
-              refresh and try again. Make sure you are using a valid email.
-            </Text>
+            <Stack direction="column" alignItems="center" mt={6}>
+              <Text textAlign="center">
+                There has been an error sending your password reset email.
+                Please refresh and try again. Make sure you are using a valid
+                email.
+              </Text>
+              <Button secondary width={200} onClick={() => setEmailSendStatus("not sent")}>
+                Back
+              </Button>
+            </Stack>
           )}
         </Container>
       </Container>
