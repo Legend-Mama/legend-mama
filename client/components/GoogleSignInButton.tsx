@@ -7,8 +7,10 @@ const roboto = Roboto({ weight: "500", subsets: ["latin"] });
 
 export default function GoogleSignInButton({
   onClick,
+  isLoading,
 }: {
   onClick: () => void;
+  isLoading: boolean;
 }) {
   return (
     <Button
@@ -20,8 +22,15 @@ export default function GoogleSignInButton({
       color="#e3e3e3"
       px="12px"
       py="10px"
+      isLoading={isLoading}
     >
-      <Image src={googleG} height={20} width={20} style={{ marginRight: 10 }} alt="Google icon" />
+      <Image
+        src={googleG}
+        height={20}
+        width={20}
+        style={{ marginRight: 10 }}
+        alt="Google icon"
+      />
       <span className={roboto.className}>Continue with Google</span>
     </Button>
   );

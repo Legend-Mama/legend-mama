@@ -59,10 +59,9 @@ function MainLogin({
     },
   });
   const form = formFactory.useForm({
-    onSubmit: ({ value }) => {
-      signInWithEmailAndPassword(auth.auth!, value.email, value.password)
+    onSubmit: async ({ value }) => {
+      await signInWithEmailAndPassword(auth.auth!, value.email, value.password)
         .then((userCredential) => {
-          console.log("Here's your user Megan: ", userCredential.user);
           router.push("/tavern");
         })
         .catch((err) => {
@@ -149,21 +148,26 @@ function MainLogin({
                     }) => ({ canSubmit, isSubmitting, isPristine, values })}
                   >
                     {({ canSubmit, isSubmitting, isPristine, values }) => (
-                      <Button
-                        type="submit"
-                        width={200}
-                        isDisabled={
-                          isPristine ||
-                          !canSubmit ||
-                          Object.values(values).some((val) => !val)
-                        }
-                        isLoading={isSubmitting}
-                      >
-                        Enter the Tavern
-                      </Button>
+                      <>
+                        <Button
+                          type="submit"
+                          width={200}
+                          isDisabled={
+                            isPristine ||
+                            !canSubmit ||
+                            Object.values(values).some((val) => !val)
+                          }
+                          isLoading={isSubmitting}
+                        >
+                          Enter the Tavern
+                        </Button>
+                        <GoogleSignInButton
+                          onClick={handleGoogleSignup}
+                          isLoading={isSubmitting}
+                        />
+                      </>
                     )}
                   </form.Subscribe>
-                  <GoogleSignInButton onClick={handleGoogleSignup} />
                 </Stack>
               </form>
               <Button
@@ -301,7 +305,8 @@ function Recovery({
           ) : emailSendStatus === "sent" ? (
             <Text textAlign="center">
               Your password recovery email is on its way! Please look for an
-              email from <strong>noreply@legend-mama.firebaseapp.com</strong> and follow the link to reset your password.
+              email from <strong>noreply@legend-mama.firebaseapp.com</strong>{" "}
+              and follow the link to reset your password.
             </Text>
           ) : (
             <Text textAlign="center">

@@ -44,12 +44,14 @@ export default function SignUp() {
     },
   });
   const form = formFactory.useForm({
-    onSubmit: ({ value }) => {
-      createUserWithEmailAndPassword(auth.auth!, value.email, value.password)
-        .then((userCredential) => {
-          updateProfile(userCredential.user, { displayName: value.nickname });
-          console.log("Here's your user Megan: ", userCredential.user);
-        })
+    onSubmit: async ({ value }) => {
+      await createUserWithEmailAndPassword(
+        auth.auth!,
+        value.email,
+        value.password
+      )
+        .then((userCredential) => userCredential.user)
+        .then((user) => updateProfile(user, { displayName: value.nickname }))
         .then(() => {
           router.push("/tavern");
         })
@@ -191,21 +193,26 @@ export default function SignUp() {
                   }) => ({ canSubmit, isSubmitting, isPristine, values })}
                 >
                   {({ canSubmit, isSubmitting, isPristine, values }) => (
-                    <Button
-                      type="submit"
-                      width={200}
-                      isDisabled={
-                        isPristine ||
-                        !canSubmit ||
-                        Object.values(values).some((val) => !val)
-                      }
-                      isLoading={isSubmitting}
-                    >
-                      Sign Up
-                    </Button>
+                    <>
+                      <Button
+                        type="submit"
+                        width={200}
+                        isDisabled={
+                          isPristine ||
+                          !canSubmit ||
+                          Object.values(values).some((val) => !val)
+                        }
+                        isLoading={isSubmitting}
+                      >
+                        Sign Up
+                      </Button>
+                      <GoogleSignInButton
+                        onClick={handleGoogleSignup}
+                        isLoading={isSubmitting}
+                      />
+                    </>
                   )}
                 </form.Subscribe>
-                <GoogleSignInButton onClick={handleGoogleSignup} />
               </Stack>
             </form>
           ) : (
