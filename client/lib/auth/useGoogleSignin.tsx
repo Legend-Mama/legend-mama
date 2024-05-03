@@ -13,6 +13,7 @@ export default function useGoogleSignin() {
     setWaitingForGoogle(true);
     signInWithPopup(auth.auth!, auth.providers.google!)
       .then((userCredential) => {
+        console.log("Here's your user Megan: ", userCredential.user);
         router.push("/tavern");
       })
       .catch((err) => {

@@ -48,6 +48,7 @@ export default function SignUp() {
       createUserWithEmailAndPassword(auth.auth!, value.email, value.password)
         .then((userCredential) => {
           updateProfile(userCredential.user, { displayName: value.nickname });
+          console.log("Here's your user Megan: ", userCredential.user);
         })
         .then(() => {
           router.push("/tavern");

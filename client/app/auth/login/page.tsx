@@ -62,6 +62,7 @@ function MainLogin({
     onSubmit: ({ value }) => {
       signInWithEmailAndPassword(auth.auth!, value.email, value.password)
         .then((userCredential) => {
+          console.log("Here's your user Megan: ", userCredential.user);
           router.push("/tavern");
         })
         .catch((err) => {
