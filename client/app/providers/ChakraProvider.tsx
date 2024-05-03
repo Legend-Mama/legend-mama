@@ -1,3 +1,4 @@
+"use client";
 import {
   extendTheme,
   ChakraProvider as BaseChakraProvider,
@@ -49,6 +50,10 @@ const theme = extendTheme({
   },
 });
 
-export default function ChakraProvider({ children }: { children: ReactNode }) {
+export default function ChakraProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return <BaseChakraProvider theme={theme}>{children}</BaseChakraProvider>;
 }

@@ -1,12 +1,11 @@
+import Navbar from "@/components/Navbar";
+import { Box, Flex } from "@chakra-ui/react";
 import type { Metadata } from "next";
+import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import localFont from "next/font/local";
 import { type ReactNode } from "react";
 import "./globals.css"; // TODO: Remove if we don't end up using a global CSS file
 import { Providers } from "./providers";
-import localFont from "next/font/local";
-import { Source_Serif_4 } from "next/font/google";
-import { Source_Sans_3 } from "next/font/google";
-import { Box, Flex } from "@chakra-ui/react";
-import Navbar from "@/components/Navbar";
 
 const jacquard24 = localFont({
   src: "../public/font/Jacquard24-Regular.ttf",
@@ -43,7 +42,9 @@ export default function RootLayout({
         <Providers>
           <Flex h="100vh" w="100vw">
             <Navbar />
-            <Box h="100%" w="100%" overflowY="auto" overflowX="hidden">{children}</Box>
+            <Box h="100%" w="100%" overflowY="auto" overflowX="hidden">
+              {children}
+            </Box>
           </Flex>
         </Providers>
       </body>

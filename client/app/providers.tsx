@@ -1,8 +1,6 @@
-"use client";
-
+import { AuthProvider } from "@/app/providers/AuthProvider";
 import { ReactNode } from "react";
 import ChakraProvider from "./providers/ChakraProvider";
-import { AuthProvider } from "./providers/AuthProvider";
 
 /**
  * Wraps our entire application, allowing it to use third party providers
@@ -10,8 +8,10 @@ import { AuthProvider } from "./providers/AuthProvider";
  */
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <ChakraProvider>
-      <AuthProvider>{children}</AuthProvider>
-    </ChakraProvider>
+    <AuthProvider>
+      <ChakraProvider>
+        {children}
+      </ChakraProvider>
+    </AuthProvider>
   );
 }

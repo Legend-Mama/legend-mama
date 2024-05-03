@@ -1,18 +1,18 @@
+'use client';
 import {
   FirebaseApp,
-  FirebaseError,
   getApp,
-  initializeApp,
+  initializeApp
 } from "firebase/app";
 import {
-  getAuth,
-  connectAuthEmulator,
   Auth,
-  onAuthStateChanged,
-  User,
   GoogleAuthProvider,
+  User,
+  connectAuthEmulator,
+  getAuth,
+  onAuthStateChanged,
 } from "firebase/auth";
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
+import { ReactNode, createContext, useMemo, useState } from "react";
 
 /** These don't have to be secrets per docs: https://firebase.google.com/docs/projects/api-keys
  */

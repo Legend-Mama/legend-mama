@@ -1,28 +1,21 @@
 "use client";
 
-import { Container, FormControl, Image, Stack } from "@chakra-ui/react";
-import Text from "@/components/typography/Text";
-import Header from "@/components/typography/Header";
+import { AuthContext } from "@/app/providers/AuthProvider";
 import Button from "@/components/Button";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 import InputGroup from "@/components/input/InputGroup";
-import GPToken from "@/components/icons/GPToken";
-import { createFormFactory, useForm } from "@tanstack/react-form";
+import Header from "@/components/typography/Header";
+import Text from "@/components/typography/Text";
+import useGoogleSignin from "@/lib/auth/useGoogleSignin";
 import { Link } from "@chakra-ui/next-js";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Container, FormControl, Stack } from "@chakra-ui/react";
+import { createFormFactory } from "@tanstack/react-form";
 import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { AuthContext } from "@/app/providers/AuthProvider";
-import useGoogleSignin from "@/lib/auth/useGoogleSignin";
-import GoogleSignInButton from "@/components/GoogleSignInButton";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 
 interface Login {
   email: string;

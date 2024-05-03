@@ -1,23 +1,19 @@
 "use client";
 
-import { Container, FormControl, Image, Stack } from "@chakra-ui/react";
-import Text from "@/components/typography/Text";
-import Header from "@/components/typography/Header";
-import Button from "@/components/Button";
-import InputGroup from "@/components/input/InputGroup";
-import GPToken from "@/components/icons/GPToken";
-import { createFormFactory, useForm } from "@tanstack/react-form";
-import { Link } from "@chakra-ui/next-js";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  updateProfile,
-} from "firebase/auth";
-import { useRouter } from "next/navigation";
-import { useCallback, useContext, useState } from "react";
 import { AuthContext } from "@/app/providers/AuthProvider";
-import useGoogleSignin from "@/lib/auth/useGoogleSignin";
+import Button from "@/components/Button";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
+import GPToken from "@/components/icons/GPToken";
+import InputGroup from "@/components/input/InputGroup";
+import Header from "@/components/typography/Header";
+import Text from "@/components/typography/Text";
+import useGoogleSignin from "@/lib/auth/useGoogleSignin";
+import { Link } from "@chakra-ui/next-js";
+import { Container, FormControl, Stack } from "@chakra-ui/react";
+import { createFormFactory } from "@tanstack/react-form";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
 interface Signup {
   nickname: string;

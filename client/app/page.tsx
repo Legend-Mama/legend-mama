@@ -6,7 +6,7 @@ import { Image, Link } from "@chakra-ui/next-js";
 import logo from "@/public/img/legend-mama-logo.png";
 import { Container, Stack } from "@chakra-ui/react";
 import { useContext } from "react";
-import { AuthContext } from "./providers/AuthProvider";
+import { AuthContext } from "@/app/providers/AuthProvider";
 
 export default function Home() {
   const auth = useContext(AuthContext);

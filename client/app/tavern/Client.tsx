@@ -1,21 +1,18 @@
 "use client";
-import Header from "@/components/typography/Header";
-import Text from "@/components/typography/Text";
-import { Container } from "@chakra-ui/react";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { AuthContext } from "@/app/providers/AuthProvider";
-import { getIdToken } from "firebase/auth";
 
-export default function Tavern() {
+import Header from "@/components/typography/Header";
+import { Container } from "@chakra-ui/react";
+import { ReactNode, useContext, useMemo } from "react";
+import { AuthContext } from "../providers/auth/AuthClientProvider";
+import Text from "@/components/typography/Text";
+
+export default function Client({
+  IdTokenComponent,
+}: {
+  IdTokenComponent: ReactNode;
+}) {
   const auth = useContext(AuthContext);
   const user = auth.user;
-
-  const [idToken, setIdToken] = useState<string>("");
-
-  useEffect(() => {
-    if (!user) return;
-    getIdToken(user).then((token) => setIdToken(token));
-  }, [user]);
 
   return (
     <Container as="main" maxWidth="container.lg" pt={12}>
@@ -40,13 +37,7 @@ export default function Tavern() {
           wrinkled parchment and nonsensical characters emboss themselves on the
           surface:
         </Text>
-        <Text
-          size="md"
-          color="white"
-          filter="drop-shadow(0 0 6px lightblue) drop-shadow(0 0 4px cyan)"
-        >
-          {idToken}
-        </Text>
+        {IdTokenComponent}
       </div>
     </Container>
   );
