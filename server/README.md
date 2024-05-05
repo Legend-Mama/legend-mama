@@ -30,6 +30,8 @@ FIRESTORE_EMULATOR_HOST="127.0.0.1:8080"
 GCLOUD_PROJECT="legend-mama"
 `
 
+WARNING: If testing authentication middleware, make sure Firebase Auth emulator is disabled and any references to it in the environment or config files are removed.
+
 ### Running Tests with Emulators
 1. Start up the emulators: `firebase emulators:start`
 2. Run `npm test`
