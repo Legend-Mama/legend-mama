@@ -1,9 +1,9 @@
 import request from 'supertest';
 import app from '../server.js';
 // Dummy Data
-import characterSheet1 from '../local/characterSheet1.json' assert {type: 'json'};
-import characterSheet2 from '../local/characterSheet2.json' assert {type: 'json'};
-import characterSheet3 from '../local/characterSheet3.json' assert {type: 'json'};
+import characterSheet1 from './data/characterSheet1.json' assert {type: 'json'};
+import characterSheet2 from './data/characterSheet2.json' assert {type: 'json'};
+import characterSheet3 from './data/characterSheet3.json' assert {type: 'json'};
 
 describe('Account Management Routes', () => {
     const token = 'some-firebase-id-token';

@@ -1,15 +1,15 @@
 import request from 'supertest';
 import app from '../server.js';
 // Dummy Data
-import characterDetails from '../local/characterDetails1.json' assert {type: 'json'};
-import characterSheet from '../local/characterSheet1.json' assert {type: 'json'};
+import characterDetails from './data/characterDetails1.json' assert {type: 'json'};
+import characterSheet from './data/characterSheet1.json' assert {type: 'json'};
 
 describe('Character Sheet Editor Routes', () => {
     const token = 'some-firebase-id-token';
 
     describe('POST /character-sheet', () => {
         it('Should return a character sheet w/ Bearer token', async () => {
-            const response = await request(app)
+            await request(app)
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${token}`)
                 .send(characterDetails)
