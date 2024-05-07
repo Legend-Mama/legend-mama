@@ -24,11 +24,7 @@ export class ForbiddenError extends Error {
 
 export default function errorHandler(err, req, res, next) {
     console.error(`${err.name}: ${err.message}`);  // Log the error for debugging
-    if (err instanceof UnauthorizedError) {
-        res.status(err.statusCode).json({error: err.name, message: err.message});
-    } else if (err instanceof NotFoundError) {
-        res.status(err.statusCode).json({error: err.name, message: err.message});
-    } else if (err instanceof ForbiddenError) {
+    if (err.statusCode && err.message && err.name) {
         res.status(err.statusCode).json({error: err.name, message: err.message});
     } else {
         // Other errors
