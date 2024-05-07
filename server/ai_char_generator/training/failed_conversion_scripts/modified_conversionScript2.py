@@ -1,27 +1,33 @@
+
 import markdown
 from bs4 import BeautifulSoup
 import json
-import pandas
+import re
+
+def extract_class_name(description):
+    match = re.search(r"description: Rules and information for the (\w+) class", description)
+    if match:
+        return match.group(1)
+    return None
 
 def markdown_to_jsonl(md_content):
     html_content = markdown.markdown(md_content, extensions=['tables', 'attr_list'])
     soup = BeautifulSoup(html_content, 'html.parser')
     jsonl_output = ""
     current_header = None
+    class_name = None
 
     for element in soup.find_all(True):
         if element.name in ['h1', 'h2', 'h3', 'h4']:
             current_header = element.get_text(strip=True)
         elif element.name in ['p', 'li'] and current_header:
-            json_data = {current_header: element.get_text(strip=True)}
+            text = element.get_text(strip=True)
+            if current_header.lower() == 'description':
+                class_name = extract_class_name(text)
+            json_data = {current_header: text}
+            if class_name:
+                json_data["class_name"] = class_name
             jsonl_output += json.dumps(json_data) + "\n"
-        elif element.name == 'table':
-            headers = [th.get_text(strip=True) for th in element.find_all('th')]
-            for row in element.find_all('tr')[1:]:
-                values = [td.get_text(strip=True) for td in row.find_all('td')]
-                if current_header:
-                    json_data = {current_header: dict(zip(headers, values))}
-                    jsonl_output += json.dumps(json_data) + "\n"
 
     return jsonl_output
 
@@ -45,19 +51,10 @@ def consolidate_jsonl(jsonl_content):
     
     return consolidated_data
 
-# Read Markdown file
-with open('markDowns/classes/bard.md', 'r') as file:
-    markdown_text = file.read()
-
-# Convert to JSONL and consolidate
+# Example usage
+markdown_text = "description: Rules and information for the Barbarian class from the 5th Edition (5e) SRD (System Reference Document).\nSome more markdown content here."
 jsonl_content = markdown_to_jsonl(markdown_text)
 consolidated_data = consolidate_jsonl(jsonl_content)
 
-# Write the consolidated JSONL data to a file
-output_filepath = 'final_output.jsonl'
-with open(output_filepath, 'w') as file:
-    for key, value in consolidated_data.items():
-        json_line = json.dumps({key: value})
-        file.write(json_line + '\n')
-
-print("Conversion and consolidation complete. Check the final_output.jsonl file.")
+# Print or write the consolidated JSONL data to a file
+print(consolidated_data)

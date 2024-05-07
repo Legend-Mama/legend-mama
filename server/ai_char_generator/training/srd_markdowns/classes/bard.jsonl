@@ -1,0 +1,361 @@
+{
+  "The Bard": {
+    "Level": "1st",
+    "Proficiency Bonus": "+2",
+    "Cantrips Known": 2,
+    "Spells Known": 4,
+    "1st": 2,
+    "Features": "Spellcasting, Bardic Inspiration (d6)"
+  }
+}
+{
+  "The Bard": {
+    "Level": "2nd",
+    "Proficiency Bonus": "+2",
+    "Cantrips Known": 2,
+    "Spells Known": 5,
+    "1st": 3,
+    "Features": "Jack of All Trades, Song of Rest (d6)"
+  }
+}
+{
+  "The Bard": {
+    "Level": "3nd",
+    "Proficiency Bonus": "+2",
+    "Cantrips Known": 2,
+    "Spells Known": 6,
+    "1st": 4,
+    "2nd": 2,
+    "Features": "Bard College, Expertise"
+  }
+}
+{
+  "The Bard": {
+    "Level": "4th",
+    "Proficiency Bonus": "+2",
+    "Cantrips Known": 3,
+    "Spells Known": 7,
+    "1st": 4,
+    "2nd": 3,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Bard": {
+    "Level": "5th",
+    "Proficiency Bonus": "+3",
+    "Cantrips Known": 3,
+    "Spells Known": 8,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 2,
+    "Features": "Bardic Inspiration (d8), Font of Inspiration"
+  }
+}
+{
+  "The Bard": {
+    "Level": "6th",
+    "Proficiency Bonus": "+3",
+    "Cantrips Known": 3,
+    "Spells Known": 9,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "Features": "Countercharm, Bard College feature"
+  }
+}
+{
+  "The Bard": {
+    "Level": "7th",
+    "Proficiency Bonus": "+3",
+    "Cantrips Known": 3,
+    "Spells Known": 10,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 1
+  }
+}
+{
+  "The Bard": {
+    "Level": "8th",
+    "Proficiency Bonus": "+3",
+    "Cantrips Known": 3,
+    "Spells Known": 11,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 2,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Bard": {
+    "Level": "9th",
+    "Proficiency Bonus": "+4",
+    "Cantrips Known": 3,
+    "Spells Known": 12,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 1,
+    "Features": "Song of Rest (d8)"
+  }
+}
+{
+  "The Bard": {
+    "Level": "10th",
+    "Proficiency Bonus": "+4",
+    "Cantrips Known": 4,
+    "Spells Known": 14,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "Features": "Bardic Inspiration (d10), Expertise, Magical Secrets"
+  }
+}
+{
+  "The Bard": {
+    "Level": "11th",
+    "Proficiency Bonus": "+4",
+    "Cantrips Known": 4,
+    "Spells Known": 15,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1
+  }
+}
+{
+  "The Bard": {
+    "Level": "12th",
+    "Proficiency Bonus": "+4",
+    "Cantrips Known": 4,
+    "Spells Known": 15,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Bard": {
+    "Level": "13th",
+    "Proficiency Bonus": "+5",
+    "Cantrips Known": 4,
+    "Spells Known": 16,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "Features": "Song of Rest (d10)"
+  }
+}
+{
+  "The Bard": {
+    "Level": "14th",
+    "Proficiency Bonus": "+5",
+    "Cantrips Known": 4,
+    "Spells Known": 18,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "Features": "Magical Secrets, Bard College feature"
+  }
+}
+{
+  "The Bard": {
+    "Level": "15th",
+    "Proficiency Bonus": "+5",
+    "Cantrips Known": 4,
+    "Spells Known": 19,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "Features": "Bardic Inspiration (d12)"
+  }
+}
+{
+  "The Bard": {
+    "Level": "16th",
+    "Proficiency Bonus": "+5",
+    "Cantrips Known": 4,
+    "Spells Known": 19,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Bard": {
+    "Level": "17th",
+    "Proficiency Bonus": "+6",
+    "Cantrips Known": 4,
+    "Spells Known": 20,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1,
+    "Features": "Song of Rest (d12)"
+  }
+}
+{
+  "The Bard": {
+    "Level": "18th",
+    "Proficiency Bonus": "+6",
+    "Cantrips Known": 4,
+    "Spells Known": 22,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1,
+    "Features": "Magical Secrets"
+  }
+}
+{
+  "The Bard": {
+    "Level": "19th",
+    "Proficiency Bonus": "+6",
+    "Cantrips Known": 4,
+    "Spells Known": 22,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Bard": {
+    "Level": "20th",
+    "Proficiency Bonus": "+6",
+    "Cantrips Known": 4,
+    "Spells Known": 22,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 2,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1,
+    "Features": "Superior Inspiration"
+  }
+}
+{
+  "Class Features": {
+    "Hit Points": {
+      "Hit Dice": "1d8 per bard level",
+      "Hit Points at 1st Level": "8 + your Constitution modifier",
+      "Hit Points at Higher Levels": "1d8 (or 5) + your Constitution modifier per bard level after 1st"
+    },
+    "Proficiencies": {
+      "Armor": "Light armor",
+      "Weapons": "Simple weapons, hand crossbows, longswords, rapiers, shortswords",
+      "Tools": "Three musical instruments of your choice",
+      "Saving Throws": "Dexterity, Charisma",
+      "Skills": "Choose any three"
+    },
+    "Equipment": {
+      "Choices": [
+        "(a) a rapier, (b) a longsword, or (c) any simple weapon",
+        "(a) a diplomat’s pack or (b) an entertainer’s pack",
+        "(a) a lute or (b) any other musical instrument",
+        "Leather armor and a dagger"
+      ]
+    },
+    "Spellcasting": {
+      "Description": "You have learned to untangle and reshape the fabric of reality in harmony with your wishes and music. Your spells are part of your vast repertoire, magic that you can tune to different situations.",
+      "Cantrips": "You know two cantrips of your choice from the bard spell list.",
+      "Spell Slots": "The Bard table shows how many spell slots you have to cast your spells of 1st level and higher.",
+      "Spells Known": "You know four 1st-level spells of your choice from the bard spell list.",
+      "Spellcasting Ability": "Charisma is your spellcasting ability for your bard spells.",
+      "Ritual Casting": "You can cast any bard spell you know as a ritual if that spell has the ritual tag.",
+      "Spellcasting Focus": "You can use a musical instrument as a spellcasting focus for your bard spells."
+    },
+    "Bardic Inspiration": {
+      "Description": "You can inspire others through stirring words or music.",
+      "Usage": "To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you.",
+      "Dice": "The creature gains one Bardic Inspiration die, a d6.",
+      "Usage Limit": "You can use this feature a number of times equal to your Charisma modifier (a minimum of once).",
+      "Dice Improvement": "Your Bardic Inspiration die changes when you reach certain levels in this class."
+    },
+    "Jack of All Trades": {
+      "Description": "Starting at 2nd level, you can add half your proficiency bonus, rounded down, to any ability check you make that doesn’t already include your proficiency bonus."
+    },
+    "Song of Rest": {
+      "Description": "Beginning at 2nd level, you can use soothing music or oration to help revitalize your wounded allies during a short rest.",
+      "Extra Hit Points": "The extra hit points increase when you reach certain levels in this class."
+    },
+    "Bard College": {
+      "Description": "At 3rd level, you delve into the advanced techniques of a bard college of your choice: the College of Lore or the College of Valor."
+    },
+    "Expertise": {
+      "Description": "At 3rd level, choose two of your skill proficiencies. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies."
+    },
+    "Ability Score Improvement": {
+      "Description": "When you reach certain levels, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1."
+    },
+    "Font of Inspiration": {
+      "Description": "Beginning when you reach 5th level, you regain all of your expended uses of Bardic Inspiration when you finish a short or long rest."
+    },
+    "Countercharm": {
+      "Description": "At 6th level, you gain the ability to use musical notes or words of power to disrupt mind-influencing effects."
+    },
+    "Magical Secrets": {
+      "Description": "By 10th level, you have plundered magical knowledge from a wide spectrum of disciplines."
+    },
+    "Superior Inspiration": {
+      "Description": "At 20th level, when you roll initiative and have no uses of Bardic Inspiration left, you regain one use."
+    }
+  },
+  "College of Lore": {
+    "Description": "Bards of the College of Lore know something about most things, collecting bits of knowledge from sources as diverse as scholarly tomes and peasant tales.",
+    "Bonus Proficiencies": "When you join the College of Lore at 3rd level, you gain proficiency with three skills of your choice.",
+    "Cutting Words": "Also at 3rd level, you learn how to use your wit to distract, confuse, and otherwise sap the confidence and competence of others.",
+    "Additional Magical Secrets": "At 6th level, you learn two spells of your choice from any class.",
+    "Peerless Skill": "Starting at 14th level, when you make an ability check, you can expend one use of Bardic Inspiration."
+  }
+}

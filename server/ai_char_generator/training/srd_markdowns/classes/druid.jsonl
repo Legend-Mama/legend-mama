@@ -1,0 +1,58 @@
+{
+  "class_name": "Druid",
+  "source": "5th Edition (5e) SRD (System Reference Document)",
+  "level": 1,
+  "proficiency_bonus": 2,
+  "cantrips_known": 2,
+  "spell_slots": {
+    "1st_level": 2,
+    "2nd_level": 0,
+    "3rd_level": 0,
+    "4th_level": 0,
+    "5th_level": 0,
+    "6th_level": 0,
+    "7th_level": 0,
+    "8th_level": 0,
+    "9th_level": 0
+  },
+  "features": ["Druidic", "Spellcasting"]
+}
+
+{
+  "class_name": "Druid",
+  "level": 2,
+  "proficiency_bonus": 2,
+  "cantrips_known": 2,
+  "spell_slots": {
+    "1st_level": 3,
+    "2nd_level": 0,
+    "3rd_level": 0,
+    "4th_level": 0,
+    "5th_level": 0,
+    "6th_level": 0,
+    "7th_level": 0,
+    "8th_level": 0,
+    "9th_level": 0
+  },
+  "features": ["Wild Shape", "Druid Circle"]
+}
+
+{
+  "class_name": "Druid",
+  "level": 3,
+  "proficiency_bonus": 2,
+  "cantrips_known": 2,
+  "spell_slots": {
+    "1st_level": 4,
+    "2nd_level": 2,
+    "3rd_level": 0,
+    "4th_level": 0,
+    "5th_level": 0,
+    "6th_level": 0,
+    "7th_level": 0,
+    "8th_level": 0,
+    "9th_level": 0
+  }
+}
+
+(Additional levels and features to be continued in a similar JSON format)

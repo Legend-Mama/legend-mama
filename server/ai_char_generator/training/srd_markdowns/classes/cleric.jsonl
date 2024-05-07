@@ -1,0 +1,386 @@
+{
+  "The Cleric": {
+    "Level": "1st",
+    "Proficiency Bonus": "+2",
+    "Cantrips Known": 3,
+    "1st": 2,
+    "Features": "Spellcasting, Divine Domain"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "2nd",
+    "Proficiency Bonus": "+2",
+    "Cantrips Known": 3,
+    "1st": 3,
+    "Features": "Channel Divinity (1/rest), Divine Domain feature"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "3rd",
+    "Proficiency Bonus": "+2",
+    "Cantrips Known": 3,
+    "1st": 4,
+    "2nd": 2
+  }
+}
+{
+  "The Cleric": {
+    "Level": "4th",
+    "Proficiency Bonus": "+2",
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "5th",
+    "Proficiency Bonus": "+3",
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 2,
+    "Features": "Destroy Undead (CR 1/2)"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "6th",
+    "Proficiency Bonus": "+3",
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "Features": "Channel Divinity (2/rest), Divine Domain feature"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "7th",
+    "Proficiency Bonus": "+3",
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 1
+  }
+}
+{
+  "The Cleric": {
+    "Level": "8th",
+    "Proficiency Bonus": "+3",
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 2,
+    "Features": "Ability Score Improvement, Destroy Undead (CR 1), Divine Domain feature"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "9th",
+    "Proficiency Bonus": "+4",
+    "Cantrips Known": 4,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 1
+  }
+}
+{
+  "The Cleric": {
+    "Level": "10th",
+    "Proficiency Bonus": "+4",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "Features": "Divine Intervention"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "11th",
+    "Proficiency Bonus": "+4",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "Features": "Destroy Undead (CR 2)"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "12th",
+    "Proficiency Bonus": "+4",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "13th",
+    "Proficiency Bonus": "+5",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1
+  }
+}
+{
+  "The Cleric": {
+    "Level": "14th",
+    "Proficiency Bonus": "+5",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "Features": "Destroy Undead (CR 3)"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "15th",
+    "Proficiency Bonus": "+5",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1
+  }
+}
+{
+  "The Cleric": {
+    "Level": "16th",
+    "Proficiency Bonus": "+5",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "17th",
+    "Proficiency Bonus": "+6",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 2,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1,
+    "Features": "Destroy Undead (CR 4), Divine Domain feature"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "18th",
+    "Proficiency Bonus": "+6",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 3,
+    "6th": 1,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1,
+    "Features": "Channel Divinity (3/rest)"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "19th",
+    "Proficiency Bonus": "+6",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 3,
+    "6th": 2,
+    "7th": 1,
+    "8th": 1,
+    "9th": 1,
+    "Features": "Ability Score Improvement"
+  }
+}
+{
+  "The Cleric": {
+    "Level": "20th",
+    "Proficiency Bonus": "+6",
+    "Cantrips Known": 5,
+    "1st": 4,
+    "2nd": 3,
+    "3rd": 3,
+    "4th": 3,
+    "5th": 3,
+    "6th": 2,
+    "7th": 2,
+    "8th": 1,
+    "9th": 1,
+    "Features": "Divine Intervention improvement"
+  }
+}
+{
+  "Class Features": {
+    "Hit Points": {
+      "Hit Dice": "1d8 per cleric level",
+      "Hit Points at 1st Level": "8 + your Constitution modifier",
+      "Hit Points at Higher Levels": "1d8 (or 5) + your Constitution modifier per cleric level after 1st"
+    }
+  }
+}
+{
+  "Class Features": {
+    "Proficiencies": {
+      "Armor": "Light armor, medium armor, shields",
+      "Weapons": "Simple weapons",
+      "Tools": "None",
+      "Saving Throws": "Wisdom, Charisma",
+      "Skills": "Choose two from History, Insight, Medicine, Persuasion, and Religion"
+    }
+  }
+}
+{
+  "Class Features": {
+    "Equipment": {
+      "Choices": [
+        "(a) a mace or (b) a warhammer (if proficient)",
+        "(a) scale mail, (b) leather armor, or (c) chain mail (if proficient)",
+        "(a) a light crossbow and 20 bolts or (b) any simple weapon",
+        "(a) a priest's pack or (b) an explorer's pack",
+        "A shield and a holy symbol"
+      ]
+    }
+  }
+}
+{
+  "Class Features": {
+    "Spellcasting": {
+      "Description": "As a conduit for divine power, you can cast cleric spells.",
+      "Cantrips": "At 1st level, you know three cantrips of your choice from the cleric spell list. You learn additional cleric cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Cleric table.",
+      "Preparing and Casting Spells": "The Cleric table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest. You prepare the list of cleric spells that are available for you to cast, choosing from the cleric spell list.",
+      "Spellcasting Ability": {
+        "Ability": "Wisdom",
+        "Description": "Wisdom is your spellcasting ability for your cleric spells. The power of your spells comes from your devotion to your deity."
+      },
+      "Ritual Casting": "You can cast a cleric spell as a ritual if that spell has the ritual tag and you have the spell prepared.",
+      "Spellcasting Focus": "You can use a holy symbol as a spellcasting focus for your cleric spells."
+    }
+  }
+}
+{
+  "Class Features": {
+    "Divine Domain": {
+      "Description": "Choose one domain related to your deity: Knowledge, Life, Light, Nature, Tempest, Trickery, or War. Each domain is detailed at the end of the class description, and each one provides examples of gods associated with it.",
+      "Domain Spells": "Each domain has a list of spells—its domain spells— that you gain at the cleric levels noted in the domain description. Once you gain a domain spell, you always have it prepared, and it doesn’t count against the number of spells you can prepare each day."
+    }
+  }
+}
+{
+  "Class Features": {
+    "Channel Divinity": {
+      "Description": "At 2nd level, you gain the ability to channel divine energy directly from your deity, using that energy to fuel magical effects. You start with two such effects: Turn Undead and an effect determined by your domain.",
+      "Channel Divinity: Turn Undead": {
+        "Description": "As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage."
+      }
+    }
+  }
+}
+{
+  "Class Features": {
+    "Ability Score Improvement": {
+      "Description": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature."
+    }
+}
+{
+  "Class Features": {
+    "Destroy Undead": {
+      "Description": "Starting at 5th level, when an undead fails its saving throw against your Turn Undead feature, the creature is instantly destroyed if its challenge rating is at or below a certain threshold, as shown in the Destroy Undead table."
+    }
+}}
+{
+  "Class Features": {
+    "Divine Intervention": {
+      "Description": "Beginning at 10th level, you can call on your deity to intervene on your behalf when your need is great."
+    }
+}}
+{
+  "Life Domain": {
+    "Description": "The Life domain focuses on the vibrant positive energy, one of the fundamental forces of the universe, that sustains all life.",
+    "Gods Associated": [
+      "Chauntea",
+      "Arawai",
+      "Demeter",
+      "Lathander",
+      "Pelor",
+      "Re-Horakhty",
+      "Ilmater",
+      "Mishakal",
+      "Apollo",
+      "Diancecht",
+      "Hestia",
+      "Hathor",
+      "Boldrei"
+    ]
+  }
+}
+{
+  "Life Domain Spells": {
+    "1st Level": ["bless", "cure wounds"],
+    "3rd Level": ["lesser restoration", "spiritual weapon"],
+    "5th Level": ["beacon of hope", "revivify"],
+    "7th Level": ["death ward", "guardian of faith"],
+    "9th Level": ["mass cure wounds", "raise dead"]
+  }
+}
+{
+  "Life Domain Features": {
+    "Bonus Proficiency": "When you choose this domain at 1st level, you gain proficiency with heavy armor.",
+    "Disciple of Life": "Also starting at 1st level, your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell's level.",
+    "Channel Divinity: Preserve Life": "Starting at 2nd level, you can use your Channel Divinity to heal the badly injured.",
+    "Blessed Healer": "Beginning at 6th level, the healing spells you cast on others heal you as well.",
+    "Divine Strike": "At 8th level, you gain the ability to infuse your weapon strikes with divine energy.",
+    "Supreme Healing": "Starting at 17th level, when you would normally roll one or more dice to restore hit points with a spell, you instead use the highest number possible for each die."
+  }
+}
