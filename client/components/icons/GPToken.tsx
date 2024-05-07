@@ -1,6 +1,6 @@
 import { Image } from "@chakra-ui/next-js";
 
-export default function GPToken({ width = 20, height = 20, ...props }) {
+export default function GPToken({ width = 20, height = 20, glow = false, ...props }) {
   return (
     <svg
       width={width}
@@ -11,6 +11,7 @@ export default function GPToken({ width = 20, height = 20, ...props }) {
       style={{
         display: "inline-block",
         verticalAlign: "text-bottom",
+        ...(glow && { filter: "drop-shadow(0 0 16px #f1efbb)" }),
         ...props.style
       }}
       {...props}

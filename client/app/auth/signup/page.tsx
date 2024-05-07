@@ -1,13 +1,19 @@
 "use client";
 
-import { Container, FormControl, Image, Stack } from "@chakra-ui/react";
-import Text from "@/components/typography/Text";
-import Header from "@/components/typography/Header";
+import { AuthContext } from "@/app/providers/AuthProvider";
 import Button from "@/components/Button";
-import InputGroup from "@/components/input/InputGroup";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 import GPToken from "@/components/icons/GPToken";
-import { createFormFactory, useForm } from "@tanstack/react-form";
+import InputGroup from "@/components/input/InputGroup";
+import Header from "@/components/typography/Header";
+import Text from "@/components/typography/Text";
+import useGoogleSignin from "@/lib/auth/useGoogleSignin";
 import { Link } from "@chakra-ui/next-js";
+import { Container, FormControl, Stack } from "@chakra-ui/react";
+import { createFormFactory } from "@tanstack/react-form";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
 interface Signup {
   nickname: string;
@@ -17,6 +23,14 @@ interface Signup {
 }
 
 export default function SignUp() {
+  const router = useRouter();
+  const auth = useContext(AuthContext);
+  const { waitingForGoogle, handleGoogleSignup } = useGoogleSignin();
+
+  if (auth.loggedIn) {
+    router.replace("/tavern");
+  }
+
   const formFactory = createFormFactory<Signup>({
     defaultValues: {
       nickname: "",
@@ -26,7 +40,21 @@ export default function SignUp() {
     },
   });
   const form = formFactory.useForm({
-    onSubmit: async ({ value }) => alert(`form data: ${JSON.stringify(value)}`),
+    onSubmit: async ({ value }) => {
+      await createUserWithEmailAndPassword(
+        auth.auth!,
+        value.email,
+        value.password
+      )
+        .then((userCredential) => userCredential.user)
+        .then((user) => updateProfile(user, { displayName: value.nickname }))
+        .then(() => {
+          router.push("/tavern");
+        })
+        .catch((err) => {
+          console.error(err.message);
+        });
+    },
   });
   return (
     <>
@@ -46,139 +74,148 @@ export default function SignUp() {
           </Link>
         </div>
         <Container mb={16}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              form.handleSubmit();
-            }}
-          >
-            <form.Field
-              name="nickname"
-              validators={{
-                onChange: ({ value, fieldApi }) =>
-                  fieldApi.state.meta.isTouched && !value
-                    ? "Please enter a nickname"
-                    : null,
+          {!waitingForGoogle ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                form.handleSubmit();
               }}
             >
-              {(field) => (
-                <FormControl isInvalid={field.state.meta.errors.length > 0}>
-                  <InputGroup
-                    name="nickname"
-                    leftWidth={140}
-                    stackPosition="top"
-                    left="Nickname"
-                    placeholder="e.g. The Great Bartholomew"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </FormControl>
-              )}
-            </form.Field>
-            <form.Field
-              name="email"
-              validators={{
-                onChange: ({ value, fieldApi }) =>
-                  fieldApi.state.meta.isTouched && !value
-                    ? "Please enter a valid email"
-                    : null,
-              }}
-            >
-              {(field) => (
-                <FormControl isInvalid={field.state.meta.errors.length > 0}>
-                  <InputGroup
-                    name="email"
-                    leftWidth={140}
-                    stackPosition="mid"
-                    left="Email"
-                    autoComplete="email"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </FormControl>
-              )}
-            </form.Field>
-            <form.Field
-              name="password"
-              validators={{
-                onChange: ({ value, fieldApi }) =>
-                  fieldApi.state.meta.isTouched && !value
-                    ? "Please enter a password"
-                    : null,
-              }}
-            >
-              {(field) => (
-                <FormControl isInvalid={field.state.meta.errors.length > 0}>
-                  <InputGroup
-                    name="password"
-                    leftWidth={140}
-                    stackPosition="mid"
-                    left="Password"
-                    type="password"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </FormControl>
-              )}
-            </form.Field>
-            <form.Field
-              name="confirmPassword"
-              validators={{
-                onChangeListenTo: ["password"],
-                onChange: ({ value, fieldApi }) => {
-                  const password = fieldApi.form.getFieldValue("password");
-                  return fieldApi.state.meta.isTouched &&
-                    password &&
-                    password != value
-                    ? "Passwords do not match"
-                    : null;
-                },
-              }}
-            >
-              {(field) => (
-                <FormControl isInvalid={field.state.meta.errors.length > 0}>
-                  <InputGroup
-                    name="confirmPassword"
-                    leftWidth={140}
-                    stackPosition="bottom"
-                    left="Confirm Password"
-                    type="password"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </FormControl>
-              )}
-            </form.Field>
-            <Stack direction="row" justifyContent="center" mt={6}>
-              <form.Subscribe
-                selector={({
-                  canSubmit,
-                  isSubmitting,
-                  isPristine,
-                  values,
-                }) => ({ canSubmit, isSubmitting, isPristine, values })}
+              <form.Field
+                name="nickname"
+                validators={{
+                  onChange: ({ value, fieldApi }) =>
+                    fieldApi.state.meta.isTouched && !value
+                      ? "Please enter a nickname"
+                      : null,
+                }}
               >
-                {({ canSubmit, isSubmitting, isPristine, values }) => (
-                  <Button
-                    type="submit"
-                    width={200}
-                    isDisabled={
-                      isPristine ||
-                      !canSubmit ||
-                      Object.values(values).some((val) => !val)
-                    }
-                    isLoading={isSubmitting}
-                  >
-                    Sign Up
-                  </Button>
+                {(field) => (
+                  <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                    <InputGroup
+                      name="nickname"
+                      leftWidth={140}
+                      stackPosition="top"
+                      left="Nickname"
+                      placeholder="e.g. The Great Bartholomew"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                  </FormControl>
                 )}
-              </form.Subscribe>
-              <Button secondary width={200}>
-                Continue with Google (temp)
-              </Button>
-            </Stack>
-          </form>
+              </form.Field>
+              <form.Field
+                name="email"
+                validators={{
+                  onChange: ({ value, fieldApi }) =>
+                    fieldApi.state.meta.isTouched && !value
+                      ? "Please enter a valid email"
+                      : null,
+                }}
+              >
+                {(field) => (
+                  <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                    <InputGroup
+                      name="email"
+                      leftWidth={140}
+                      stackPosition="mid"
+                      left="Email"
+                      autoComplete="email"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                  </FormControl>
+                )}
+              </form.Field>
+              <form.Field
+                name="password"
+                validators={{
+                  onChange: ({ value, fieldApi }) =>
+                    fieldApi.state.meta.isTouched && !value
+                      ? "Please enter a password"
+                      : null,
+                }}
+              >
+                {(field) => (
+                  <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                    <InputGroup
+                      name="password"
+                      leftWidth={140}
+                      stackPosition="mid"
+                      left="Password"
+                      type="password"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                  </FormControl>
+                )}
+              </form.Field>
+              <form.Field
+                name="confirmPassword"
+                validators={{
+                  onChangeListenTo: ["password"],
+                  onChange: ({ value, fieldApi }) => {
+                    const password = fieldApi.form.getFieldValue("password");
+                    return fieldApi.state.meta.isTouched &&
+                      password &&
+                      password != value
+                      ? "Passwords do not match"
+                      : null;
+                  },
+                }}
+              >
+                {(field) => (
+                  <FormControl isInvalid={field.state.meta.errors.length > 0}>
+                    <InputGroup
+                      name="confirmPassword"
+                      leftWidth={140}
+                      stackPosition="bottom"
+                      left="Confirm Password"
+                      type="password"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                  </FormControl>
+                )}
+              </form.Field>
+              <Stack direction="row" justifyContent="center" mt={6}>
+                <form.Subscribe
+                  selector={({
+                    canSubmit,
+                    isSubmitting,
+                    isPristine,
+                    values,
+                  }) => ({ canSubmit, isSubmitting, isPristine, values })}
+                >
+                  {({ canSubmit, isSubmitting, isPristine, values }) => (
+                    <>
+                      <Button
+                        type="submit"
+                        width={200}
+                        isDisabled={
+                          isPristine ||
+                          !canSubmit ||
+                          Object.values(values).some((val) => !val)
+                        }
+                        isLoading={isSubmitting}
+                      >
+                        Sign Up
+                      </Button>
+                      <GoogleSignInButton
+                        onClick={handleGoogleSignup}
+                        isLoading={isSubmitting}
+                      />
+                    </>
+                  )}
+                </form.Subscribe>
+              </Stack>
+            </form>
+          ) : (
+            <Text textAlign="center">
+              Please sign in with the Google authentication pop-up.
+            </Text>
+          )}
         </Container>
         <Header as="h2">Pricing Details</Header>
         <Text>

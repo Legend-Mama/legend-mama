@@ -2,7 +2,10 @@
 
 # dependencies
 /node_modules
-/local*
+/local
 
 # local env files
 .env
+/firebase-debug.log
+/firestore-debug.log
+/ui-debug.log

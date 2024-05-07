@@ -1,24 +1,38 @@
 //https://cloud.google.com/run/docs/tutorials/identity-platform#server
 import {firebaseAuth} from '../firebase.js';
+import {ForbiddenError, UnauthorizedError} from "./errorHandlers.js";
+import asyncHandler from "express-async-handler";
 
 // Extract and verify Id Token from header
-export default async function authenticateJWT(req, res, next) {
+const authenticateJWT = asyncHandler(async (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (authHeader) {
         const token = authHeader.split(' ')[1];
-        // If the provided ID token has the correct format, is not expired, and is
-        // properly signed, the method returns the decoded ID token
-        firebaseAuth
-            .verifyIdToken(token)
-            .then(decodedToken => {
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(">> Testing - Bypassing token verification!");
+            if (token === 'some-firebase-id-token') {
+                req.uid = 'some-firebase-uid';
+            } else {
+                req.uid = token;
+            }
+        } else {
+            // If the provided ID token has the correct format, is not expired, and is
+            // properly signed, the method returns the decoded ID token
+            try {
+                const decodedToken = await firebaseAuth.verifyIdToken(token);
                 req.uid = decodedToken.uid;
-                next();
-            })
-            .catch(err => {
-                req.logger.error(`Error with authentication: ${err}`);
-                return res.sendStatus(403);
-            });
+                console.log("Authentication got UID from token: ", req.uid);
+                // next();
+            } catch (err) {
+                console.log("Authentication failed with error: ", err);
+                throw new ForbiddenError();
+            }
+        }
+        next();
+
     } else {
-        return res.sendStatus(401);
+        throw new UnauthorizedError();
     }
-};
+})
+
+export {authenticateJWT as default};

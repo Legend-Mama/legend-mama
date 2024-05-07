@@ -1,18 +1,22 @@
 "use client";
 
-import { type ReactNode } from "react";
-import { Container, Image, Stack } from "@chakra-ui/react";
-import Text from "@/components/typography/Text";
 import Header from "@/components/typography/Header";
-import { Link } from "@chakra-ui/next-js";
+import Text from "@/components/typography/Text";
+import { Image, Link } from "@chakra-ui/next-js";
+import logo from "@/public/img/legend-mama-logo.png";
+import { Container, Stack } from "@chakra-ui/react";
+import { useContext } from "react";
+import { AuthContext } from "@/app/providers/AuthProvider";
 
 export default function Home() {
+  const auth = useContext(AuthContext);
+
   return (
     <>
       <header
         style={{
           height: 480,
-          width: "100vw",
+          width: "100%",
           background: "url('/img/bg-castle-yuliya-pauliukevich-vecteezy.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -22,21 +26,27 @@ export default function Home() {
         <div
           style={{ margin: "0 auto", width: "fit-content", paddingTop: 138 }}
         >
-          <Image
-            src="/img/legend-mama-logo.png"
-            alt="Legend Mama logo"
-            mb={4}
-          />
-          <Link href="/auth/signup" _hover={{ textDecoration: "unset" }}>
-            <Header as="h1" size="2xl" glow mb="4">
-              Start your legend
-            </Header>
-          </Link>
-          <Link href="/auth/login" _hover={{ textDecoration: "unset" }}>
-            <Header as="h2" glow color="white">
-              Sign In
-            </Header>
-          </Link>
+          <Image src={logo} alt="Legend Mama logo" mb={4} />
+          {auth.loggedIn ? (
+            <Link href={"/tavern"} _hover={{ textDecoration: "unset" }}>
+              <Header as="h1" size="2xl" glow mb="4">
+                Enter the Tavern
+              </Header>
+            </Link>
+          ) : (
+            <Link href={"/auth/signup"} _hover={{ textDecoration: "unset" }}>
+              <Header as="h1" size="2xl" glow mb="4">
+                Start your legend
+              </Header>
+            </Link>
+          )}
+          {!auth.loggedIn && (
+            <Link href="/auth/login" _hover={{ textDecoration: "unset" }}>
+              <Header as="h2" glow color="white">
+                Sign In
+              </Header>
+            </Link>
+          )}
         </div>
       </header>
       <Container as="main" maxWidth="container.lg" pt={12}>
