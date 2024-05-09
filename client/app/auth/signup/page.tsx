@@ -41,19 +41,30 @@ export default function SignUp() {
   });
   const form = formFactory.useForm({
     onSubmit: async ({ value }) => {
-      await createUserWithEmailAndPassword(
-        auth.auth!,
-        value.email,
-        value.password
-      )
-        .then((userCredential) => userCredential.user)
-        .then((user) => updateProfile(user, { displayName: value.nickname }))
-        .then(() => {
-          router.push("/tavern");
-        })
-        .catch((err) => {
-          console.error(err.message);
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth.auth!,
+          value.email,
+          value.password
+        );
+        const user = userCredential.user;
+        const [, idToken] = await Promise.all([
+          updateProfile(user, { displayName: value.nickname }),
+          user.getIdToken(),
+        ]);
+        const resp = await fetch(process.env.NEXT_PUBLIC_API + "/account", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
         });
+        if (resp.status != 201) {
+          throw "Couldn't create account data";
+        }
+        router.push("/tavern");
+      } catch (err: any) {
+        console.error(err.message);
+      }
     },
   });
   return (
