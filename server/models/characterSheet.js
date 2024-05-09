@@ -24,6 +24,7 @@ import classes from '../data/dnd5e/classes.json' with {type: 'json'};
 import races from '../data/dnd5e/races.json' with {type: 'json'};
 import tools from '../data/dnd5e/tools.json' with {type: 'json'};
 import weapons from '../data/dnd5e/weapons.json' with {type: 'json'};
+import selectionValidation from "../helpers/selectionValidation.js";
 
 // TODO: Implement logic to manage any check failures (i.e. if bad abiity score, generate a good ability score)
 
@@ -34,52 +35,10 @@ class AbilityScoreError extends Error {
     }
 }
 
-function selectionCheck(options, selection) {
-    // Remove required selections
-    let opts = options.filter(element => !selection.includes(element));
-    selection.filter(element => !options.includes(element));
-
-    // Check selection isn't missing required selections
-    const allHaveSelect = opts.every(el => el?.select !== undefined);
-    if (!allHaveSelect) {
-        throw new Error('Missing required selections');
-    }
-
-    // Check selection categories
-    let total = 0;
-    let matches;
-    for (let opt in opts) {
-        total += opt.select;
-
-        matches = opt.options.reduce((count, el) => count +  selection.has(el), 0);
-        if (matches < opt.select) {
-            throw new Error('Too few selections');
-        }
-    }
-
-    if (selection.length > total) {
-        throw new Error('Too many selections');
-    }
-}
-
 class RaceDetails {
-    description;
-    racialStatBonus;
-    speed;
-    weaponProficiency;
-    armorProficiency;
-    toolProficiency;
-    skillProficiency;
-    languages;
-    features;
-
     constructor(name) {
         this.name = name;
-        this.getRaceDetails();
-    }
-
-    getRaceDetails() {
-        const data = races[this.name];
+        const data = races[name];
         this.description = data.description;
         this.racialStatBonus = data.racialStatBonus;
         this.speed = data.speed;
@@ -93,24 +52,9 @@ class RaceDetails {
 }
 
 class ClassDetails {
-    description;
-    hitDice;
-    unarmedACModifier;
-    weaponProficiency;
-    armorProficiency;
-    toolProficiency;
-    skillProficiency;
-    savingThrowProficiency;
-    languages;
-    features;
-
     constructor(name) {
         this.name = name;
-        this.getClassDetails();
-    }
-
-    getClassDetails() {
-        const data = classes[this.name];
+        const data = classes[name];
         this.description = data.description;
         this.hitDice = data.hitDice;
         this.unarmedACModifier = data.unarmedACModifier;
@@ -125,18 +69,24 @@ class ClassDetails {
 }
 
 class BackgroundDetails {
-    constructor(name, specialty, description, skillProficiency, toolProficiency, languages, equipment, feature) {
+    constructor(name, specialty, description, skillProficiency, toolProficiency, languages, feature) {
         this.name = name;
         this.specialty = specialty;
         this.description = description;
+
+        if (skillProficiency.length !== 2) {
+            throw new Error('Requires 2 skill proficiencies');
+        }
         this.skillProficiency = skillProficiency;
+
+        if ((toolProficiency.length + languages.length) > 2) {
+            throw new Error('Choose a total of 2 tool proficiencies or languages');
+        }
         this.toolProficiency = toolProficiency;
         this.languages = languages;
-        this.equipment = equipment;
+
         this.feature = feature;
     }
-    // Checks against background rules
-    // Proficiency in 2 skills, 2 total tool proficiencies and/or languages, 1 feature
 }
 
 class AbilityScores {
@@ -144,8 +94,7 @@ class AbilityScores {
         this.baseScores = baseScores;
         this.checkBaseScores();
 
-        this.racialStatBonus = racialStatBonus;
-        this.checkRacialStatBonus();
+        this.racialStatBonus = selectionValidation(racialStatBonus.selection, racialStatBonus.options);
 
         this.strength = {score: baseScores.strength, bonus: racialStatBonus.selection.strength};
         this.dexterity = {score: baseScores.dexterity, bonus: racialStatBonus.selection.dexterity};
@@ -180,14 +129,6 @@ class AbilityScores {
             } else {
                 throw new AbilityScoreError(`Invalid score: ${ability}`);
             }
-        }
-    }
-
-    checkRacialStatBonus() {
-        try {
-            selectionCheck(this.racialStatBonus.options, this.racialStatBonus.selection);
-        } catch (err) {
-            throw new AbilityScoreError(`Racial Stat Bonus - ${err.message}`);
         }
     }
 
@@ -239,15 +180,13 @@ class CharacterSheet {
         this.armorProficiency = Array.from(new Set([this.race.armorProficiency, this.class.armorProficiency]));
         this.features = Array.from(new Set([this.race.features, this.class.features, this.background.features]));
 
-        // Consolidate options across race, class, and background
-        this.toolProficiencyOptions = Array.from(new Set([this.race.toolProficiency, this.class.toolProficiency, this.background.toolProficiency]));
-        this.skillProficiencyOptions = Array.from(new Set([this.race.skillProficiency, this.class.skillProficiency, this.background.skillProficiency]));
-        this.languageOptions = Array.from(new Set([this.race.languages, this.class.languages, this.background.languages]));
-
-        // Check selections
-        this.skills = this.checkSkills(skillProficiency);
-        this.toolProficiency = this.checkTools(toolProficiency);
+        // Check skill proficiency, tool proficiency, and language selections
+        this.skillProficiency = this.checkSkillProficiencies(skillProficiency);
+        this.toolProficiency = this.checkToolProficiencies(toolProficiency);
         this.languages = this.checkLanguages(languages);
+
+        this.skills = this.getSkills();
+
     }
 
     calculateAbilityModifiers() {
@@ -264,13 +203,22 @@ class CharacterSheet {
         }
     }
 
-    checkSkills(skillProficiency) {
-        try {
-            selectionCheck(this.skillProficiencyOptions, skillProficiency);
-        } catch (err) {
-            throw new AbilityScoreError(`Skill Proficiencies - ${err.message}`);
-        }
+    checkSkillProficiencies(skillProficiency) {
+        const skillProficiencyOptions = Array.from(new Set([this.race.skillProficiency, this.class.skillProficiency, this.background.skillProficiency]));
+        return selectionValidation(skillProficiency, skillProficiencyOptions);
+    }
 
+    checkToolProficiencies(toolProficiency) {
+        const toolProficiencyOptions = Array.from(new Set([this.race.toolProficiency, this.class.toolProficiency, this.background.toolProficiency]));
+        return selectionValidation(toolProficiency, toolProficiencyOptions);
+    }
+
+    checkLanguages(languages) {
+        const languageOptions = Array.from(new Set([this.race.languages, this.class.languages, this.background.languages]));
+        return selectionValidation(languages, languageOptions);
+    }
+
+    getSkills() {
         const skills = {
             "Athletics": this.abilityScores.strength,
             "Acrobatics": this.abilityScores.dexterity,
@@ -292,31 +240,11 @@ class CharacterSheet {
             "Persuasion": this.abilityScores.charisma
         }
 
-        for (let skill in skillProficiency) {
+        for (let skill in this.skillProficiency) {
             skills[skill] += this.proficiencyBonus;
         }
 
         return skills;
-    }
-
-    checkTools(toolProficiency) {
-        try {
-            selectionCheck(this.toolProficiencyOptions, toolProficiency);
-        } catch (err) {
-            throw new AbilityScoreError(`Tool Proficiencies - ${err.message}`);
-        }
-
-        return toolProficiency;
-    }
-
-    checkLanguages(languages) {
-        try {
-            selectionCheck(this.languageOptions, languages);
-        } catch (err) {
-            throw new AbilityScoreError(`Languages - ${err.message}`);
-        }
-
-        return languages;
     }
 
     toFirestore() {
@@ -349,6 +277,7 @@ class CharacterSheet {
             flaw: this.flaw,
             backstory: this.backstory
         };
+
     }
 
     fromFirestore(snapshot, options) {
@@ -359,5 +288,3 @@ class CharacterSheet {
             data.ideal, data.bond, data.flaw, data.backstory);
     }
 }
-
-export * from "characterSheet.js";
