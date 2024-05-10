@@ -25,22 +25,15 @@ import races from '../data/dnd5e/races.json' with {type: 'json'};
 import tools from '../data/dnd5e/tools.json' with {type: 'json'};
 import weapons from '../data/dnd5e/weapons.json' with {type: 'json'};
 import selectionValidation from "../helpers/selectionValidation.js";
+import pointBuyValidation from "../helpers/pointBuyValidation.js";
 
-// TODO: Implement logic to manage any check failures (i.e. if bad abiity score, generate a good ability score)
-
-class AbilityScoreError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = "AbilityScoreError";
-    }
-}
-
-class RaceDetails {
+export class RaceDetails {
     constructor(name) {
         this.name = name;
         const data = races[name];
         this.description = data.description;
         this.racialStatBonus = data.racialStatBonus;
+        this.hpBonus = data.hpBonus;
         this.speed = data.speed;
         this.weaponProficiency = data.weaponProficiency.map(obj => weapons[obj] || obj).flat();
         this.armorProficiency = data.armorProficiency;
@@ -51,16 +44,16 @@ class RaceDetails {
     }
 }
 
-class ClassDetails {
+export class ClassDetails {
     constructor(name) {
         this.name = name;
         const data = classes[name];
         this.description = data.description;
         this.hitDice = data.hitDice;
-        this.unarmedACModifier = data.unarmedACModifier;
-        this.weaponProficiency = data.weaponProficiency.map(obj => weapons[obj] || obj).flat();
+        this.unarmoredACBonus = data.unarmoredACBonus;
         this.armorProficiency = data.armorProficiency;
-        this.toolProficiency = data.toolProficiency.map(obj => tools[obj] || obj).flat();
+        this.weaponProficiency = data.weaponProficiency.map(obj => weapons[obj] || obj).flat();
+        this.toolProficiency = data.toolProficiency;
         this.skillProficiency = data.skillProficiency;
         this.savingThrowProficiency = data.savingThrowProficiency;
         this.languages = data.languages;
@@ -68,10 +61,9 @@ class ClassDetails {
     }
 }
 
-class BackgroundDetails {
-    constructor(name, specialty, description, skillProficiency, toolProficiency, languages, feature) {
+export class Background {
+    constructor(name, description, skillProficiency, toolProficiency, languages, feature) {
         this.name = name;
-        this.specialty = specialty;
         this.description = description;
 
         if (skillProficiency.length !== 2) {
@@ -89,62 +81,40 @@ class BackgroundDetails {
     }
 }
 
-class AbilityScores {
+export class AbilityScores {
+    bonuses = {
+        strength: 0,
+        dexterity: 0,
+        constitution: 0,
+        intelligence: 0,
+        wisdom: 0,
+        charisma: 0
+    };
+
     constructor(baseScores, racialStatBonus) {
-        this.baseScores = baseScores;
-        this.checkBaseScores();
+        this.baseScores = pointBuyValidation(baseScores);
 
-        this.racialStatBonus = selectionValidation(racialStatBonus.selection, racialStatBonus.options);
-
-        this.strength = {score: baseScores.strength, bonus: racialStatBonus.selection.strength};
-        this.dexterity = {score: baseScores.dexterity, bonus: racialStatBonus.selection.dexterity};
-        this.constitution = {score: baseScores.constitution, bonus: racialStatBonus.selection.constitution};
-        this.intelligence = {score: baseScores.intelligence, bonus: racialStatBonus.selection.intelligence};
-        this.wisdom = {score: baseScores.wisdom, bonus: racialStatBonus.selection.wisdom};
-        this.charisma = {score: baseScores.charisma, bonus: racialStatBonus.selection.charisma};
-    }
-
-    checkBaseScores() {
-        const pointBuyCost = (score) => {
-            if (8 < score < 15) {
-                return score - 8;
-            } else if (score === 15) {
-                return 9;
-            } else {
-                return -1;
-            }
-        }
-
-        let points = 27;
-        let cost;
-        for (const ability in this.baseScores) {
-            cost = pointBuyCost(this.baseScores[ability]);
-            if (cost > -1) {
-                points -= cost;
-                if (points < 0) {
-                    throw new AbilityScoreError("Too many points used!");
-                } else if (points > 0) {
-                    throw new AbilityScoreError(`Unused points: ${points}`);
-                }
-            } else {
-                throw new AbilityScoreError(`Invalid score: ${ability}`);
-            }
+        const bonuses = selectionValidation(racialStatBonus.selection, racialStatBonus.options);
+        let tmp;
+        for (let bonus of bonuses) {
+            tmp = bonus.split(",");
+            this.bonuses[tmp[0]] = parseInt(tmp[1]);
         }
     }
 
     getAbilityScores() {
         return {
-            strength: this.strength.score + this.strength.bonus,
-            dexterity: this.dexterity.score + this.dexterity.bonus,
-            constitution: this.constitution.score + this.constitution.bonus,
-            intelligence: this.intelligence.score + this.intelligence.bonus,
-            wisdom: this.wisdom.score + this.wisdom.bonus,
-            charisma: this.charisma.score + this.charisma.bonus
+            strength: this.baseScores.strength + this.bonuses.strength,
+            dexterity: this.baseScores.dexterity + this.bonuses.dexterity,
+            constitution: this.baseScores.constitution + this.bonuses.constitution,
+            intelligence: this.baseScores.intelligence + this.bonuses.intelligence,
+            wisdom: this.baseScores.wisdom + this.bonuses.wisdom,
+            charisma: this.baseScores.charisma + this.bonuses.charisma,
         }
     }
 }
 
-class CharacterSheet {
+export class CharacterSheet {
     level = 1;
     proficiencyBonus = 2;
     constructor (name, race, charClass, background, alignment, abilityScores, racialStatBonus, skillProficiency,

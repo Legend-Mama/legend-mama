@@ -3,6 +3,9 @@ import {firebaseAuth} from '../firebase.js';
 import {ForbiddenError, UnauthorizedError} from "./errorHandlers.js";
 import asyncHandler from "express-async-handler";
 
+
+
+
 // Extract and verify Id Token from header
 const authenticateJWT = asyncHandler(async (req, res, next) => {
     const authHeader = req.headers.authorization;

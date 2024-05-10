@@ -1,7 +1,8 @@
 {
   "Barbarian": {
+    "description": "",
     "hitDice": 12,
-    "unarmedACModifier": "constitution",
+    "unarmoredACBonus": "Constitution",
     "armorProficiency": [
       "Light Armor",
       "Medium Armor",
@@ -13,9 +14,10 @@
       "martialMelee",
       "martialRanged"
     ],
+    "toolProficiency": [],
     "savingThrowProficiency": [
-      "strength",
-      "constitution"
+      "Strength",
+      "Constitution"
     ],
     "skillProficiency": [
       {
@@ -47,6 +49,7 @@
       "Explorer's Pack",
       "Four Javelins"
     ],
+    "languages": [],
     "features": [
       "Rage",
       "Unarmored Defense"
@@ -55,13 +58,14 @@
   "Bard": {
     "description": "",
     "hitDice": 8,
+    "unarmoredACBonus": "",
     "armorProficiency": [
       "Light Armor"
     ],
     "weaponProficiency": [
       "simpleMelee",
       "simpleRanged",
-      "Crossbows, hand",
+      "Hand Crossbows",
       "Longswords",
       "Rapiers",
       "Shortswords"
@@ -70,13 +74,22 @@
       {
         "select": 3,
         "options": [
-          "musicalInstrument"
+          "Bagpipes",
+          "Drum",
+          "Dulcimer",
+          "Flute",
+          "Lute",
+          "Lyre",
+          "Horn",
+          "Pan Flute",
+          "Shawm",
+          "Viol"
         ]
       }
     ],
     "savingThrowProficiency": [
-      "dexterity",
-      "charisma"
+      "Dexterity",
+      "Charisma"
     ],
     "skillProficiency": [
       {
@@ -127,6 +140,7 @@
       "Leather Armor",
       "Dagger"
     ],
+    "languages": [],
     "features": [
       "Spellcasting",
       "Bardic Inspiration (d6)"
@@ -135,6 +149,7 @@
   "Cleric": {
     "description": "",
     "hitDice": 8,
+    "unarmoredACBonus": "",
     "armorProficiency": [
       "Light Armor",
       "Medium Armor",
@@ -144,9 +159,10 @@
       "simpleMelee",
       "simpleRanged"
     ],
+    "toolProficiency": [],
     "savingThrowProficiency": [
-      "wisdom",
-      "charisma"
+      "Wisdom",
+      "Charisma"
     ],
     "skillProficiency": [
       {
@@ -197,6 +213,7 @@
       "Shield",
       "Holy Symbol"
     ],
+    "languages": [],
     "features": [
       "Spellcasting",
       "Divine Domain"
@@ -205,11 +222,11 @@
   "Druid": {
     "description": "",
     "hitDice": 8,
+    "unarmoredACBonus": "",
     "armorProficiency": [
-      "Light Armor",
-      "Medium Armor",
-      "Shields",
-      "No Metal"
+      "Light Armor (non metal)",
+      "Medium Armor (non metal)",
+      "Shields (non metal)"
     ],
     "weaponProficiency": [
       "Clubs",
@@ -227,8 +244,8 @@
       "Herbalism Kit"
     ],
     "savingThrowProficiency": [
-      "intelligence",
-      "wisdom"
+      "Intelligence",
+      "Wisdom"
     ],
     "skillProficiency": [
       {
@@ -269,12 +286,14 @@
       "Druidic"
     ],
     "features": [
+      "Druidic",
       "Spellcasting"
     ]
   },
   "Fighter": {
     "description": "",
     "hitDice": 10,
+    "unarmoredACBonus": "",
     "armorProficiency": [
       "Light Armor",
       "Medium Armor",
@@ -287,9 +306,10 @@
       "martialMelee",
       "martialRanged"
     ],
+    "toolProficiency": [],
     "savingThrowProficiency": [
-      "strength",
-      "constitution"
+      "Strength",
+      "Constitution"
     ],
     "skillProficiency": [
       {
@@ -358,6 +378,7 @@
         ]
       }
     ],
+    "languages": [],
     "features": [
       "Fighting Style",
       "Second Wind"
@@ -366,7 +387,8 @@
   "Monk": {
     "description": "",
     "hitDice": 8,
-    "unarmedACModifier": "wisdom",
+    "unarmoredACBonus": "Wisdom",
+    "armorProficiency": [],
     "weaponProficiency": [
       "simpleMelee",
       "simpleRanged",
@@ -376,14 +398,38 @@
       {
         "select": 1,
         "options": [
-          "artisanTools",
-          "musicalInstrument"
+          "Alchemist's Supplies",
+          "Brewer's Supplies",
+          "Calligrapher's Supplies",
+          "Carpenter's Tools",
+          "Cobbler's Tools",
+          "Cook's Utensils",
+          "Glassblower's Tools",
+          "Jeweler's Tools",
+          "Leatherworker's Tools",
+          "Mason's Tools",
+          "Painter's Supplies",
+          "Potter's Tools",
+          "Smith's Tools",
+          "Tinker's Tools",
+          "Weaver's Tools",
+          "Woodcarver's Tools",
+          "Bagpipes",
+          "Drum",
+          "Dulcimer",
+          "Flute",
+          "Lute",
+          "Lyre",
+          "Horn",
+          "Pan Flute",
+          "Shawm",
+          "Viol"
         ]
       }
     ],
     "savingThrowProficiency": [
-      "strength",
-      "dexterity"
+      "Strength",
+      "Dexterity"
     ],
     "skillProficiency": [
       {
@@ -416,6 +462,7 @@
       },
       "10 Darts"
     ],
+    "languages": [],
     "features": [
       "Unarmored Defense",
       "Martial Arts"
@@ -424,6 +471,7 @@
   "Paladin": {
     "description": "",
     "hitDice": 10,
+    "unarmoredACBonus": "",
     "armorProficiency": [
       "Light Armor",
       "Medium Armor",
@@ -436,9 +484,10 @@
       "martialMelee",
       "martialRanged"
     ],
+    "toolProficiency": [],
     "savingThrowProficiency": [
-      "wisdom",
-      "charisma"
+      "Wisdom",
+      "Charisma"
     ],
     "skillProficiency": [
       {
@@ -493,6 +542,7 @@
       "Chain Mail",
       "Holy Symbol"
     ],
+    "languages": [],
     "features": [
       "Divine Sense",
       "Lay on Hands"
@@ -501,6 +551,7 @@
   "Ranger": {
     "description": "",
     "hitDice": 10,
+    "unarmoredACBonus": "",
     "armorProficiency": [
       "Light Armor",
       "Medium Armor",
@@ -512,9 +563,10 @@
       "martialMelee",
       "martialRanged"
     ],
+    "toolProficiency": [],
     "savingThrowProficiency": [
-      "strength",
-      "dexterity"
+      "Strength",
+      "Dexterity"
     ],
     "skillProficiency": [
       {
@@ -561,6 +613,7 @@
       "Longbow",
       "Quiver of 20 arrows"
     ],
+    "languages": [],
     "features": [
       "Favored Enemy",
       "Natural Explorer"
@@ -569,13 +622,14 @@
   "Rogue": {
     "description": "",
     "hitDice": 8,
+    "unarmoredACBonus": "",
     "armorProficiency": [
       "Light Armor"
     ],
     "weaponProficiency": [
       "simpleMelee",
       "simpleRanged",
-      "Crossbows, hand",
+      "Hand Crossbows",
       "Longswords",
       "Rapiers",
       "Shortswords"
@@ -584,8 +638,8 @@
       "Thieves' Tools"
     ],
     "savingThrowProficiency": [
-      "dexterity",
-      "intelligence"
+      "Dexterity",
+      "Intelligence"
     ],
     "skillProficiency": [
       {
@@ -647,16 +701,19 @@
   "Sorcerer": {
     "description": "",
     "hitDice": 6,
+    "unarmoredACBonus": "",
+    "armorProficiency": [],
     "weaponProficiency": [
       "Daggers",
       "Darts",
       "Slings",
       "Quarterstaffs",
-      "Crossbows, light"
+      "Light Crossbows"
     ],
+    "toolProficiency": [],
     "savingThrowProficiency": [
-      "constitution",
-      "charisma"
+      "Constitution",
+      "Charisma"
     ],
     "skillProficiency": [
       {
@@ -699,6 +756,7 @@
       },
       "2 Daggers"
     ],
+    "languages": [],
     "features": [
       "Spellcasting",
       "Sorcerous Origin"
@@ -707,6 +765,7 @@
   "Warlock": {
     "description": "",
     "hitDice": 8,
+    "unarmoredACBonus": "",
     "armorProficiency": [
       "Light Armor"
     ],
@@ -714,9 +773,10 @@
       "simpleMelee",
       "simpleRanged"
     ],
+    "toolProficiency": [],
     "savingThrowProficiency": [
-      "wisdom",
-      "charisma"
+      "Wisdom",
+      "Charisma"
     ],
     "skillProficiency": [
       {
@@ -768,6 +828,7 @@
       "Leather Armor",
       "2 Daggers"
     ],
+    "languages": [],
     "features": [
       "Otherworldly Patron",
       "Pact Magic"
@@ -776,16 +837,19 @@
   "Wizard": {
     "description": "",
     "hitDice": 6,
+    "unarmoredACBonus": "",
+    "armorProficiency": [],
     "weaponProficiency": [
       "Daggers",
       "Darts",
       "Slings",
       "Quarterstaffs",
-      "Crossbows, light"
+      "Light Crossbows"
     ],
+    "toolProficiency": [],
     "savingThrowProficiency": [
-      "intelligence",
-      "wisdom"
+      "Intelligence",
+      "Wisdom"
     ],
     "skillProficiency": [
       {
@@ -824,6 +888,7 @@
       },
       "Spellbook"
     ],
+    "languages": [],
     "features": [
       "Spellcasting",
       "Arcane Recovery"
