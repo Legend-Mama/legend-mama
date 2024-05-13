@@ -7,7 +7,7 @@ import errorHandler from './middleware/errorHandlers.js';
 import auth from './middleware/authenticate.js';
 
 const app = express();
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // Middleware + Routes

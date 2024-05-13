@@ -1,16 +1,16 @@
 /*
-CharacterDetails object and converter to use with Firebase
+CharacterDetailsModel object and converter to use with Firebase
 
  */
 
-export class CharacterDetails {
+export class CharacterDetailsModel {
     constructor (data) {
         this.name = data.name;
         this.race = data.race;
         this.class = data.class;
         this.worldview = data.worldview;
         this.ethicalTraits = data.ethicalTraits;
-        this.personalityScores = data.personalityScores;
+        this.personalityTraits = data.personalityTraits;
         this.quirks = data.quirks;
         this.motivations = data.motivations;
         this.fears = data.fears;
@@ -26,7 +26,7 @@ export class CharacterDetails {
             class: this.class,
             worldview: this.worldview,
             ethicalTraits: this.ethicalTraits,
-            personalityScores: this.personalityScores,
+            personalityTraits: this.personalityTraits,
             quirks: this.quirks,
             motivations: this.motivations,
             fears: this.fears,

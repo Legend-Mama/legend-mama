@@ -1,18 +1,18 @@
 /*
-CharacterSheet object and converter to use with Firebase
+CharacterSheetModel object and converter to use with Firebase
 
 How to use with Firestore:
 Set Custom Object
 const ref = doc(db, "accounts", "user").withConverter(characterSheetConverter);
-await setDoc(ref, new CharacterSheet("Eustace Twinkletoes", "Dwarf"));
+await setDoc(ref, new CharacterSheetModel("Eustace Twinkletoes", "Dwarf"));
 
 Get Custom Object
 const ref = doc(db, "accounts", "user").withConverter(characterSheetConverter);
 const docSnap = await getDoc(ref);
 if (docSnap.exists()) {
-  // Convert to CharacterSheet object
+  // Convert to CharacterSheetModel object
   const characterSheet = docSnap.data();
-  // Use a CharacterSheet instance method
+  // Use a CharacterSheetModel instance method
   console.log(characterSheet.toString());
 } else {
   console.log("No such document!");
@@ -29,8 +29,8 @@ import pointBuyValidation from "../helpers/pointBuyValidation.js";
 
 export class RaceDetails {
     constructor(name) {
-        this.name = name;
         const data = races[name];
+        this.name = name;
         this.description = data.description;
         this.racialStatBonus = data.racialStatBonus;
         this.hpBonus = data.hpBonus;
@@ -46,8 +46,8 @@ export class RaceDetails {
 
 export class ClassDetails {
     constructor(name) {
-        this.name = name;
         const data = classes[name];
+        this.name = name;
         this.description = data.description;
         this.hitDice = data.hitDice;
         this.unarmoredACBonus = data.unarmoredACBonus;
@@ -88,7 +88,7 @@ export class CharacterSheet {
 
         // Pass values through
         this.name = data.name;
-        this.background = data.background;
+        this.background = new Background(data.background);
         this.alignment = data.alignment;
         this.personalityTraits = data.personalityTraits;
         this.ideal = data.ideal;
@@ -97,8 +97,8 @@ export class CharacterSheet {
         this.backstory = data.backstory;
 
         // Get race, class, and ability score details
-        this.race = data.race;
-        this.class = data.class;
+        this.race = new RaceDetails(data.race);
+        this.class = new ClassDetails(data.class);
         this.abilityScores = this.getAbilityScores(data.abilityScores, data.racialStatBonus, this.race.racialStatBonus);
 
         // Get derived fields
@@ -231,7 +231,7 @@ export class CharacterSheet {
             race: this.race.name,
             class: this.class.name,
             level: this.level,
-            background: {name: this.background.name, description: this.background.description, feature: this.background.feature},
+            background: this.background,
             alignment: this.alignment,
             abilityScores: this.abilityScores,
             abilityModifiers: this.abilityModifiers,

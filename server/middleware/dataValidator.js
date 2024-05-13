@@ -1,4 +1,4 @@
-import {body, validationResult} from 'express-validator';
+import {body, validationResult, matchedData} from 'express-validator';
 import classData from '../data/dnd5e/classes.json' with {type: 'json'};
 import raceData from '../data/dnd5e/races.json' with {type: 'json'};
 import alignmentData from '../data/dnd5e/alignments.json' with {type: 'json'};
@@ -10,6 +10,8 @@ const alignments = Object.keys(alignmentData);
 // https://dev.to/nedsoft/a-clean-approach-to-using-express-validator-8go
 
 export const validate = (req, res, next) => {
+    req.body = matchedData(req, { locations: ['body'], includeOptionals: true, onlyValidData: true });
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log(errors.array());
@@ -21,65 +23,65 @@ export const validate = (req, res, next) => {
 export const characterDetailsValidationRules = () => {
     return [
         // Validating and sanitizing the string attributes
-        body('name').optional().isString().trim().escape(),
+        body('name').optional().isString().trim(),
         body('race').optional().isIn(races),
         body('class').optional().isIn(classes),
-        body('worldview').isString().trim().escape(),
-        body('backstory').optional().isString().trim().escape(),
+        body('worldview').isString().trim(),
+        body('backstory').optional().isString().trim(),
 
         // Validating and sanitizing the array attributes
         body('ethicalTraits').isArray({ min: 1 }),
-        body('ethicalTraits.*').trim().escape(),
+        body('ethicalTraits.*').trim(),
         body('personalityTraits').isArray({ min: 1 }),
-        body('personalityTraits.*').isString().trim().escape(),
+        body('personalityTraits.*').isString().trim(),
         body('quirks').optional().isArray(),
-        body('quirks.*').isString().trim().escape(),
+        body('quirks.*').isString().trim(),
         body('motivations').isArray({ min: 1 }),
-        body('motivations.*').isString().trim().escape(),
+        body('motivations.*').isString().trim(),
         body('fears').isArray({ min: 1 }),
-        body('fears.*').isString().trim().escape(),
+        body('fears.*').isString().trim(),
         body('likes').optional().isArray(),
-        body('likes.*').isString().trim().escape(),
+        body('likes.*').isString().trim(),
         body('dislikes').optional().isArray(),
-        body('dislikes.*').isString().trim().escape(),
+        body('dislikes.*').isString().trim(),
     ];
 };
 
 export const generatedCharacterValidationRules = () => {
     return [
         // Validating and sanitizing the string attributes
-        body('name').isString().trim().escape(),
+        body('name').isString().trim(),
         body('race').isIn(races),
         body('class').isIn(classes),
         body('alignment').isIn(alignments),
-        body('ideal').isString().trim().escape(),
-        body('bond').isString().trim().escape(),
-        body('flaw').isString().trim().escape(),
-        body('backstory').isString().trim().escape(),
+        body('ideal').isString().trim(),
+        body('bond').isString().trim(),
+        body('flaw').isString().trim(),
+        body('backstory').isString().trim(),
 
         // Validating and sanitizing the array attributes
         body('toolProficiency').isArray(),
-        body('toolProficiency.*').isString().trim().escape(),
+        body('toolProficiency.*').isString().trim(),
         body('languages').isArray(),
-        body('languages.*').isString().trim().escape(),
+        body('languages.*').isString().trim(),
         body('skillProficiency').isArray(),
-        body('skillProficiency.*').isString().trim().escape(),
+        body('skillProficiency.*').isString().trim(),
         body('personalityTraits').isArray({ min: 2, max: 2 }),
-        body('personalityTraits.*').isString().trim().escape(),
+        body('personalityTraits.*').isString().trim(),
         body('racialStatBonus').isArray(),
         body('racialStatBonus.*').matches(/^(strength|dexterity|constitution|intelligence|wisdom|charisma)+,\d+$/).withMessage('Must be in the format "ability,bonus"'),
 
         // Validating and sanitizing the object attributes
-        body("background.name").isString().trim().escape(),
-        body("background.description").isString().trim().escape(),
+        body("background.name").isString().trim(),
+        body("background.description").isString().trim(),
         body("background.skillProficiency").isArray({min: 2, max: 2}),
-        body('background.skillProficiency.*').isString().trim().escape(),
+        body('background.skillProficiency.*').isString().trim(),
         body("background.toolProficiency").isArray(),
-        body('background.toolProficiency.*').isString().trim().escape(),
+        body('background.toolProficiency.*').isString().trim(),
         body("background.languages").isArray(),
-        body('background.languages.*').isString().trim().escape(),
+        body('background.languages.*').trim(),
         body("background.feature").isObject(),
-        body('background.feature.*').isString().trim().escape(),
+        body('background.feature.*').isString().trim(),
         body("abilityScores.strength").isInt({min: 8}),
         body("abilityScores.dexterity").isInt({min: 8}),
         body("abilityScores.constitution").isInt({min: 8}),
@@ -89,17 +91,22 @@ export const generatedCharacterValidationRules = () => {
     ];
 };
 
+/**
+ * The context for this validator is a character sheet has already been
+ * saved, and we want to save it to an account. This is less about 5e checking and more about validation/sanitization.
+ * Trying to decide if I should have POST and PUT validator so that for PUT fields can be optional
+ */
 export const characterSheetValidationRules = () => {
     return [
         // Validating and sanitizing the string attributes
-        body('name').isString().trim().escape(),
+        body('name').isString().trim(),
         body('race').isIn(races),
         body('class').isIn(classes),
         body('alignment').isIn(alignments),
-        body('ideal').isString().trim().escape(),
-        body('bond').isString().trim().escape(),
-        body('flaw').isString().trim().escape(),
-        body('backstory').isString().trim().escape(),
+        body('ideal').isString().trim(),
+        body('bond').isString().trim(),
+        body('flaw').isString().trim(),
+        body('backstory').isString().trim(),
 
         // Validating and sanitizing integer attributes
         body("level").isInt(),
@@ -113,26 +120,26 @@ export const characterSheetValidationRules = () => {
 
         // Validating and sanitizing the array attributes
         body('armorProficiency').isArray(),
-        body('armorProficiency.*').isString().trim().escape(),
+        body('armorProficiency.*').isString().trim(),
         body('weaponProficiency').isArray(),
-        body('weaponProficiency.*').isString().trim().escape(),
+        body('weaponProficiency.*').isString().trim(),
         body('toolProficiency').isArray(),
-        body('toolProficiency.*').isString().trim().escape(),
+        body('toolProficiency.*').isString().trim(),
         body('languages').isArray(),
-        body('languages.*').isString().trim().escape(),
+        body('languages.*').isString().trim(),
         body('skillProficiency').isArray(),
-        body('skillProficiency.*').isString().trim().escape(),
+        body('skillProficiency.*').isString().trim(),
         body('features').isArray(),
-        body('features.*').isString().trim().escape(),
+        body('features.*').isString().trim(),
         body('personalityTraits').isArray({ min: 2, max: 2 }),
-        body('personalityTraits.*').isString().trim().escape(),
+        body('personalityTraits.*').isString().trim(),
 
         // Validating and sanitizing the object attributes
         // Background
-        body("background.name").isString().trim().escape(),
-        body("background.description").isString().trim().escape(),
+        body("background.name").isString().trim(),
+        body("background.description").isString().trim(),
         body("background.feature").isObject(),
-        body('background.feature.*').isString().trim().escape(),
+        body('background.feature.*').isString().trim(),
 
         // Ability Scores
         body("abilityScores.strength").isInt({min: 8}),
