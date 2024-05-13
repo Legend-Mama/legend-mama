@@ -1,0 +1,14 @@
+{
+  "name": "Thorin Oakenshield",
+  "race": "Hill Dwarf",
+  "class": "Cleric",
+  "worldview": "Metaphysics",
+  "ethicalTraits": ["Honest", "Fair", "Thoughtful"],
+  "personalityScores": {"":  ""},
+  "quirks": ["Paces when thinking"],
+  "motivations": ["Inner Peace", "Worldly knowledge"],
+  "fears": ["Past indiscretions"],
+  "likes": ["Nature", "Gardening", "Meditating", "Occasional fine wine"],
+  "dislikes": ["Broccoli"],
+  "backstory": "Raised as a nobel, but found the life hollow and lacking. As a young man, he left for a monastery to understand the world better and find his place in it."
+}

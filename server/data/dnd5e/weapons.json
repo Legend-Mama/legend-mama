@@ -21,8 +21,8 @@
   ],
   "martialRanged": [
     "Blowgun",
-    "Crossbow, hand",
-    "Crossbow, heavy",
+    "Hand Crossbow",
+    "Heavy Crossbow",
     "Longbow",
     "Net"
   ],
@@ -32,14 +32,14 @@
     "Greatclub",
     "Handaxe",
     "Javelin",
-    "Light hammer",
+    "Light Hammer",
     "Mace",
     "Quarterstaff",
     "Sickle",
     "Spear"
   ],
   "simpleRanged": [
-    "Crossbow, light",
+    "Light Crossbow",
     "Dart",
     "Shortbow",
     "Sling"

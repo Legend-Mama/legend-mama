@@ -2,7 +2,7 @@
   "Barbarian": {
     "description": "",
     "hitDice": 12,
-    "unarmoredACBonus": "Constitution",
+    "unarmoredACBonus": "constitution",
     "armorProficiency": [
       "Light Armor",
       "Medium Armor",
@@ -65,7 +65,7 @@
     "weaponProficiency": [
       "simpleMelee",
       "simpleRanged",
-      "Hand Crossbows",
+      "Hand Crossbow",
       "Longswords",
       "Rapiers",
       "Shortswords"
@@ -364,7 +364,7 @@
         "select": 1,
         "options": [
           [
-            "Crossbow, light",
+            "Light Crossbow",
             "20 bolts"
           ],
           "2 Handaxes"
@@ -387,7 +387,7 @@
   "Monk": {
     "description": "",
     "hitDice": 8,
-    "unarmoredACBonus": "Wisdom",
+    "unarmoredACBonus": "wisdom",
     "armorProficiency": [],
     "weaponProficiency": [
       "simpleMelee",
@@ -629,7 +629,7 @@
     "weaponProficiency": [
       "simpleMelee",
       "simpleRanged",
-      "Hand Crossbows",
+      "Hand Crossbow",
       "Longswords",
       "Rapiers",
       "Shortswords"
@@ -708,7 +708,7 @@
       "Darts",
       "Slings",
       "Quarterstaffs",
-      "Light Crossbows"
+      "Light Crossbow"
     ],
     "toolProficiency": [],
     "savingThrowProficiency": [
@@ -733,7 +733,7 @@
         "select": 1,
         "options": [
           [
-            "Crossbow, light",
+            "Light Crossbow",
             "20 bolts"
           ],
           "simpleMelee",
@@ -797,7 +797,7 @@
         "select": 1,
         "options": [
           [
-            "Crossbow, light",
+            "Light Crossbow",
             "20 bolts"
           ],
           "simpleMelee",
@@ -844,7 +844,7 @@
       "Darts",
       "Slings",
       "Quarterstaffs",
-      "Light Crossbows"
+      "Light Crossbow"
     ],
     "toolProficiency": [],
     "savingThrowProficiency": [

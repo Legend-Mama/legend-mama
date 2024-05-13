@@ -1,16 +1,20 @@
 import {expect, assert} from 'chai';
-import {RaceDetails, ClassDetails, Background, AbilityScores} from '../models/characterSheet.js'
+import {RaceDetails, ClassDetails, Background, CharacterSheet} from '../models/characterSheet.js'
+import {Character1, Character2} from "./data/characterSheetTestData.js";
+
+const char1 = new Character1();
+const char2 = new Character2();
 
 describe('Character Sheet and Associated Objects', () => {
 
-    describe('Race details', () => {
+    describe('Race Details', () => {
         it('returns object for High Elf', () => {
             const expected = {
                 name: "High Elf",
                 description: "Known for their grace and longevity, elves live in natural settings and are often seen as aloof. They come in different kinds, including high elves, wood elves, and dark elves (drow). Elves have keen senses and intuition, reflected in their proficiency in Perception. They also have Fey Ancestry, which grants them advantage on saving throws against being charmed, and immunity to magical sleep.  High elves are a subrace of elves who have a keen mind and mastery over the basics of magic.",
                 racialStatBonus: [
-                    ["dexterity", 2],
-                    ["intelligence", 1]
+                    "dexterity,2",
+                    "intelligence,1"
                 ],
                 hpBonus: 0,
                 speed: 30,
@@ -58,19 +62,19 @@ describe('Character Sheet and Associated Objects', () => {
                     "Perception"
                 ]
             };
-            const returned = new RaceDetails("High Elf");
 
+            const returned = new RaceDetails("High Elf");
             expect(returned).to.deep.equal(expected);
         });
     });
 
-    describe('Class details', () => {
+    describe('Class Details', () => {
         it('returns object for Barbarian', () => {
             const expected = {
                 name: "Barbarian",
                 description: "",
                 hitDice: 12,
-                unarmoredACBonus: "Constitution",
+                unarmoredACBonus: "constitution",
                 armorProficiency: [
                     "Light Armor",
                     "Medium Armor",
@@ -82,12 +86,12 @@ describe('Character Sheet and Associated Objects', () => {
                     "Greatclub",
                     "Handaxe",
                     "Javelin",
-                    "Light hammer",
+                    "Light Hammer",
                     "Mace",
                     "Quarterstaff",
                     "Sickle",
                     "Spear",
-                    "Crossbow, light",
+                    "Light Crossbow",
                     "Dart",
                     "Shortbow",
                     "Sling",
@@ -110,8 +114,8 @@ describe('Character Sheet and Associated Objects', () => {
                     "Warhammer",
                     "Whip",
                     "Blowgun",
-                    "Crossbow, hand",
-                    "Crossbow, heavy",
+                    "Hand Crossbow",
+                    "Heavy Crossbow",
                     "Longbow",
                     "Net"
                 ],
@@ -139,8 +143,8 @@ describe('Character Sheet and Associated Objects', () => {
                     "Unarmored Defense"
                 ]
             };
-            const returned = new ClassDetails("Barbarian");
 
+            const returned = new ClassDetails("Barbarian");
             expect(returned).to.deep.equal(expected);
         });
     });
@@ -177,17 +181,17 @@ describe('Character Sheet and Associated Objects', () => {
                         ]
                     }
                 ],
-                feature: {"Shelter of the Faithful": "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."}
+                feature: {name: "Shelter of the Faithful", description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."}
             };
-            const returned = new Background(
-                "Acolyte",
-                "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
-                [
+            const input = {
+                name: "Acolyte",
+                description: "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
+                skillProficiency: [
                     "Insight",
                     "Religion"
                 ],
-                [],
-                [
+                toolProficiency: [],
+                languages: [
                     {
                         "select": 2,
                         "options": [
@@ -209,60 +213,27 @@ describe('Character Sheet and Associated Objects', () => {
                         ]
                     }
                 ],
-                {"Shelter of the Faithful": "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."}
-                );
+                feature: {
+                    name: "Shelter of the Faithful",
+                    description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."
+                }
+            };
 
+            const returned = new Background(input);
             expect(returned).to.deep.equal(expected);
         });
     });
 
-    describe('Ability Scores', () => {
-        it('returns object when provided correct base scores and bonuses', () => {
-            const expected = {
-                baseScores: {strength: 8, dexterity: 15, constitution: 13, intelligence: 10, wisdom: 10, charisma: 15},
-                bonuses: {strength: 0, dexterity: 2, constitution: 0, intelligence: 0, wisdom: 0, charisma: 1}
-            };
-            const returned = new AbilityScores(
-                {strength: 8, dexterity: 15, constitution: 13, intelligence: 10, wisdom: 10, charisma: 15},
-                {
-                    selection: ["dexterity,2", "charisma,1"],
-                    options: ["dexterity,2", "charisma,1"]
-                }
-            );
-
-            expect(returned).to.deep.equal(expected);
+    describe('Character Sheet', () => {
+        it('returns character sheet for valid character (1)', () => {
+            const returned = new CharacterSheet(char1.generatedChar)
+            expect(returned.toJSON()).to.deep.equal(char1.expected);
         });
 
-        it('returns corrected object when provided correct base scores and incorrect bonuses', () => {
-            const expected = {
-                baseScores: {strength: 8, dexterity: 15, constitution: 13, intelligence: 10, wisdom: 10, charisma: 15},
-                bonuses: {strength: 0, dexterity: 2, constitution: 0, intelligence: 0, wisdom: 0, charisma: 1}
-            };
-            const returned = new AbilityScores(
-                {strength: 8, dexterity: 15, constitution: 13, intelligence: 10, wisdom: 10, charisma: 15},
-                {
-                    selection: ["dexterity,2", "charisma,2", "strength,1"],
-                    options: ["dexterity,2", "charisma,1"]
-                }
-            );
-
-            expect(returned).to.deep.equal(expected);
+        it('returns character sheet for valid character (2)', () => {
+            const returned = new CharacterSheet(char2.generatedChar)
+            expect(returned.toJSON()).to.deep.equal(char2.expected);
         });
 
-        it('returns corrected object when provided incorrect base scores and correct bonuses', () => {
-            const expected = {
-                baseScores: {strength: 8, dexterity: 15, constitution: 13, intelligence: 10, wisdom: 10, charisma: 15},
-                bonuses: {strength: 0, dexterity: 2, constitution: 0, intelligence: 0, wisdom: 0, charisma: 1}
-            };
-            const returned = new AbilityScores(
-                {strength: 10, dexterity: 15, constitution: 13, intelligence: 10, wisdom: 10, charisma: 15},
-                {
-                    selection: ["dexterity,2", "charisma,1"],
-                    options: ["dexterity,2", "charisma,1"]
-                }
-            );
-
-            expect(returned).to.deep.equal(expected);
-        });
     });
 });

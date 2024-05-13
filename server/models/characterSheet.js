@@ -62,106 +62,96 @@ export class ClassDetails {
 }
 
 export class Background {
-    constructor(name, description, skillProficiency, toolProficiency, languages, feature) {
-        this.name = name;
-        this.description = description;
+    constructor(data) {
+        this.name = data.name;
+        this.description = data.description;
 
-        if (skillProficiency.length !== 2) {
+        if (data.skillProficiency.length !== 2) {
             throw new Error('Requires 2 skill proficiencies');
         }
-        this.skillProficiency = skillProficiency;
+        this.skillProficiency = data.skillProficiency;
 
-        if ((toolProficiency.length + languages.length) > 2) {
+        if ((data.toolProficiency.length + data.languages.length) > 2) {
             throw new Error('Choose a total of 2 tool proficiencies or languages');
         }
-        this.toolProficiency = toolProficiency;
-        this.languages = languages;
+        this.toolProficiency = data.toolProficiency;
+        this.languages = data.languages;
 
-        this.feature = feature;
-    }
-}
-
-export class AbilityScores {
-    bonuses = {
-        strength: 0,
-        dexterity: 0,
-        constitution: 0,
-        intelligence: 0,
-        wisdom: 0,
-        charisma: 0
-    };
-
-    constructor(baseScores, racialStatBonus) {
-        this.baseScores = pointBuyValidation(baseScores);
-
-        const bonuses = selectionValidation(racialStatBonus.selection, racialStatBonus.options);
-        let tmp;
-        for (let bonus of bonuses) {
-            tmp = bonus.split(",");
-            this.bonuses[tmp[0]] = parseInt(tmp[1]);
-        }
-    }
-
-    getAbilityScores() {
-        return {
-            strength: this.baseScores.strength + this.bonuses.strength,
-            dexterity: this.baseScores.dexterity + this.bonuses.dexterity,
-            constitution: this.baseScores.constitution + this.bonuses.constitution,
-            intelligence: this.baseScores.intelligence + this.bonuses.intelligence,
-            wisdom: this.baseScores.wisdom + this.bonuses.wisdom,
-            charisma: this.baseScores.charisma + this.bonuses.charisma,
-        }
+        this.feature = data.feature;
     }
 }
 
 export class CharacterSheet {
     level = 1;
     proficiencyBonus = 2;
-    constructor (name, race, charClass, background, alignment, abilityScores, racialStatBonus, skillProficiency,
-                 toolProficiency, languages, personalityTraits, ideal, bond, flaw, backstory) {
+    constructor (data) {
 
         // Pass values through
-        this.name = name;
-        this.background = background;
-        this.alignment = alignment;
-        this.personalityTraits = personalityTraits;
-        this.ideal = ideal;
-        this.bond = bond;
-        this.flaw = flaw;
-        this.backstory = backstory;
+        this.name = data.name;
+        this.background = data.background;
+        this.alignment = data.alignment;
+        this.personalityTraits = data.personalityTraits;
+        this.ideal = data.ideal;
+        this.bond = data.bond;
+        this.flaw = data.flaw;
+        this.backstory = data.backstory;
 
         // Get race, class, and ability score details
-        this.race = RaceDetails.constructor(race);
-        this.class = ClassDetails.constructor(charClass);
-        this.abilityScores = AbilityScores.constructor(abilityScores, racialStatBonus);
+        this.race = data.race;
+        this.class = data.class;
+        this.abilityScores = this.getAbilityScores(data.abilityScores, data.racialStatBonus, this.race.racialStatBonus);
 
         // Get derived fields
-        this.abilityModifiers = this.calculateAbilityModifiers();
+        this.abilityModifiers = this.getAbilityModifiers();
         this.savingThrows = this.class.savingThrowProficiency;
         this.armorClass = 10 + this.abilityModifiers.dexterity;
-        this.initiative = this.abilityScores + this.abilityModifiers.dexterity;
+        if (this.class.unarmoredACBonus.length > 0) {
+            this.armorClass += this.abilityModifiers[this.class.unarmoredACBonus];
+        }
+
+        this.initiative = this.abilityModifiers.dexterity;
         this.speed = this.race.speed;
         this.hitDice = this.class.hitDice;
-        this.hitPointMax = this.hitDice + this.abilityModifiers.constitution;
+        this.hitPointMax = this.hitDice + this.abilityModifiers.constitution + this.race.hpBonus;
         this.passivePerception = 10 + this.abilityModifiers.wisdom;
 
         // Consolidate across race, class, and background
-        this.weaponProficiency = Array.from(new Set([this.race.weaponProficiency, this.class.weaponProficiency]));
-        this.armorProficiency = Array.from(new Set([this.race.armorProficiency, this.class.armorProficiency]));
-        this.features = Array.from(new Set([this.race.features, this.class.features, this.background.features]));
+        this.weaponProficiency = Array.from(new Set([...this.race.weaponProficiency, ...this.class.weaponProficiency]));
+        this.armorProficiency = Array.from(new Set([...this.race.armorProficiency, ...this.class.armorProficiency]));
+        this.features = Array.from(new Set([...this.race.features, ...this.class.features, this.background.feature.name]));
 
         // Check skill proficiency, tool proficiency, and language selections
-        this.skillProficiency = this.checkSkillProficiencies(skillProficiency);
-        this.toolProficiency = this.checkToolProficiencies(toolProficiency);
-        this.languages = this.checkLanguages(languages);
+        this.skillProficiency = this.checkSkillProficiencies(data.skillProficiency);
+        this.toolProficiency = this.checkToolProficiencies(data.toolProficiency);
+        this.languages = this.checkLanguages(data.languages);
 
         this.skills = this.getSkills();
-
     }
 
-    calculateAbilityModifiers() {
-        const score2modifier = (ability) => {
-            return Math.floor((ability - 10)/2)
+    getAbilityScores(baseScores, bonusSelection, bonusOptions) {
+        baseScores = pointBuyValidation(baseScores);
+        bonusSelection = selectionValidation(bonusSelection, bonusOptions);
+        const bonuses = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
+
+        let tmp;
+        for (let bonus of bonusSelection) {
+            tmp = bonus.split(",");
+            bonuses[tmp[0]] = parseInt(tmp[1]);
+        }
+
+        return {
+            strength: baseScores.strength + bonuses.strength,
+            dexterity: baseScores.dexterity + bonuses.dexterity,
+            constitution: baseScores.constitution + bonuses.constitution,
+            intelligence: baseScores.intelligence + bonuses.intelligence,
+            wisdom: baseScores.wisdom + bonuses.wisdom,
+            charisma: baseScores.charisma + bonuses.charisma,
+        }
+    }
+
+    getAbilityModifiers() {
+        const score2modifier = (score) => {
+            return Math.floor((score - 10)/2)
         }
         return {
             strength: score2modifier(this.abilityScores.strength),
@@ -174,58 +164,58 @@ export class CharacterSheet {
     }
 
     checkSkillProficiencies(skillProficiency) {
-        const skillProficiencyOptions = Array.from(new Set([this.race.skillProficiency, this.class.skillProficiency, this.background.skillProficiency]));
+        const skillProficiencyOptions = Array.from(new Set([...this.race.skillProficiency, ...this.class.skillProficiency, ...this.background.skillProficiency]));
         return selectionValidation(skillProficiency, skillProficiencyOptions);
     }
 
     checkToolProficiencies(toolProficiency) {
-        const toolProficiencyOptions = Array.from(new Set([this.race.toolProficiency, this.class.toolProficiency, this.background.toolProficiency]));
+        const toolProficiencyOptions = Array.from(new Set([...this.race.toolProficiency, ...this.class.toolProficiency, ...this.background.toolProficiency]));
         return selectionValidation(toolProficiency, toolProficiencyOptions);
     }
 
     checkLanguages(languages) {
-        const languageOptions = Array.from(new Set([this.race.languages, this.class.languages, this.background.languages]));
+        const languageOptions = Array.from(new Set([...this.race.languages, ...this.class.languages, ...this.background.languages]));
         return selectionValidation(languages, languageOptions);
     }
 
     getSkills() {
         const skills = {
-            "Athletics": this.abilityScores.strength,
-            "Acrobatics": this.abilityScores.dexterity,
-            "Sleight of Hand": this.abilityScores.dexterity,
-            "Stealth": this.abilityScores.dexterity,
-            "Arcana": this.abilityScores.intelligence,
-            "History": this.abilityScores.intelligence,
-            "Investigation": this.abilityScores.intelligence,
-            "Nature": this.abilityScores.intelligence,
-            "Religion": this.abilityScores.intelligence,
-            "Animal Handling": this.abilityScores.wisdom,
-            "Insight": this.abilityScores.wisdom,
-            "Medicine": this.abilityScores.wisdom,
-            "Perception": this.abilityScores.wisdom,
-            "Survival": this.abilityScores.wisdom,
-            "Deception": this.abilityScores.charisma,
-            "Intimidation": this.abilityScores.charisma,
-            "Performance": this.abilityScores.charisma,
-            "Persuasion": this.abilityScores.charisma
-        }
+            "Athletics": this.abilityModifiers.strength,
+            "Acrobatics": this.abilityModifiers.dexterity,
+            "Sleight of Hand": this.abilityModifiers.dexterity,
+            "Stealth": this.abilityModifiers.dexterity,
+            "Arcana": this.abilityModifiers.intelligence,
+            "History": this.abilityModifiers.intelligence,
+            "Investigation": this.abilityModifiers.intelligence,
+            "Nature": this.abilityModifiers.intelligence,
+            "Religion": this.abilityModifiers.intelligence,
+            "Animal Handling": this.abilityModifiers.wisdom,
+            "Insight": this.abilityModifiers.wisdom,
+            "Medicine": this.abilityModifiers.wisdom,
+            "Perception": this.abilityModifiers.wisdom,
+            "Survival": this.abilityModifiers.wisdom,
+            "Deception": this.abilityModifiers.charisma,
+            "Intimidation": this.abilityModifiers.charisma,
+            "Performance": this.abilityModifiers.charisma,
+            "Persuasion": this.abilityModifiers.charisma
+        };
 
-        for (let skill in this.skillProficiency) {
+        for (let skill of this.skillProficiency) {
             skills[skill] += this.proficiencyBonus;
         }
 
         return skills;
     }
 
-    toFirestore() {
+    toJSON() {
         return {
             name: this.name,
             race: this.race.name,
             class: this.class.name,
             level: this.level,
-            background: {name: this.background.name, description: this.background.description},
+            background: {name: this.background.name, description: this.background.description, feature: this.background.feature},
             alignment: this.alignment,
-            abilityScores: this.abilityScores.getAbilityScores(),
+            abilityScores: this.abilityScores,
             abilityModifiers: this.abilityModifiers,
             armorClass: this.armorClass,
             initiative: this.initiative,

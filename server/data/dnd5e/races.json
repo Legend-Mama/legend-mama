@@ -7,6 +7,9 @@
     ],
     "hpBonus": 0,
     "speed": 30,
+    "armorProficiency": [],
+    "weaponProficiency": [],
+    "toolProficiency": [],
     "languages": [
       "Common",
       "Draconic"
@@ -26,10 +29,11 @@
     ],
     "hpBonus": 1,
     "speed": 25,
+    "armorProficiency": [],
     "weaponProficiency": [
       "Battleaxe",
       "Handaxe",
-      "Light hammer",
+      "Light Hammer",
       "Warhammer"
     ],
     "toolProficiency": [
@@ -116,6 +120,8 @@
     ],
     "hpBonus": 0,
     "speed": 25,
+    "armorProficiency": [],
+    "weaponProficiency": [],
     "toolProficiency": [
       "Tinker's Tools"
     ],
@@ -148,6 +154,9 @@
     ],
     "hpBonus": 0,
     "speed": 30,
+    "armorProficiency": [],
+    "weaponProficiency": [],
+    "toolProficiency": [],
     "languages": [
       "Common",
       "Elvish",
@@ -209,6 +218,9 @@
     ],
     "hpBonus": 0,
     "speed": 25,
+    "armorProficiency": [],
+    "weaponProficiency": [],
+    "toolProficiency": [],
     "languages": [
       "Common",
       "Halfling"
@@ -229,6 +241,9 @@
     ],
     "hpBonus":0,
     "speed": 30,
+    "armorProficiency": [],
+    "weaponProficiency": [],
+    "toolProficiency": [],
     "languages": [
       "Common",
       "Orc"
@@ -267,6 +282,9 @@
     ],
     "hpBonus": 0,
     "speed": 30,
+    "armorProficiency": [],
+    "weaponProficiency": [],
+    "toolProficiency": [],
     "languages": [
       "Common",
       {
@@ -304,6 +322,9 @@
     ],
     "hpBonus": 0,
     "speed": 30,
+    "armorProficiency": [],
+    "weaponProficiency": [],
+    "toolProficiency": [],
     "languages": [
       "Common",
       "Infernal"
