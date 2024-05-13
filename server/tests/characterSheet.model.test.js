@@ -1,4 +1,4 @@
-import {expect, assert} from 'chai';
+import {expect} from 'chai';
 import {RaceDetails, ClassDetails, Background, CharacterSheet} from '../models/characterSheet.js'
 import {Character1, Character2} from "./data/characterSheetTestData.js";
 
@@ -121,8 +121,8 @@ describe('Character Sheet and Associated Objects', () => {
                 ],
                 toolProficiency: [],
                 "savingThrowProficiency": [
-                    "Strength",
-                    "Constitution"
+                    "strength",
+                    "constitution"
                 ],
                 skillProficiency: [
                     {

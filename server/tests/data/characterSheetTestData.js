@@ -84,7 +84,9 @@ export class Character1 {
             hitPointMax: 13,
             proficiencyBonus: 2,
             passivePerception: 10,
-            savingThrows: ["Strength", "Constitution"],
+            savingThrowProficiency: ["strength", "constitution"],
+            savingThrows: {strength: 1, dexterity: 3, constitution: 3, intelligence: 0, wisdom: 0, charisma: 2},
+            skillProficiency: ["Insight", "Religion", "Perception", "Athletics", "Intimidation"],
             skills: {
                 "Athletics": 1,
                 "Acrobatics": 3,
@@ -225,7 +227,7 @@ export class Character2 {
             racialStatBonus: ["strength,2", "constitution,1"],
             languages: ["Common", "Orc", "Infernal"],
             toolProficiency: ["Herbalism Kit"],
-            skillProficiency: ["Medicine", "Religion", "Arcana", "Intimidation"],
+            skillProficiency: ["Medicine", "Religion", "Intimidation", "Deception", "Arcana"],
             personalityTraits: [
                 "I connect everything that happens to me to a grand, cosmic plan.",
                 "I often get lost in my own thoughts and contemplation, becoming oblivious to my surroundings."
@@ -259,7 +261,9 @@ export class Character2 {
             hitPointMax: 8,  // Hit dice + constitution modifier
             proficiencyBonus: 2,
             passivePerception: 12,  // 10 + wisdom modifier
-            savingThrows: ["Constitution", "Charisma"],
+            savingThrowProficiency: ["constitution", "charisma"],
+            savingThrows: {strength: 1, dexterity: 1, constitution: 4, intelligence: 1, wisdom: 2, charisma: 1},
+            skillProficiency: ["Medicine", "Religion", "Intimidation", "Deception", "Arcana"],
             skills: {
                 "Athletics": 1,
                 "Acrobatics": 1,
@@ -269,16 +273,16 @@ export class Character2 {
                 "History": 1,
                 "Investigation": 1,
                 "Nature": 1,
-                "Religion": 4,
+                "Religion": 3,
                 "Animal Handling": 2,
                 "Insight": 2,
                 "Medicine": 4,
                 "Perception": 2,
                 "Survival": 2,
-                "Deception": 3,
-                "Intimidation": 5,
-                "Performance": 3,
-                "Persuasion": 3
+                "Deception": 1,
+                "Intimidation": 1,
+                "Performance": -1,
+                "Persuasion": -1
             },
             weaponProficiency: [
                 "Daggers",
@@ -289,7 +293,7 @@ export class Character2 {
             ],
             armorProficiency: [],
             toolProficiency: ["Herbalism Kit"],
-            languages: ["Common", "Orc"],
+            languages: ["Common", "Orc", "Infernal"],
             feature: [
                 "Darkvision",
                 "Menacing",

@@ -103,7 +103,8 @@ export class CharacterSheet {
 
         // Get derived fields
         this.abilityModifiers = this.getAbilityModifiers();
-        this.savingThrows = this.class.savingThrowProficiency;
+        this.savingThrowProficiency = this.class.savingThrowProficiency;
+        this.savingThrows = this.getSavingThrows();
         this.armorClass = 10 + this.abilityModifiers.dexterity;
         if (this.class.unarmoredACBonus.length > 0) {
             this.armorClass += this.abilityModifiers[this.class.unarmoredACBonus];
@@ -161,6 +162,23 @@ export class CharacterSheet {
             wisdom: score2modifier(this.abilityScores.wisdom),
             charisma: score2modifier(this.abilityScores.charisma)
         }
+    }
+
+    getSavingThrows() {
+        const savingThrows = {
+            strength: this.abilityModifiers.strength,
+            dexterity: this.abilityModifiers.dexterity,
+            constitution: this.abilityModifiers.constitution,
+            intelligence: this.abilityModifiers.intelligence,
+            wisdom: this.abilityModifiers.wisdom,
+            charisma: this.abilityModifiers.charisma,
+        };
+
+        for (let ability of this.savingThrowProficiency) {
+            savingThrows[ability] += this.proficiencyBonus;
+        }
+
+        return savingThrows;
     }
 
     checkSkillProficiencies(skillProficiency) {
@@ -224,7 +242,9 @@ export class CharacterSheet {
             hitPointMax: this.hitPointMax,
             proficiencyBonus: this.proficiencyBonus,
             passivePerception: this.passivePerception,
+            savingThrowProficiency: this.savingThrowProficiency,
             savingThrows: this.savingThrows,
+            skillProficiency: this.skillProficiency,
             skills: this.skills,
             weaponProficiency: this.weaponProficiency,
             armorProficiency: this.armorProficiency,
@@ -237,14 +257,10 @@ export class CharacterSheet {
             flaw: this.flaw,
             backstory: this.backstory
         };
-
     }
 
     fromFirestore(snapshot, options) {
         const data = snapshot.data(options);
-
-        this.constructor(data.name, data.race, data.class, data.background, data.alignment, data.abilityScores,
-            data.racialStatBonus, data.skillProficiency, data.toolProficiency, data.languages, data.personalityTraits,
-            data.ideal, data.bond, data.flaw, data.backstory);
+        this.constructor(data);
     }
 }
