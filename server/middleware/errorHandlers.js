@@ -1,3 +1,11 @@
+export class UnprocessableError extends Error {
+    constructor(message = 'Errors in request body') {
+        super(message);
+        this.name = "UnprocessableError";
+        this.statusCode = 422;
+    }
+}
+
 export class UnauthorizedError extends Error {
     constructor(message = 'Invalid or missing token') {
         super(message);

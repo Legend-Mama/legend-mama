@@ -5,17 +5,11 @@
   "level": 1,
   "background": {
     "name": "Hermit",
-    "specialty": "Reclusive Scholar",
-    "description": "You lived in seclusion either in a sheltered community such as a monastery, or entirely alone, for a formative part of your life. In your time apart from the clamor of society, you found quiet, solitude, and perhaps some of the answers you were looking for.",
-    "skillProficiency": {
-      "medicine": 2,
-      "religion": 2
-    },
-    "toolProficiency": ["Herbalism Kit"],
-    "languages": ["Dwarvish", "Giant"],
-    "equipment": ["scroll case stuffed full of notes from your studies or prayers", "winter blanket", "herbalism kit",
-      "set of common clothes", "pouch containing 5gp"],
-    "feature": ["Discovery"]
+    "description": "A character who has lived in seclusion for a long time, either in a sheltered community such as a monastery, or entirely alone, seeking spiritual enlightenment or personal insight.",
+    "feature": {
+      "name": "Discovery",
+      "description": "The quiet seclusion of your extended hermitage gave you access to a unique and powerful discovery. The exact nature of this revelation depends on the nature of your seclusion."
+    }
   },
   "alignment": "Lawful Neutral",
   "abilityScores": {

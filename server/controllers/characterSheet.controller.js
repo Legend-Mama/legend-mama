@@ -5,8 +5,6 @@ Controller for character sheet creation/editing
 import asyncHandler from "express-async-handler";
 
 export const createCharacterSheet = asyncHandler(async (req, res, next) => {
-    // TODO: Validate CharacterDetails object is valid
-
     // TODO: Pass to GPT library to get GeneratedCharacter object
 
     // TODO: Pass to helpers to check and derive fields

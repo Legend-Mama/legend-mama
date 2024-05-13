@@ -61,7 +61,7 @@ export class Character1 {
             backstory: "Some fun backstory here"
         };
 
-        this.expected = {
+        this.charSheet = {
             name: "Captain Flapjack",
             race: "High Elf",
             class: "Barbarian",
@@ -153,7 +153,7 @@ export class Character1 {
             ],
             toolProficiency: [],
             languages: ["Common", "Elvish", "Dwarvish", "Giant", "Orc"],
-            feature: [
+            features: [
                 "Darkvision",
                 "Keen Senses",
                 "Fey Ancestry",
@@ -238,7 +238,7 @@ export class Character2 {
             backstory: "Isolated from society, Mystic Raven sought the truths of the arcane arts within the confines of a dark cave."
 
         };
-        this.expected = {
+        this.charSheet = {
             name: "Mystic Raven",
             race: "Half-Orc",
             class: "Sorcerer",
@@ -294,7 +294,7 @@ export class Character2 {
             armorProficiency: [],
             toolProficiency: ["Herbalism Kit"],
             languages: ["Common", "Orc", "Infernal"],
-            feature: [
+            features: [
                 "Darkvision",
                 "Menacing",
                 "Relentless Endurance",

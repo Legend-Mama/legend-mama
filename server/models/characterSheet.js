@@ -250,7 +250,7 @@ export class CharacterSheet {
             armorProficiency: this.armorProficiency,
             toolProficiency: this.toolProficiency,
             languages: this.languages,
-            feature: this.features,
+            features: this.features,
             personalityTraits: this.personalityTraits,
             ideal: this.ideal,
             bond: this.bond,

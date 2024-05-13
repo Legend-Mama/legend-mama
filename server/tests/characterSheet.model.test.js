@@ -227,12 +227,12 @@ describe('Character Sheet and Associated Objects', () => {
     describe('Character Sheet', () => {
         it('returns character sheet for valid character (1)', () => {
             const returned = new CharacterSheet(char1.generatedChar)
-            expect(returned.toJSON()).to.deep.equal(char1.expected);
+            expect(returned.toJSON()).to.deep.equal(char1.charSheet);
         });
 
         it('returns character sheet for valid character (2)', () => {
             const returned = new CharacterSheet(char2.generatedChar)
-            expect(returned.toJSON()).to.deep.equal(char2.expected);
+            expect(returned.toJSON()).to.deep.equal(char2.charSheet);
         });
 
     });
