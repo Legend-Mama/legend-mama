@@ -4,7 +4,10 @@ import {ForbiddenError, UnauthorizedError} from "./errorHandlers.js";
 import asyncHandler from "express-async-handler";
 
 
-
+function devDecodeToken(token) {
+    const arrayToken = token.split('.');
+    return JSON.parse(atob(arrayToken[1]));
+}
 
 // Extract and verify Id Token from header
 const authenticateJWT = asyncHandler(async (req, res, next) => {
@@ -12,12 +15,16 @@ const authenticateJWT = asyncHandler(async (req, res, next) => {
     if (authHeader) {
         const token = authHeader.split(' ')[1];
         if (process.env.NODE_ENV !== 'production') {
-            console.log(">> Testing - Bypassing token verification!");
-            if (token === 'some-firebase-id-token') {
-                req.uid = 'some-firebase-uid';
-            } else {
-                req.uid = token;
+            try {
+                console.log(">> Testing/Development - Manual token verification!");
+                const data = devDecodeToken(token);
+                req.uid = data.user_id;
+
+            } catch (err) {
+                console.log("Authentication failed with error: ", err);
+                throw new ForbiddenError();
             }
+
         } else {
             // If the provided ID token has the correct format, is not expired, and is
             // properly signed, the method returns the decoded ID token
