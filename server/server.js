@@ -15,6 +15,7 @@ app.use(express.json());
 app.use('/', tempRouter);
 app.use('/api/v1/account', [auth], accountRouter);
 app.use('/api/v1/character-sheet', [auth], characterSheetRouter);
+app.use('/api/v1/character-illustration', [auth], characterSheetRouter);
 
 // Error Handling
 app.use(errorHandler);
