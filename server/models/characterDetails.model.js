@@ -3,7 +3,7 @@ CharacterDetailsModel object and converter to use with Firebase
 
  */
 
-export class CharacterDetailsModel {
+export class CharacterDetails {
     constructor (data) {
         this.name = data.name;
         this.race = data.race;

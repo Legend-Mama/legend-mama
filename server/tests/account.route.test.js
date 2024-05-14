@@ -165,17 +165,13 @@ describe('Account Management Routes', () => {
     });
 
     describe('PUT /account/character-sheets/:character_sheet_id', () => {
-        before(() => {
-            character1.charSheet.name = "Eugene Twinkletoes";
-        })
-
         it('Should update character sheet w/ token', async () => {
             await request(app)
                 .put(`/api/v1/account/character-sheets/${sheetId}`)
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
-                .send(character1.charSheet)
+                .send({name: "Eugene Twinkletoes"})
                 .expect(200)
 
             await request(app)
@@ -192,7 +188,7 @@ describe('Account Management Routes', () => {
                 .put(`/api/v1/account/character-sheets/${sheetId}`)
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
-                .send(character1.charSheet)
+                .send({name: "Eugene Twinkletoes"})
                 .expect(401)
         });
 

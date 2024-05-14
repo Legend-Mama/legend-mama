@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {RaceDetails, ClassDetails, Background, CharacterSheet} from '../models/characterSheet.js'
+import {RaceDetails, ClassDetails, Background, CharacterSheet} from '../models/characterSheet.model.js'
 import {Character1, Character2} from "./data/characterSheetTestData.js";
 
 const char1 = new Character1();

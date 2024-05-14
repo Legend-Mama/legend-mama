@@ -1,11 +1,6 @@
-import {expect, assert} from 'chai';
+import {expect} from 'chai';
 import {pointBuyCheck, pointBuyCorrection} from '../helpers/pointBuyValidation.js';
-import {AbilityScores} from "../models/characterSheet.js";
 // TODO: Would be nice to implement random testing
-
-function arrEqualityCheck(arr1, arr2) {
-    return JSON.stringify(arr1.sort()) === JSON.stringify(arr2.sort());
-}
 
 describe('Point Buy Validation', () => {
     describe('Point Buy Check', () => {

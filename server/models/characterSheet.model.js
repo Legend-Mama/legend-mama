@@ -27,6 +27,9 @@ import weapons from '../data/dnd5e/weapons.json' with {type: 'json'};
 import selectionValidation from "../helpers/selectionValidation.js";
 import pointBuyValidation from "../helpers/pointBuyValidation.js";
 
+/**
+ * Looks up relevant Race data
+ */
 export class RaceDetails {
     constructor(name) {
         const data = races[name];
@@ -44,6 +47,9 @@ export class RaceDetails {
     }
 }
 
+/**
+ * Looks up relevant Class data
+ */
 export class ClassDetails {
     constructor(name) {
         const data = classes[name];
@@ -61,6 +67,9 @@ export class ClassDetails {
     }
 }
 
+/**
+ * Create and validates a Background
+ */
 export class Background {
     constructor(data) {
         this.name = data.name;
@@ -81,6 +90,10 @@ export class Background {
     }
 }
 
+/**
+ * Create a CharacterSheet from GeneratedCharacters object
+ * Performs 5e checks and calculations to fill out/correct fields.
+ */
 export class CharacterSheet {
     level = 1;
     proficiencyBonus = 2;

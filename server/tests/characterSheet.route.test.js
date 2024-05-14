@@ -29,6 +29,15 @@ describe('Character Sheet Editor Routes', () => {
                 .send(character1.charDetails)
                 .expect(401)
         });
+
+        it('Should fail w/ invalid request body', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
+                .send({name: "Potato Man"})
+                .expect(422)
+        });
     });
 
     describe('PUT /character-sheet', () => {
@@ -47,6 +56,15 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Content-Type', 'application/json')
                 .send(character2.generatedChar)
                 .expect(401)
+        });
+
+        it('Should fail w/ invalid request body', async () => {
+            await request(app)
+                .put('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
+                .send({name: "Potato Man"})
+                .expect(422)
         });
     });
 });
