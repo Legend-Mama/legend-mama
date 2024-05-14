@@ -21,12 +21,9 @@ export const createCharacterSheet = asyncHandler(async (req, res) => {
 })
 
 export const editCharacterSheet = asyncHandler(async (req, res) => {
-    // TODO: Pass GeneratedCharacter object to CharacterSheetModel object
-
     // Pass to helpers to check and derive fields
     const charSheet = new CharacterSheet(req.body);
 
-    // TODO: return updated character
     console.log("Successfully updated character sheet");
     res.status(200).send(charSheet);
 })
