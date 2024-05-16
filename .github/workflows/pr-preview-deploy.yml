@@ -59,7 +59,7 @@ env:
   CLIENT_URL: https://client-${{ github.head_ref }}-${{ github.event.pull_request.number }}-ijpuyqrx3a-uc.a.run.app
   SERVER_SERVICE: server-${{ github.head_ref }}-${{ github.event.pull_request.number }}
   SERVER_IMAGE: ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/server-${{ github.head_ref }}-${{ github.event.pull_request.number }}
-  SERVER_URL: https://client-${{ github.head_ref }}-${{ github.event.pull_request.number }}-ijpuyqrx3a-uc.a.run.app
+  SERVER_URL: https://server-${{ github.head_ref }}-${{ github.event.pull_request.number }}-ijpuyqrx3a-uc.a.run.app
   REGION: ${{ vars.GCR_LOCATION }} # TODO: update Cloud Run service region
 
 jobs:
