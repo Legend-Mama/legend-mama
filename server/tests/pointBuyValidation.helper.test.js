@@ -1,6 +1,67 @@
 import {expect} from 'chai';
-import {pointBuyCheck, pointBuyCorrection} from '../helpers/pointBuyValidation.js';
-// TODO: Would be nice to implement random testing
+import pointBuyValidation, {pointBuyCheck, pointBuyCorrection} from '../helpers/pointBuyValidation.js';
+import {getRandomInt, nRandomIndices} from "../helpers/utilities.js";
+
+function validAbilityScores() {
+    const pointBuyCost = {
+        8: 0,
+        9: 1,
+        10: 2,
+        11: 3,
+        12: 4,
+        13: 5,
+        14: 7,
+        15: 9
+    };
+    const scores = {
+        strength: 0,
+        dexterity: 0,
+        constitution: 0,
+        intelligence: 0,
+        wisdom: 0,
+        charisma: 0
+    }
+    const abilities = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'];
+    const inds = nRandomIndices(abilities.length, abilities.length);
+
+    let pointsBefore, points, val;
+    do {
+        points = 27;
+        for (let i= 0; i < 6; i++) {
+            val = getRandomInt(8, 15);
+            pointsBefore = points;
+
+            if (points === 0) {
+                val = 8;
+            } else if (pointBuyCost[val] > points) {
+                val = getRandomInt(8, 15);
+            } else if ((i === 5) && points > 0) {
+                val = parseInt(Object.keys(pointBuyCost).find(key => pointBuyCost[key] === points));
+            }
+
+            points -= pointBuyCost[val];
+            scores[abilities[inds[i]]] = val;
+        }
+    } while (points !== 0)
+
+    return scores;
+}
+
+function invalidAbilityScores() {
+    const scores = validAbilityScores();
+
+    // Randomly select some abilities to mess up
+    const abilities = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'];
+    const inds = nRandomIndices(getRandomInt(1, 6), abilities.length);
+
+    let adj;
+    for (const ind of inds) {
+        adj = getRandomInt(-5, 5);
+        scores[abilities[ind]] += adj;
+    }
+
+    return scores;
+}
 
 describe('Point Buy Validation', () => {
     describe('Point Buy Check', () => {
@@ -55,5 +116,27 @@ describe('Point Buy Validation', () => {
 
             expect(returned).to.deep.equal(expected);
         });
+    });
+
+    describe("Random Testing", () => {
+        const n = 5000;
+        let scores, returned, title;
+        for (let i = 0; i < n; i++) {
+            title = `Random Test Iteration ${i+1} - Valid Scores`;
+            it(title, () => {
+                scores = validAbilityScores();
+                returned = pointBuyValidation(scores);
+                expect(returned).to.deep.equal(scores);
+            });
+        }
+
+        for (let i = 0; i < n; i++) {
+            title = `Random Test Iteration ${i+1} - Invalid Scores`;
+            it(title, () => {
+                scores = invalidAbilityScores();
+                returned = pointBuyValidation(scores);
+                expect(pointBuyCheck(returned), `\nScores before correction: ${JSON.stringify(scores)}\nScores after correction: ${JSON.stringify(returned)}`).to.be.true;
+            });
+        }
     });
 });

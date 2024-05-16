@@ -47,7 +47,7 @@ export function pointBuyCorrection(scores) {
     const sortedScores = Object.entries(scores);
     sortedScores.sort((a, b) => b[1] - a[1]);
 
-    let greedy, name, val, cost, tmp, points;
+    let greedy, name, val, tmp, points;
     let extra = 0;
     do {
         points = 27;
@@ -55,6 +55,7 @@ export function pointBuyCorrection(scores) {
         for (let score of sortedScores) {
             [name, val] = score;
             val = Math.min(15, val);
+            val = Math.max(8, val);
 
             // Check if we have extra points
             if (extra > 0) {
@@ -63,17 +64,19 @@ export function pointBuyCorrection(scores) {
                 val = tmp;
             }
 
-            cost = pointBuyCost[val];
-
-            if (((points - cost) < 0) && (points > 0)) {
+            if (((points - pointBuyCost[val]) < 0) && (points > 0)) {
                 // If we don't have enough points to cover the cost, but still have points left, dump remaining points
-                val = parseInt(Object.keys(pointBuyCost).find(key => pointBuyCost[key] === points));
+                tmp = points+1;
+                do {
+                    tmp -= 1;
+                    val = parseInt(Object.keys(pointBuyCost).find(key => pointBuyCost[key] === tmp));
+                } while (isNaN(val));
             } else if (points <= 0) {
                 // No more points to give, leave
                 break;
             }
 
-            points -= cost;
+            points -= pointBuyCost[val];
             greedy[name] = val;
         }
         extra = points;
