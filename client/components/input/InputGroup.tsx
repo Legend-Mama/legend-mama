@@ -10,11 +10,15 @@ export default function InputGroup({
   left,
   leftWidth,
   stackPosition = "alone",
+  serif = false,
+  highlight = false,
   ...props
 }: {
   left?: ReactNode | string;
   leftWidth?: number | string;
   stackPosition?: "top" | "mid" | "alone" | "bottom";
+  serif?: boolean;
+  highlight?: boolean;
 } & InputProps) {
   let leftAddonBorders;
   let inputBorders;
@@ -80,12 +84,24 @@ export default function InputGroup({
         bg="gray.600"
         color="white"
         outline="none"
-        fontFamily="var(--font-source-sans)"
+        fontFamily={
+          serif ? "var(--font-source-serif)" : "var(--font-source-sans)"
+        }
         borderColor="gray.500"
         _placeholder={placeholderStyles}
       />
     </CInputGroup>
   ) : (
-    <Input {...props} {...inputBorders} bg="gray.700" color="white" />
+    <Input
+      {...props}
+      {...inputBorders}
+      borderColor={highlight ? "#E7C26C" : "#4D4639"}
+      bg="#1F1B13"
+      color="white"
+      fontFamily={
+        serif ? "var(--font-source-serif)" : "var(--font-source-sans)"
+      }
+      borderWidth={2}
+    />
   );
 }
