@@ -19,9 +19,13 @@ RUN npm ci
 
 # Rebuild the source code only when needed
 FROM base AS builder
+ARG NEXT_PUBLIC_API
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Our public ENV variables - don't need to be secret as they're passed to the frontend
+ENV NEXT_PUBLIC_API $NEXT_PUBLIC_API
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -33,15 +37,11 @@ RUN npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
-ARG NEXT_PUBLIC_API
 WORKDIR /app
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
-
-# Our public ENV variables - don't need to be secret as they're passed to the frontend
-ENV NEXT_PUBLIC_API $NEXT_PUBLIC_API
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
