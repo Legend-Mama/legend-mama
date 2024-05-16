@@ -38,15 +38,25 @@ let user_input = {
 };
 
 const user_input2 = {
-  worldview: "Chaotic Good",
-  ethicalTraits: ["free-spirited", "rebellious", "compassionate"],
-  personality: ["adventurous", "spontaneous", "generous"],
-  motivations: [
-    "explore unknown lands",
-    "help the downtrodden",
-    "find personal freedom",
-  ],
-  fears: ["confinement", "tyranny", "loss of individuality"],
+  name: "Caden Windwalker",
+  race: "Elf",
+  class: "Wizard",
+  worldview: "Knowledge is power, Seek truth",
+  ethicalTraits: "Curiosity, Honor, Intellectual Integrity",
+  personalityScores: {
+    Extraversion: "Reserved",
+    Agreeableness: "Helpful",
+    Conscientiousness: "Organized",
+    Neuroticism: "Anxious",
+    OpennessToExperience: "Inquisitive",
+  },
+  quirks: "Writes notes on palms, Forgets to sleep when studying",
+  motivations: "Mastering the Arcane Arts, Discovering Ancient Mysteries",
+  fears: "Ignorance, Loss of Control",
+  likes: "Rare Books, Stargazing, Complex Puzzles",
+  dislikes: "Superstition, Disruption of Routine, Chaos",
+  backstory:
+    "Born under an eclipsed moon, Caden was destined for a life intertwined with the arcane. Raised in an esteemed magical academy, every moment was dedicated to the pursuit of knowledge. An unquenchable thirst for understanding the universe's secrets drives him, and though his endeavors isolate him, his path is clear.",
 };
 
 const testChar = await testGen.generateChar(user_input2);
