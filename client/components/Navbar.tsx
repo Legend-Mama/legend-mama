@@ -10,13 +10,14 @@ import Button from "./Button";
 import { useCallback, useContext } from "react";
 import { signOut } from "firebase/auth";
 import { AuthContext } from "@/app/providers/AuthProvider";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { DataContext } from "@/app/providers/DataProvider";
 
 export default function Navbar() {
   const auth = useContext(AuthContext);
   const data = useContext(DataContext);
   const router = useRouter();
+  const url = usePathname();
 
   const handleLogout = useCallback(() => {
     signOut(auth.auth!)
@@ -133,7 +134,7 @@ export default function Navbar() {
               </>
             )}
           </Box>
-          {auth.loggedIn && (
+          {auth.loggedIn &&  (
             <Box w="100%">
               <HStack color="brand.800" fontSize={20} mx="auto" w="fit-content">
                 <Text
@@ -141,7 +142,7 @@ export default function Navbar() {
                   fontWeight={700}
                   mb={0}
                 >
-                  <GPToken height={30} width={30} glow /> {data.user.goldBalance || 0} GP
+                  <GPToken height={30} width={30} glow /> {data.user.goldBalance || "?"} GP
                 </Text>
                 <PiPlusCircleFill fontSize={24} />
                 <PiQuestionFill fontSize={24} />

@@ -27,10 +27,6 @@ export default function SignUp() {
   const auth = useContext(AuthContext);
   const { waitingForGoogle, handleGoogleSignup } = useGoogleSignin();
 
-  if (auth.loggedIn) {
-    router.replace("/tavern");
-  }
-
   const formFactory = createFormFactory<Signup>({
     defaultValues: {
       nickname: "",
