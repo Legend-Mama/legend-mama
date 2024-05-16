@@ -2,111 +2,131 @@ import dotenv from "dotenv";
 import OpenAI from "openai";
 import fs from "fs";
 import path from "path";
-import { type } from "os";
 
 dotenv.config();
 const openai = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
 
 export class AICharGen {
   // Constructor
-  async initialize({vectorStoreId = null, assistantId = null}) {
-    if (vectorStoreId == null) {
-      this.vectorStoreId = await this.#createVectorStore();
-    } else {
-      this.vectorStoreId = vectorStoreId;
+  async initialize({ vectorStoreId = null, assistantId = null }) {
+    try {
+      if (vectorStoreId == null) {
+        this.vectorStoreId = await this.#createVectorStore();
+      } else {
+        this.vectorStoreId = vectorStoreId;
+      }
+      if (assistantId == null) {
+        this.assistantId = await this.#createAssistant();
+      } else {
+        this.assistantId = assistantId;
+      }
+    } catch (error) {
+      console.error("Failed to initialize AICharGen:", error);
     }
-    if (assistantId == null) {
-      this.assistantId = await this.#createAssistant();
-    } else {
-      this.assistantId = assistantId;
-    }
-    return this
+    return this;
   }
 
   // Generate character
   async generateChar(user_input) {
-    const str_user_input = this.#jsonToString(user_input);
+    try {
+      const str_user_input = this.#jsonToString(user_input);
 
-    const thread = await openai.beta.threads.create();
+      const thread = await openai.beta.threads.create();
 
-    const message = await openai.beta.threads.messages.create(thread.id, {
-      role: "user",
-      content: str_user_input,
-    });
+      const message = await openai.beta.threads.messages.create(thread.id, {
+        role: "user",
+        content: str_user_input,
+      });
 
-    let run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-      assistant_id: this.assistantId,
-    });
+      let run = await openai.beta.threads.runs.createAndPoll(thread.id, {
+        assistant_id: this.assistantId,
+      });
 
-    let returnedMessage = "";
-    if (run.status === "completed") {
-      const messages = await openai.beta.threads.messages.list(run.thread_id);
-      for (const message of messages.data.reverse()) {
-        // console.log(`${message.role} > ${message.content[0].text.value}`);
-        returnedMessage = message.content[0].text.value;
+      let returnedMessage = "";
+      if (run.status === "completed") {
+        const messages = await openai.beta.threads.messages.list(run.thread_id);
+        for (const message of messages.data.reverse()) {
+          returnedMessage = message.content[0].text.value;
+          // console.log(returnedMessage)
+        }
+      } else {
+        console.log("Run status:", run.status);
       }
-    } else {
-      console.log(run.status);
-    }
 
-    const response = this.#messageToJSON(returnedMessage);
-    return response;
+      const response = this.#messageToJSON(returnedMessage);
+      return response;
+
+    } catch (error) {
+      console.error("Failed to generate character:", error);
+    }
   }
 
   // Convert JSON to string
   #jsonToString(jsonObject) {
-    let result = [];
+    try {
+      let result = [];
 
-    // Iterate over each key in the JSON object
-    for (const key in jsonObject) {
-      if (jsonObject.hasOwnProperty(key)) {
-        const value = jsonObject[key];
+      // Iterate over each key in the JSON object
+      for (const key in jsonObject) {
+        if (jsonObject.hasOwnProperty(key)) {
+          const value = jsonObject[key];
 
-        // Check if the value is an array or a primitive
-        if (Array.isArray(value)) {
-          // Join array elements with a comma and space
-          result.push(`${key}: ${value.join(", ")}`);
-        } else {
-          // Directly append the value
-          result.push(`${key}: ${value}`);
+          // Check if the value is an array or a primitive
+          if (Array.isArray(value)) {
+            // Join array elements with a comma and space
+            result.push(`${key}: ${value.join(", ")}`);
+          } else {
+            // Directly append the value
+            result.push(`${key}: ${value}`);
+          }
         }
       }
-    }
 
-    // Join all results with a line break
-    return result.join("\n");
+      // Join all results with a line break
+      return result.join("\n");
+    } catch (error) {
+      console.error("Failed to convert JSON to string:", error);
+    }
   }
 
   // Convert response message to JSON
   #messageToJSON(message) {
-    const jsonMatch = message.match(/```json\s*({[\s\S]*?})\s*```/);
+    try {
+      const jsonMatch = message.match(/```json\s*({[\s\S]*?})\s*```/);
 
-    if (jsonMatch && jsonMatch[1]) {
-      // Extract the JSON string and parse it
-      const jsonString = jsonMatch[1];
-      const jsonData = JSON.parse(jsonString);
+      if (jsonMatch && jsonMatch[1]) {
+        // Extract the JSON string and parse it
+        const jsonString = jsonMatch[1];
+        const jsonData = JSON.parse(jsonString);
 
-      // Logging the JSON data to console (or manipulate it as needed)
-      //   console.log(jsonData);
-      return jsonData;
-    } else {
-      console.log("No JSON data found!");
+        // Logging the JSON data to console (or manipulate it as needed)
+        //   console.log(jsonData);
+        return jsonData;
+      } else {
+        console.log("No JSON data found!");
+      }
+    } catch (error) {
+      console.error("Failed to convert message to JSON:", error);
     }
   }
 
   // Create Vector Store
   async #createVectorStore() {
-    const folderPath = "../training/test_files";
-    const fileStreams = this.#createStreamsFromFolder(folderPath);
-    const vectorStore = await openai.beta.vectorStores.create({
-      name: "Dungeons and Dragons Training Files",
-    });
-    await openai.beta.vectorStores.fileBatches.uploadAndPoll(vectorStore.id, {
-      files: fileStreams,
-    });
-    // console.log(vectorStore.id);
-    // console.log(typeof vectorStore.id);
-    return vectorStore.id;
+    try {
+      const folderPath = "file-search";
+      const fileStreams = this.#createStreamsFromFolder(folderPath);
+      const vectorStore = await openai.beta.vectorStores.create({
+        name: "Dungeons and Dragons Training Files",
+      });
+      await openai.beta.vectorStores.fileBatches.uploadAndPoll(vectorStore.id, {
+        files: fileStreams,
+      });
+      // console.log(vectorStore.id);
+      // console.log(typeof vectorStore.id);
+      return vectorStore.id;
+    } catch (error) {
+      console.error("Failed to create vector store:", error);
+    }
   }
   // Create Streams for Vector Store
   #createStreamsFromFolder(folderPath) {
@@ -123,15 +143,15 @@ export class AICharGen {
       return fileStreams;
     } catch (error) {
       console.error("Failed to read directory or create streams:", error);
-      return [];
     }
   }
 
   // Create Assistant
   async #createAssistant() {
-    const assistant = await openai.beta.assistants.create({
-      name: "dnd_char_generator_json",
-      instructions: `You are a Dungeons and Dragons character sheet generator. You have comprehensive knowledge of the Dungeons and Dragons SRD. You are very creative and are able to create dynamic characters. You will receive input and create a character sheet based on that input. You will use the point-buy system to determine ability scores. Create only valid json complying to schema. //json output schema 
+    try {
+      const assistant = await openai.beta.assistants.create({
+        name: "dnd_char_generator_json",
+        instructions: `You are a Dungeons and Dragons character sheet generator. You have comprehensive knowledge of the Dungeons and Dragons SRD. You are very creative and are able to create dynamic characters. You will receive input and create a character sheet based on that input. You will use the point-buy system to determine ability scores. Create only valid json complying to schema. //json output schema 
     {
       "name": {
         "type": "string",
@@ -315,14 +335,17 @@ export class AICharGen {
         "description": "A short quote that the character would say."
       }
     }`,
-      tools: [{ type: "file_search" }],
-      tool_resources: {
-        file_search: { vector_store_ids: [`${this.vectorStoreId}`] },
-      },
-      model: "gpt-4o",
-      temperature: 1,
-    });
+        tools: [{ type: "file_search" }],
+        tool_resources: {
+          file_search: { vector_store_ids: [`${this.vectorStoreId}`] },
+        },
+        model: "gpt-4o",
+        temperature: 1,
+      });
 
-    return assistant.id;
+      return assistant.id;
+    } catch (error) {
+      console.error("Failed to create assistant:", error);
+    }
   }
 }
