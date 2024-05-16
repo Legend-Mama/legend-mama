@@ -4,10 +4,14 @@ import fs from "fs";
 import path from "path";
 
 dotenv.config();
-const openai = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
+// const openai = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
 
 export class AICharGen {
   // Constructor
+  constructor(openai_key) {
+    this.openai = new OpenAI({ apiKey: openai_key });
+  }
+
   async initialize({ vectorStoreId = null, assistantId = null }) {
     try {
       if (vectorStoreId == null) {
@@ -31,20 +35,20 @@ export class AICharGen {
     try {
       const str_user_input = this.#jsonToString(user_input);
 
-      const thread = await openai.beta.threads.create();
+      const thread = await this.openai.beta.threads.create();
 
-      const message = await openai.beta.threads.messages.create(thread.id, {
+      const message = await this.openai.beta.threads.messages.create(thread.id, {
         role: "user",
         content: str_user_input,
       });
 
-      let run = await openai.beta.threads.runs.createAndPoll(thread.id, {
+      let run = await this.openai.beta.threads.runs.createAndPoll(thread.id, {
         assistant_id: this.assistantId,
       });
 
       let returnedMessage = "";
       if (run.status === "completed") {
-        const messages = await openai.beta.threads.messages.list(run.thread_id);
+        const messages = await this.openai.beta.threads.messages.list(run.thread_id);
         for (const message of messages.data.reverse()) {
           returnedMessage = message.content[0].text.value;
           // console.log(returnedMessage)
@@ -115,10 +119,10 @@ export class AICharGen {
     try {
       const folderPath = "file-search";
       const fileStreams = this.#createStreamsFromFolder(folderPath);
-      const vectorStore = await openai.beta.vectorStores.create({
+      const vectorStore = await this.openai.beta.vectorStores.create({
         name: "Dungeons and Dragons Training Files",
       });
-      await openai.beta.vectorStores.fileBatches.uploadAndPoll(vectorStore.id, {
+      await this.openai.beta.vectorStores.fileBatches.uploadAndPoll(vectorStore.id, {
         files: fileStreams,
       });
       // console.log(vectorStore.id);
@@ -149,7 +153,7 @@ export class AICharGen {
   // Create Assistant
   async #createAssistant() {
     try {
-      const assistant = await openai.beta.assistants.create({
+      const assistant = await this.openai.beta.assistants.create({
         name: "dnd_char_generator_json",
         instructions: `You are a Dungeons and Dragons character sheet generator. You have comprehensive knowledge of the Dungeons and Dragons SRD. You are very creative and are able to create dynamic characters. You will receive input and create a character sheet based on that input. You will use the point-buy system to determine ability scores. Create only valid json complying to schema. //json output schema 
     {

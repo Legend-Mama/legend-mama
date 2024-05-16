@@ -7,12 +7,15 @@ To use the AICharGen class:
     import { AICharGen } from './path_to_file/ai_char_generator/library/AICharGen.js';
     ```
 
-2. **Create an instance and initialize AICharGen:**
-   You must use the `.initialize()` method when creating an instance.
+2. **Create an instance and pass in OpenAI API Key:**
+   ```javascript
+     const charGen = new AICharGen(api_key)
+     ```
 
-   - **Without vector store ID and assistant ID:**
+3. **Initialize character generator with Vector Store ID and Assistnat ID:**
+   - **Without Vector Store ID and Assistant ID:**
      ```javascript
-     const charGen = await new AICharGen().initialize({});
+     await charGen.initialize({});
      ```
      - Vector Store ID and Assistant ID can be retrieved by:
        ```javascript
@@ -22,13 +25,13 @@ To use the AICharGen class:
 
    - **If you have a vector store ID and assistant ID, pass as arguments into initialize:**
      ```javascript
-     const charGen = await new AICharGen().initialize({
+     await charGen.initialize({
        vectorStoreId: "vector_store_id",
        assistantId: "assistant_id",
      });
      ```
 
-3. **Generate a character by passing user input:**
+4. **Generate a character by passing user input:**
     ```javascript
     const characterSheet = await charGen.generateChar(user_input);
     ```
