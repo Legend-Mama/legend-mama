@@ -1,0 +1,16 @@
+# Docker files
+Dockerfile
+.dockerignore
+
+# dependencies
+/node_modules
+/local
+
+# local env and config files
+.env
+/firebase.json
+/firebase-debug.log
+/firestore-debug.log
+/ui-debug.log
+/.firebaserc
+README.md

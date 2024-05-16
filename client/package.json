@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "emulate": "firebase emulators:start",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -13,13 +14,18 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@tanstack/react-form": "^0.19.2",
+    "@types/node": "^20",
+    "firebase": "^10.11.1",
     "framer-motion": "^11.0.28",
     "next": "14.1.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-icons": "^5.2.0",
+    "sharp": "^0.33.3",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
-    "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -29,7 +35,6 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.34.1",
-    "typescript": "^5.4.5"
+    "eslint-plugin-react": "^7.34.1"
   }
 }

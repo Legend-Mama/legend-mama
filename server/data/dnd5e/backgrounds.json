@@ -1,0 +1,228 @@
+{
+  "backgrounds": [
+    {
+      "name": "Acolyte",
+      "description": "",
+      "skillsProficiency": [
+        "Insight",
+        "Religion"
+      ],
+      "languages": [
+        {
+          "select": 2,
+          "options": "all"
+        }
+      ],
+      "equipment": [
+        "Holy Symbol",
+        {
+          "select": 1,
+          "options": [
+            "Prayer Book",
+            "Prayer Wheel"
+          ]
+        },
+        "5 sticks of incense",
+        "vestments",
+        "common clothes",
+        "pouch containing 15 gp"
+      ],
+      "features": [
+        "Shelther of the Faithful"
+      ]
+    },
+    {
+      "name": "Criminal/Spy",
+      "description": "",
+      "skillsProficiency": [
+        "Deception",
+        "Stealth"
+      ],
+      "toolProficiency": [
+        {
+          "select": 1,
+          "options": [
+            "gamingSet"
+          ]
+        },
+        "Thieves' Tools"
+      ],
+      "equipment": [
+        "crowbar",
+        "set of dark common clothes including a hood",
+        "pouch containing 15 gp"
+      ],
+      "specialty": [
+        {
+          "select": 1,
+          "options": [
+            "Blackmailer",
+            "Burglar",
+            "Enforcer",
+            "Fence",
+            "Highway robber",
+            "Hired killer",
+            "Pickpocket",
+            "Smuggler"
+          ]
+        }
+      ],
+      "features": [
+        "Criminal Contact"
+      ]
+    },
+    {
+      "name": "Folk Hero",
+      "description": "",
+      "skillsProficiency": [
+        "Animal Handling",
+        "Survival"
+      ],
+      "toolProficiency": [
+        {
+          "select": 1,
+          "options": [
+            "artisansTools"
+          ]
+        },
+        "vehicles (land)"
+      ],
+      "equipment": [
+        {
+          "select": 1,
+          "options": [
+            "artisansTools"
+          ]
+        },
+        "shovel",
+        "iron pot",
+        "set of common clothes",
+        "pouch containing 10 gp"
+      ],
+      "definingEvent": [
+        "I stood up to a tyrant's agents.",
+        "others... how do I want to define this"
+      ],
+      "features": [
+        "Rustic Hospitality"
+      ]
+    },
+    {
+      "name": "Noble",
+      "description": "",
+      "skillsProficiency": [
+        "History",
+        "Persuasion"
+      ],
+      "toolProficiency": [
+        {
+          "select": 1,
+          "options": [
+            "gamingSet"
+          ]
+        }
+      ],
+      "languages": [
+        {
+          "select": 1,
+          "options": [
+            "all"
+          ]
+        }
+      ],
+      "equipment": [
+        "set of fine clothes",
+        "signet ring",
+        "scroll of pedigree",
+        "purse containing 25 gp"
+      ],
+      "features": [
+        "Position of Privilege"
+      ]
+    },
+    {
+      "name": "Sage",
+      "description": "",
+      "skillsProficiency": [
+        "Arcana",
+        "History"
+      ],
+      "languages": [
+        {
+          "select": 2,
+          "options": [
+            "all"
+          ]
+        }
+      ],
+      "equipment": [
+        "bottle of black ink",
+        "quill",
+        "small knife",
+        "letter from a dead colleague posing a question you have not yet been able to answer",
+        "set of common clothes",
+        "pouch containing 10 gp"
+      ],
+      "specialty": [
+        {
+          "select": 1,
+          "options": [
+            "Alchemist",
+            "Astronomer",
+            "Discredited academic",
+            "Librarian",
+            "Professor",
+            "Researcher",
+            "Wizard's apprentice",
+            "Scribe"
+          ]
+        }
+      ],
+      "features": [
+        "Researcher"
+      ]
+    },
+    {
+      "name": "Soldier",
+      "description": "",
+      "skillsProficiency": [
+        "Athletics",
+        "Intimidation"
+      ],
+      "toolProficiency": [
+        {
+          "select": 1,
+          "options": [
+            "gamingSet"
+          ]
+        },
+        "vehicles (land)"
+      ],
+      "equipment": [
+        "insignia of rank",
+        "trophy taken from a fallen enemy",
+        "set of bone dice or deck of cards",
+        "set of common clothes",
+        "pouch containing 10 gp"
+      ],
+      "specialty": [
+        {
+          "select": 1,
+          "options": [
+            "Officer",
+            "Scout",
+            "Infantry",
+            "Cavalry",
+            "Healer",
+            "Quartermaster",
+            "Standard bearer",
+            "Support staff"
+          ]
+        }
+      ],
+      "features": [
+        "Military Rank"
+      ]
+    }
+  ]
+}
