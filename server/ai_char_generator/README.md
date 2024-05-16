@@ -12,7 +12,7 @@ To use the AICharGen class:
      const charGen = new AICharGen(api_key)
      ```
 
-3. **Initialize character generator with Vector Store ID and Assistnat ID:**
+3. **Initialize character generator with Vector Store ID and Assistant ID:**
    - **Without Vector Store ID and Assistant ID:**
      ```javascript
      await charGen.initialize({});
@@ -23,7 +23,7 @@ To use the AICharGen class:
        const asID = await charGen.assistantId;
        ```
 
-   - **If you have a vector store ID and assistant ID, pass as arguments into initialize:**
+   - **If you have a vector store ID and assistant ID, pass as arguments into `.initialize()`:**
      ```javascript
      await charGen.initialize({
        vectorStoreId: "vector_store_id",
