@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "ai_char_generator.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "type": "module",
   "keywords": [],
@@ -12,6 +12,10 @@
   "description": "",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "jest": "^29.7.0",
     "openai": "^4.42.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.24.5"
   }
 }
