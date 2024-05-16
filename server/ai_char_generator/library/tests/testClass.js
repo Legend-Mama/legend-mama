@@ -7,11 +7,13 @@ const api_key = process.env.OPEN_AI_KEY;
 //const vectorStoreId = "vs_brTEfEm1wNRpKXte2j828ip8";
 //assistantId: "asst_6izpt1oFvmW2DYyCm9ONVBZT"
 
-  // vectorStoreId: "vs_brTEfEm1wNRpKXte2j828ip8",
-  // assistantId: "asst_6izpt1oFvmW2DYyCm9ONVBZT",
+ 
 
 const testGen = new AICharGen(api_key)
-await testGen.initialize({});
+await testGen.initialize({
+  vectorStoreId: "vs_A4Q8QFfkNoZv8XWrEzAuyN76",
+  assistantId: "asst_M8clXUr0kIHkCZOQk5kT4lvp",
+});
 
 const vsID = await testGen.vectorStoreId;
 console.log(vsID);
@@ -64,5 +66,5 @@ const user_input2 = {
     "Born under an eclipsed moon, Caden was destined for a life intertwined with the arcane. Raised in an esteemed magical academy, every moment was dedicated to the pursuit of knowledge. An unquenchable thirst for understanding the universe's secrets drives him, and though his endeavors isolate him, his path is clear.",
 };
 
-// const testChar = await testGen.generateChar(user_input2);
-// console.log(testChar);
+const testChar = await testGen.generateChar(user_input);
+console.log(testChar);

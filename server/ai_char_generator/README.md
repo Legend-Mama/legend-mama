@@ -97,5 +97,26 @@ To use the AICharGen class:
   "backstory": "Born under an eclipsed moon, Caden was destined for a life intertwined with the arcane. Raised in an esteemed magical academy, every moment was dedicated to the pursuit of knowledge. An unquenchable thirst for understanding the universe's secrets drives him, and though his endeavors isolate him, his path is clear.",
   "quote": "Knowledge is power."
 }
-
 ```
+
+## How AICharGen Works
+
+**Setup:** The AICharGen utilizes the OpenAI API Assistant with the following configurations:
+
+- **Tools:** `file_search`
+- **Tool Resources:** Vector store that contains Dungeons and Dragons SRD and 160 sample character sheets
+- **Model:** `gpt-4o`
+- **Temperature:** `1`
+- **Instructions:** 
+  `You are a Dungeons and Dragons character sheet generator. You have comprehensive knowledge of the Dungeons and Dragons SRD. You are very creative and are able to create dynamic characters. You will receive input and create a character sheet based on that input. You will use the point-buy system to determine ability scores. Create only valid json complying to schema. //json output schema`
+  * See `output_schema.json` for instructed JSON output. 
+
+## Operational Steps
+
+1. Clean-up user input by removing JSON formatting (`{}`, `""`) to reduce token usage.
+2. Send user input to Assistant.
+3. Assistant retrieves information from Vector Store to generate a character sheet. 
+4. Extract only the JSON object from Assistant's response message. (The Assistant sometimes generates additional info along with the JSON.)
+5. Return the JSON object. :D
+
+      
