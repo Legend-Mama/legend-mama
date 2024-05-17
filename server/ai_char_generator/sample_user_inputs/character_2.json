@@ -1,0 +1,20 @@
+{
+    "name": "Elaria Windwhisper",
+    "race": "Elf",
+    "class": "Sorceress",
+    "worldview": "Knowledge is power, Balance is key",
+    "ethicalTraits": "Wisdom, Grace, Patience",
+    "personalityScores": {
+        "Extraversion": "Introverted",
+        "Agreeableness": "Diplomatic",
+        "Conscientiousness": "Methodical",
+        "Neuroticism": "Calm",
+        "OpennessToExperience": "Curious"
+    },
+    "quirks": "Collects rare herbs, Speaks to animals",
+    "motivations": "Master ancient spells, Preserve the natural order",
+    "fears": "Destruction of nature, Ignorance",
+    "likes": "Moonlit nights, Ancient tomes, Forests",
+    "dislikes": "Pollution, War, Loud noises",
+    "backstory": "Elaria grew up in the serene forests of her homeland, where she developed a deep connection with nature and magic. Her curiosity led her to study ancient spells, striving to balance the forces of nature. She is a protector of the forest and a seeker of arcane knowledge."
+}

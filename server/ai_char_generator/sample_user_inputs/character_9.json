@@ -1,0 +1,16 @@
+{
+    "name": "Ragnar the Fearless",
+    "race": "Half-Orc",
+    "class": "Fighter",
+    "worldview": "Glory in battle, Honor in death",
+    "ethicalTraits": "Bravery, Loyalty, Strength",
+    "personalityScores": {
+        "Extraversion": "Bold",
+        "Agreeableness": "Loyal",
+        "Conscientiousness": "Determined",
+        "Neuroticism": "Fearless",
+        "OpennessToExperience": "Adventurous"
+    },
+    "motivations": "Become a legendary warrior, Protect his comrades",
+    "fears": "Cowardice, Failure"
+}

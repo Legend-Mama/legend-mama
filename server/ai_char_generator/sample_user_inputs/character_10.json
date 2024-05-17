@@ -1,0 +1,16 @@
+{
+    "name": "Seraphina Lightbringer",
+    "race": "Aasimar",
+    "class": "Cleric",
+    "worldview": "Faith is my strength, Light against darkness",
+    "ethicalTraits": "Piety, Compassion, Justice",
+    "personalityScores": {
+        "Extraversion": "Warm",
+        "Agreeableness": "Empathetic",
+        "Conscientiousness": "Disciplined",
+        "Neuroticism": "Steadfast",
+        "OpennessToExperience": "Spiritual"
+    },
+    "motivations": "Spread the light of her deity, Heal the suffering",
+    "fears": "Falling to darkness, Losing faith"
+}

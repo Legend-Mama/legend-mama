@@ -1,0 +1,15 @@
+{
+    "race": "Gnome",
+    "class": "Wizard",
+    "worldview": "Knowledge is supreme, Curiosity drives progress",
+    "ethicalTraits": "Intelligence, Creativity, Persistence",
+    "personalityScores": {
+        "Extraversion": "Introverted",
+        "Agreeableness": "Inquisitive",
+        "Conscientiousness": "Diligent",
+        "Neuroticism": "Anxious",
+        "OpennessToExperience": "Inventive"
+    },
+    "motivations": "Unlock the secrets of the universe, Create new inventions",
+    "fears": "Ignorance, Stagnation"
+}

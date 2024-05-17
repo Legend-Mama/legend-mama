@@ -1,0 +1,15 @@
+{
+    "name": "Thalia Moonshadow",
+    "class": "Druid",
+    "worldview": "Harmony with nature, Balance above all",
+    "ethicalTraits": "Wisdom, Compassion, Patience",
+    "personalityScores": {
+        "Extraversion": "Quiet",
+        "Agreeableness": "Kind",
+        "Conscientiousness": "Organized",
+        "Neuroticism": "Calm",
+        "OpennessToExperience": "Curious"
+    },
+    "motivations": "Protect the natural world, Restore balance",
+    "fears": "Destruction of nature, Imbalance"
+}
