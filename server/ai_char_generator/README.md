@@ -36,7 +36,6 @@ To use the AICharGen class:
     const characterSheet = await charGen.generateChar(user_input);
     ```
 
-
 ## Sample User Input (JSON)
 
 ```json
