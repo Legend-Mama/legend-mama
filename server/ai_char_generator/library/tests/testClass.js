@@ -66,5 +66,27 @@ const user_input2 = {
     "Born under an eclipsed moon, Caden was destined for a life intertwined with the arcane. Raised in an esteemed magical academy, every moment was dedicated to the pursuit of knowledge. An unquenchable thirst for understanding the universe's secrets drives him, and though his endeavors isolate him, his path is clear.",
 };
 
-const testChar = await testGen.generateChar(user_input);
+const user_input3 = {
+  name: "Thorin Ironfist",
+  race: "Dwarf",
+  class: "Warrior",
+  worldview: "Honor is my guide, Strength is my virtue",
+  ethicalTraits: "Bravery, Sturdiness, Loyalty",
+  personalityScores: {
+    Extraversion: "Reserved",
+    Agreeableness: "Stubborn",
+    Conscientiousness: "Disciplined",
+    Neuroticism: "Stoic",
+    OpennessToExperience: "Traditional",
+  },
+  quirks: "Always polishing his axe, Talks to his beard",
+  motivations: "Protect his clan, Seek glory in battle",
+  fears: "Shame, Magic",
+  likes: "Ale, Ancient lore, Forge fires",
+  dislikes: "Elves, Cowardice, Surface dwellings",
+  backstory:
+    "Thorin hails from a long line of renowned warriors. Raised in the depths of the mountain halls, he was trained from a young age in the arts of war. His loyalty to his clan is unmatched, and he seeks to bring honor to his family through deeds of valor.",
+};
+
+const testChar = await testGen.generateChar(user_input2);
 console.log(testChar);
