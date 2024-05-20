@@ -6,5 +6,5 @@ import {generateCharacterIllustration} from "../helpers/generateCharacterIllustr
 
 export const getCharacterIllustration = asyncHandler(async (req, res) => {
     const imageURL = await generateCharacterIllustration(req.body.race, req.body.class, req.body.backstory);
-    res.status(200).json(imageURL);
+    res.status(201).json(imageURL);
 })
