@@ -1,3 +1,20 @@
+export class BadRequestError extends Error {
+    constructor(errors, message = "Invalid request") {
+        super(message);
+        this.name = "BadRequestError";
+        this.statusCode = 400;
+        this.errors = errors;
+    }
+}
+
+export class UnprocessableError extends Error {
+    constructor(message = "Request understood but failed") {
+        super(message);
+        this.name = "UnprocessableError";
+        this.statusCode = 422;
+    }
+}
+
 export class UnauthorizedError extends Error {
     constructor(message = 'Invalid or missing token') {
         super(message);
@@ -22,7 +39,7 @@ export class ForbiddenError extends Error {
     }
 }
 
-export default function errorHandler(err, req, res, next) {
+export default function errorHandler(err, req, res) {
     console.error(`${err.name}: ${err.message}`);  // Log the error for debugging
     if (err.statusCode && err.message && err.name) {
         res.status(err.statusCode).json({error: err.name, message: err.message});
