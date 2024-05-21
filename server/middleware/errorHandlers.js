@@ -1,12 +1,23 @@
 /**
  * Used for request bodies that failed validation.
  */
+export class BadRequestError extends Error {
+    constructor(errors, message = "Invalid request") {
+        super(message);
+        this.name = "BadRequestError";
+        this.statusCode = 400;
+        this.errors = errors;
+    }
+}
+
+/**
+ * Used for insufficient gold balance errors
+ */
 export class UnprocessableError extends Error {
-    constructor(errors, message = "Error in request body") {
+    constructor(message = "Request understood but failed") {
         super(message);
         this.name = "UnprocessableError";
         this.statusCode = 422;
-        this.errors = errors;
     }
 }
 

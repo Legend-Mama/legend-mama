@@ -36,7 +36,7 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send({name: "Potato Man"})
-                .expect(422)
+                .expect(400)
         });
     });
 
@@ -64,7 +64,7 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send({name: "Potato Man"})
-                .expect(422)
+                .expect(400)
         });
     });
 });

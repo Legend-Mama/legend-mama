@@ -1,5 +1,5 @@
 import {body, validationResult, matchedData} from 'express-validator';
-import {UnprocessableError} from "./errorHandlers.js";
+import {BadRequestError} from "./errorHandlers.js";
 import classData from '../data/dnd5e/classes.json' with {type: 'json'};
 import raceData from '../data/dnd5e/races.json' with {type: 'json'};
 import alignmentData from '../data/dnd5e/alignments.json' with {type: 'json'};
@@ -19,8 +19,7 @@ export const validate = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log(errors.array());
-        // return res.status(422).json({ errors: errors.array() });
-        throw new UnprocessableError(errors.array());
+        throw new BadRequestError(errors.array());
     }
     next();
 }
