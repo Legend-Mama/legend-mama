@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "id": "msg_1LOz1HabVt5kRhmx4Gy6Ipc4",
+      "object": "thread.message",
+      "created_at": 1716321901,
+      "assistant_id": "asst_M8clXUr0kIHkCZOQk5kT4lvp",
+      "thread_id": "thread_EaqqqQCNPf0aYDjyXy8XGNbg",
+      "run_id": "run_C5HA1ZhiasBTVN47ffaJcU82",
+      "role": "assistant",
+      "content": [
+        {
+          "text": {
+            "value": "```json {\"name\":\"Caden Windwalker\",\"race\":\"High Elf\",\"class\":\"Wizard\",\"background\":{\"name\":\"Sage\",\"description\":\"Born under an eclipsed moon, Caden was destined for a life intertwined with the arcane. Raised in an esteemed magical academy, every moment was dedicated to the pursuit of knowledge. An unquenchable thirst for understanding the universe's secrets drives him, and though his endeavors isolate him, his path is clear.\",\"skills\":[\"Arcana\",\"History\"],\"tools\":[\"Herbalism kit\",\"Alchemist's supplies\"],\"languages\":[\"Common\",\"Elvish\",\"Draconic\",\"Celestial\"],\"feature\":{\"name\":\"Researcher\",\"description\":\"When you attempt to learn or recall a piece of lore, if you do not know that information, you often know where and from whom you can obtain it. Usually, this information comes from a library, scriptorium, university, or a sage or other learned person or creature.\"}},\"alignment\":\"Neutral Good\",\"abilityScores\":{\"strength\":{\"base\":8,\"bonus\":0},\"dexterity\":{\"base\":14,\"bonus\":2},\"constitution\":{\"base\":14,\"bonus\":0},\"intelligence\":{\"base\":15,\"bonus\":1},\"wisdom\":{\"base\":13,\"bonus\":0},\"charisma\":{\"base\":8,\"bonus\":0}},\"initiative\":2,\"languages\":[\"Common\",\"Elvish\",\"Draconic\",\"Celestial\"],\"personalityTrait\":\"I am fixated on discovering and uncovering ancient mysteries and solving complex puzzles.\",\"ideal\":\"Knowledge. The path to power and self-improvement is through knowledge.\",\"bond\":\"I am dedicated to the library that took me in and nurtured me.\",\"flaw\":\"I speak without much thought, which often results in misunderstanding and conflict.\",\"backstory\":\"From a young age, Caden was fascinated by the mysteries of the world. Raised in a renowned magical academy, he spent most of his time buried in books, driven by an insatiable thirst for knowledge. Despite his academic focus, Caden often found himself isolated from others, his intellectual pursuits taking precedence over social interactions. His ultimate goal is to master the arcane arts and uncover forgotten secrets of the ancient world.\",\"quote\":\"The pursuit of knowledge is the noblest quest of all. Ignorance is the true enemy of progress.\"}```"
+          }
+        }
+      ],
+      "attachments": [],
+      "metadata": {}
+    }
+  ]
+}

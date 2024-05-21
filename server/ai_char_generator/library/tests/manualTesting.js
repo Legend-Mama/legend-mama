@@ -1,5 +1,6 @@
 import { AICharGen } from "../AICharGen.js";
 import dotenv from "dotenv";
+import fs from "fs";
 
 dotenv.config();
 const api_key = process.env.OPEN_AI_KEY;
@@ -89,4 +90,15 @@ const user_input3 = {
 };
 
 const testChar = await testGen.generateChar(user_input2);
-console.log(testChar);
+
+function writeResultToFile(filename, data) {
+  fs.writeFile(filename, JSON.stringify(data, null, 2), (err) => {
+    if (err) {
+      console.error("Error writing to file", err);
+    } else {
+      console.log("File has been written successfully");
+    }
+  });
+}
+
+// writeResultToFile('mockResponse.json', testChar)
