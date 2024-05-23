@@ -1,7 +1,7 @@
 "use client";
 import logo from "@/public/img/legend-mama-logo.png";
 import { Image, Link } from "@chakra-ui/next-js";
-import { Box, Flex, HStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Tooltip } from "@chakra-ui/react";
 import Header from "./typography/Header";
 import GPToken from "./icons/GPToken";
 import Text from "./typography/Text";
@@ -134,7 +134,7 @@ export default function Navbar() {
               </>
             )}
           </Box>
-          {auth.loggedIn &&  (
+          {auth.loggedIn && (
             <Box w="100%">
               <HStack color="brand.800" fontSize={20} mx="auto" w="fit-content">
                 <Text
@@ -142,9 +142,14 @@ export default function Navbar() {
                   fontWeight={700}
                   mb={0}
                 >
-                  <GPToken height={30} width={30} glow /> {data.user.goldBalance || "?"} GP
+                  <GPToken height={30} width={30} glow />{" "}
+                  {data.user.goldBalance || "?"} GP
                 </Text>
-                <PiQuestionFill fontSize={24} />
+                <Tooltip label="You reset to 3GP every day.">
+                  <span>
+                    <PiQuestionFill fontSize={24} style={{ cursor: "help" }} />
+                  </span>
+                </Tooltip>
               </HStack>
 
               <Button
