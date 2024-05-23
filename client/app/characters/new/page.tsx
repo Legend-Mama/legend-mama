@@ -29,14 +29,16 @@ import StepperNav, { steps } from "./StepperNav";
 import readyBtn from "@/public/img/die.png";
 import Image from "next/image";
 import * as presets from "./presets";
-import { Values, canSubmit } from "./lib";
+import { Values, canSubmit, submitCharacterCreationForm } from "./lib";
 import { DataContext } from "@/app/providers/DataProvider";
+import { AuthContext } from "@/app/providers/AuthProvider";
 
 const races = racesJson as Record<string, any>;
 const { classes } = classesJson;
 
 export default function NewCharacter() {
   const userData = useContext(DataContext);
+  const token = useContext(AuthContext);
 
   const { activeStep, setActiveStep } = useSteps({
     index: 0,
@@ -71,6 +73,7 @@ export default function NewCharacter() {
     fears: { freetext: true, value: "" },
     likes: { freetext: true, value: "" },
     dislikes: { freetext: true, value: "" },
+    backstory: { freetext: true, value: "" },
   });
 
   const enableSubmitButton = useMemo(() => canSubmit(values), [values]);
@@ -99,8 +102,6 @@ export default function NewCharacter() {
     return () => ref?.removeEventListener("scroll", scrollHandler);
   }, []);
 
-  console.log(scrollInfo);
-
   return (
     <Flex as="main" h="100%" w="100%">
       {!userData.user.goldBalance ? (
@@ -110,7 +111,6 @@ export default function NewCharacter() {
         </VStack>
       ) : (
         <>
-          {" "}
           <Flex h="100%" w={300}>
             <StepperNav
               activeStep={activeStep}
@@ -317,6 +317,20 @@ export default function NewCharacter() {
                     setValues={(value, freetext) =>
                       setValues((v) => ({
                         ...v,
+                        backstory: {
+                          value,
+                          freetext,
+                        },
+                      }))
+                    }
+                    title="Give us a short summary of what your character did before arriving here."
+                    valueField={values.backstory}
+                    options={presets.backstory}
+                  />
+                  <FreetextOrButton
+                    setValues={(value, freetext) =>
+                      setValues((v) => ({
+                        ...v,
                         quirks: {
                           value,
                           freetext,
@@ -437,7 +451,7 @@ export default function NewCharacter() {
                   <Box
                     position="relative"
                     onClick={
-                      enableSubmitButton ? () => console.log(values) : undefined
+                      enableSubmitButton ? async () => token.idToken && await submitCharacterCreationForm(values, token.idToken) : undefined
                     }
                     cursor={enableSubmitButton ? "pointer" : "not-allowed"}
                   >

@@ -81,3 +81,10 @@ export const dislikes = [
   { name: "option3", description: "Option 3" },
   { name: "option4", description: "Option 4" },
 ];
+
+export const backstory = [
+  { name: "option1", description: "Option 1" },
+  { name: "option2", description: "Option 2" },
+  { name: "option3", description: "Option 3" },
+  { name: "option4", description: "Option 4" },
+];
