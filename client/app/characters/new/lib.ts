@@ -70,7 +70,7 @@ export async function submitCharacterCreationForm(
     worldView: formValues.worldview.value,
     ethicalTraits: formValues.ethicalTraits.value,
     personalityTraits: Object.entries(formValues.personalityScores).map(
-      ([trait, description]) => `${trait}: ${description}`
+      ([trait, description]) => `${trait}: ${description.value}`
     ), // TODO: make sure this fits the input we use for GPT - currently it creates an array like ["opennessToExperience: I'm always open to new things", ...]
     quirks: formValues.quirks.value,
     motivations: formValues.motivations.value,

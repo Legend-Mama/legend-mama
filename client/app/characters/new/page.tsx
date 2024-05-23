@@ -245,7 +245,7 @@ export default function NewCharacter() {
                         },
                       }))
                     }
-                    title="Do they get along well with those in need?"
+                    title="Do they get along well with others around them?"
                     valueField={values.personalityScores.agreeableness}
                     options={presets.agreeableness}
                   />
@@ -527,7 +527,7 @@ function FreetextOrButton({
   title: string;
   setValues: (val: string, freetext: boolean) => void;
   valueField: { freetext: boolean; value: string };
-  options: { name: string; description: string }[];
+  options: string[];
 }) {
   return (
     <Box w="100%" textAlign="center">
@@ -547,15 +547,16 @@ function FreetextOrButton({
         subtle={!valueField.freetext}
       />
       <Grid gap={2} templateColumns="repeat(2, 1fr)" flexShrink={0}>
-        {options.map((x) => (
+        {options.map((presetChoice) => (
           <Button
             secondary
             flexGrow={1}
-            key={x.name}
-            onClick={() => setValues(x.name, false)}
-            highlight={valueField.value === x.name}
+            key={presetChoice}
+            onClick={() => setValues(presetChoice, false)}
+            highlight={valueField.value === presetChoice}
+            whiteSpace="normal"
           >
-            {x.description}
+            {presetChoice}
           </Button>
         ))}
       </Grid>
