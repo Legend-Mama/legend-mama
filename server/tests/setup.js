@@ -2,6 +2,7 @@ import {initializeTestEnvironment} from '@firebase/rules-unit-testing';
 import dotenv from 'dotenv';
 import {client} from "./dummyClient.js";
 dotenv.config({path: '../.env'});
+process.env.NODE_ENV = 'test';
 
 before(async () => {
     console.log('>> Setting up test environment');

@@ -7,6 +7,10 @@ const costs = {
     'POST /api/v1/character-sheet': 1,
     'POST /api/v1/character-illustration': 1
 }
+if (process.env.NODE_ENV === "development") {
+    costs['POST /api/v1/character-sheet'] = 0;
+    costs['POST /api/v1/character-illustration'] = 0;
+}
 
 const updateGoldBalance = asyncHandler(async (req, res, next) => {
     // Check account exists
