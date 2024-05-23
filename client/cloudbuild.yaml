@@ -7,6 +7,7 @@ steps:
   - --destination=${_FULL_IMAGE_NAME} # Destination for finished image - in Artifacts Registry
   - --cache=true # Kaniko caches each layer of the build and reuses them as necessary
   - --cache-copy-layers=true
+  - --build-arg='NEXT_PUBLIC_API=${_NEXT_PUBLIC_API}'
 # deploy new build on Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud

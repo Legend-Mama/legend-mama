@@ -1,464 +1,355 @@
 {
-  "classes": [
-    {
-      "name": "Barbarian",
-      "description": "",
-      "hitDice": 12,
-      "unarmedACModifier": "constitution",
-      "armorProficiency": [
-        "Light Armor",
-        "Medium Armor",
-        "Shields"
-      ],
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged",
-        "martialMelee",
-        "martialRanged"
-      ],
-      "savingThrows": [
-        "strength",
-        "constitution"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "Animal Handling",
-            "Athletics",
-            "Intimidation",
-            "Nature",
-            "Perception",
-            "Survival"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "martialMelee"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "simpleMelee",
-            "simpleRanged"
-          ]
-        },
-        "Explorer's Pack",
-        "Four Javelins"
-      ],
-      "features": [
-        "Rage",
-        "Unarmored Defense"
-      ]
-    },
-    {
-      "name": "Bard",
-      "description": "",
-      "hitDice": 8,
-      "armorProficiency": [
-        "Light Armor"
-      ],
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged",
-        "Crossbows, hand",
-        "Longswords",
-        "Rapiers",
-        "Shortswords"
-      ],
-      "toolProficiency": [
-        {
-          "select": 3,
-          "options": [
-            "musicalInstrument"
-          ]
-        }
-      ],
-      "savingThrows": [
-        "dexterity",
-        "charisma"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 3,
-          "options": "all"
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "Rapier",
-            "Longsword",
-            "simpleMelee",
-            "simpleRanged"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Diplomat's Pack",
-            "Entertainer's Pack"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "musicalInstrument"
-          ]
-        },
-        "Leather Armor",
-        "Dagger"
-      ],
-      "features": [
-        "Spellcasting",
-        "Bardic Inspiration (d6)"
-      ]
-    },
-    {
-      "name": "Cleric",
-      "description": "",
-      "hitDice": 8,
-      "armorProficiency": [
-        "Light Armor",
-        "Medium Armor",
-        "Shields"
-      ],
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged"
-      ],
-      "savingThrows": [
-        "wisdom",
-        "charisma"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "History",
-            "Insight",
-            "Medicine",
-            "Persuasion",
-            "Religion"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "Mace",
-            "Warhammer (profCheck)"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Scale Mail",
+  "Barbarian": {
+    "description": "",
+    "hitDice": 12,
+    "unarmoredACBonus": "constitution",
+    "armorProficiency": [
+      "Light Armor",
+      "Medium Armor",
+      "Shields"
+    ],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged",
+      "martialMelee",
+      "martialRanged"
+    ],
+    "toolProficiency": [],
+    "savingThrowProficiency": [
+      "strength",
+      "constitution"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "Animal Handling",
+          "Athletics",
+          "Intimidation",
+          "Nature",
+          "Perception",
+          "Survival"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "martialMelee"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "simpleMelee",
+          "simpleRanged"
+        ]
+      },
+      "Explorer's Pack",
+      "Four Javelins"
+    ],
+    "languages": [],
+    "features": [
+      "Rage",
+      "Unarmored Defense"
+    ]
+  },
+  "Bard": {
+    "description": "",
+    "hitDice": 8,
+    "unarmoredACBonus": "",
+    "armorProficiency": [
+      "Light Armor"
+    ],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged",
+      "Hand Crossbow",
+      "Longswords",
+      "Rapiers",
+      "Shortswords"
+    ],
+    "toolProficiency": [
+      {
+        "select": 3,
+        "options": [
+          "Bagpipes",
+          "Drum",
+          "Dulcimer",
+          "Flute",
+          "Lute",
+          "Lyre",
+          "Horn",
+          "Pan Flute",
+          "Shawm",
+          "Viol"
+        ]
+      }
+    ],
+    "savingThrowProficiency": [
+      "dexterity",
+      "charisma"
+    ],
+    "skillProficiency": [
+      {
+        "select": 3,
+        "options": [
+          "Athletics",
+          "Sleight of Hand",
+          "Stealth",
+          "Arcana",
+          "History",
+          "Investigation",
+          "Nature",
+          "Religion",
+          "Animal Handling",
+          "Insight",
+          "Medicine",
+          "Perception",
+          "Survival",
+          "Deception",
+          "Performance",
+          "Persuasion"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "Rapier",
+          "Longsword",
+          "simpleMelee",
+          "simpleRanged"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Diplomat's Pack",
+          "Entertainer's Pack"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "musicalInstrument"
+        ]
+      },
+      "Leather Armor",
+      "Dagger"
+    ],
+    "languages": [],
+    "features": [
+      "Spellcasting",
+      "Bardic Inspiration (d6)"
+    ]
+  },
+  "Cleric": {
+    "description": "",
+    "hitDice": 8,
+    "unarmoredACBonus": "",
+    "armorProficiency": [
+      "Light Armor",
+      "Medium Armor",
+      "Shields"
+    ],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged"
+    ],
+    "toolProficiency": [],
+    "savingThrowProficiency": [
+      "wisdom",
+      "charisma"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "History",
+          "Insight",
+          "Medicine",
+          "Persuasion",
+          "Religion"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "Mace",
+          "Warhammer (profCheck)"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Scale Mail",
+          "Leather Armor",
+          "Chain Mail (profCheck)"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          [
+            "Light Crossbow",
+            "20 bolts"
+          ],
+          "simpleMelee",
+          "simpleRanged"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Priest's Pack",
+          "Explorer's Pack"
+        ]
+      },
+      "Shield",
+      "Holy Symbol"
+    ],
+    "languages": [],
+    "features": [
+      "Spellcasting",
+      "Divine Domain"
+    ]
+  },
+  "Druid": {
+    "description": "",
+    "hitDice": 8,
+    "unarmoredACBonus": "",
+    "armorProficiency": [
+      "Light Armor (non metal)",
+      "Medium Armor (non metal)",
+      "Shields (non metal)"
+    ],
+    "weaponProficiency": [
+      "Clubs",
+      "Daggers",
+      "Darts",
+      "Javelins",
+      "Maces",
+      "Quarterstaffs",
+      "Scimitars",
+      "Sickles",
+      "Slings",
+      "Spears"
+    ],
+    "toolProficiency": [
+      "Herbalism Kit"
+    ],
+    "savingThrowProficiency": [
+      "intelligence",
+      "wisdom"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "Arcana",
+          "Animal Handling",
+          "Insight",
+          "Medicine",
+          "Nature",
+          "Perception",
+          "Religion",
+          "Survival"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "Wooden Shield",
+          "simpleMelee",
+          "simpleRanged"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Scimitar",
+          "simpleMelee"
+        ]
+      },
+      "Leather Armor",
+      "Explorer's Pack",
+      "Druidic Focus"
+    ],
+    "languages": [
+      "Druidic"
+    ],
+    "features": [
+      "Druidic",
+      "Spellcasting"
+    ]
+  },
+  "Fighter": {
+    "description": "",
+    "hitDice": 10,
+    "unarmoredACBonus": "",
+    "armorProficiency": [
+      "Light Armor",
+      "Medium Armor",
+      "Heavy Armor",
+      "Shields"
+    ],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged",
+      "martialMelee",
+      "martialRanged"
+    ],
+    "toolProficiency": [],
+    "savingThrowProficiency": [
+      "strength",
+      "constitution"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "Acrobatics",
+          "Animal Handling",
+          "Athletics",
+          "History",
+          "Insight",
+          "Intimidation",
+          "Perception",
+          "Survival"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "Chain Mail",
+          [
             "Leather Armor",
-            "Chain Mail (profCheck)"
+            "Longbow",
+            "20 arrows"
           ]
-        },
-        {
-          "select": 1,
-          "options": [
-            [
-              "Light Crossbow",
-              "20 bolts"
-            ],
-            "simpleMelee",
-            "simpleRanged"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Priest's Pack",
-            "Explorer's Pack"
-          ]
-        },
-        "Shield",
-        "Holy Symbol"
-      ],
-      "features": [
-        "Spellcasting",
-        "Divine Domain"
-      ]
-    },
-    {
-      "name": "Druid",
-      "description": "",
-      "hitDice": 8,
-      "armorProficiency": [
-        "Light Armor",
-        "Medium Armor",
-        "Shields",
-        "No Metal"
-      ],
-      "weaponProficiency": [
-        "Clubs",
-        "Daggers",
-        "Darts",
-        "Javelins",
-        "Maces",
-        "Quarterstaffs",
-        "Scimitars",
-        "Sickles",
-        "Slings",
-        "Spears"
-      ],
-      "toolProficiency": [
-        "Herbalism Kit"
-      ],
-      "savingThrows": [
-        "intelligence",
-        "wisdom"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "Arcana",
-            "Animal Handling",
-            "Insight",
-            "Medicine",
-            "Nature",
-            "Perception",
-            "Religion",
-            "Survival"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "Wooden Shield",
-            "simpleMelee",
-            "simpleRanged"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Scimitar",
-            "simpleMelee"
-          ]
-        },
-        "Leather Armor",
-        "Explorer's Pack",
-        "Druidic Focus"
-      ],
-      "languages": [
-        "Druidic"
-      ],
-      "features": [
-        "Spellcasting"
-      ]
-    },
-    {
-      "name": "Fighter",
-      "description": "",
-      "hitDice": 10,
-      "armorProficiency": [
-        "Light Armor",
-        "Medium Armor",
-        "Heavy Armor",
-        "Shields"
-      ],
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged",
-        "martialMelee",
-        "martialRanged"
-      ],
-      "savingThrows": [
-        "strength",
-        "constitution"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "Acrobatics",
-            "Animal Handling",
-            "Athletics",
-            "History",
-            "Insight",
-            "Intimidation",
-            "Perception",
-            "Survival"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "Chain Mail",
-            [
-              "Leather Armor",
-              "Longbow",
-              "20 arrows"
-            ]
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            [
-              "martialMelee",
-              "Shield"
-            ],
-            [
-              "martialRanged",
-              "Shield"
-            ],
-            [
-              {
-                "select": 2,
-                "options": [
-                  "martialMelee",
-                  "martialRanged"
-                ]
-              }
-            ]
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            [
-              "Crossbow, light",
-              "20 bolts"
-            ],
-            "2 Handaxes"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Dungeoneer's Pack",
-            "Explorer's Pack"
-          ]
-        }
-      ],
-      "features": [
-        "Fighting Style",
-        "Second Wind"
-      ]
-    },
-    {
-      "name": "Monk",
-      "description": "",
-      "hitDice": 8,
-      "unarmedACModifier": "wisdom",
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged",
-        "Shortswords"
-      ],
-      "toolProficiency": [
-        {
-          "select": 1,
-          "options": [
-            "artisanTools",
-            "musicalInstrument"
-          ]
-        }
-      ],
-      "savingThrows": [
-        "strength",
-        "dexterity"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "Acrobatics",
-            "Athletics",
-            "History",
-            "Insight",
-            "Religion",
-            "Stealth"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "Shortsword",
-            "simpleMelee",
-            "simpleRanged"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Dungeoneer's Pack",
-            "Explorer's Pack"
-          ]
-        },
-        "10 Darts"
-      ],
-      "features": [
-        "Unarmored Defense",
-        "Martial Arts"
-      ]
-    },
-    {
-      "name": "Paladin",
-      "description": "",
-      "hitDice": 10,
-      "armorProficiency": [
-        "Light Armor",
-        "Medium Armor",
-        "Heavy Armor",
-        "Shields"
-      ],
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged",
-        "martialMelee",
-        "martialRanged"
-      ],
-      "savingThrows": [
-        "wisdom",
-        "charisma"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "Athletics",
-            "Insight",
-            "Intimidation",
-            "Medicine",
-            "Persuasion",
-            "Religion"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            [
-              {
-                "select": 1,
-                "options": [
-                  "martialMelee",
-                  "martialRanged"
-                ]
-              },
-              "Shield"
-            ],
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          [
+            "martialMelee",
+            "Shield"
+          ],
+          [
+            "martialRanged",
+            "Shield"
+          ],
+          [
             {
               "select": 2,
               "options": [
@@ -467,364 +358,540 @@
               ]
             }
           ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Five Javelins",
-            "simpleMelee"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Priest's Pack",
-            "Explorer's Pack"
-          ]
-        },
-        "Chain Mail",
-        "Holy Symbol"
-      ],
-      "features": [
-        "Divine Sense",
-        "Lay on Hands"
-      ]
-    },
-    {
-      "name": "Ranger",
-      "description": "",
-      "hitDice": 10,
-      "armorProficiency": [
-        "Light Armor",
-        "Medium Armor",
-        "Shields"
-      ],
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged",
-        "martialMelee",
-        "martialRanged"
-      ],
-      "savingThrows": [
-        "strength",
-        "dexterity"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 3,
-          "options": [
-            "Animal Handling",
-            "Athletics",
-            "Insight",
-            "Investigation",
-            "Nature",
-            "Perception",
-            "Stealth",
-            "Survival"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "Scale Mail",
-            "Leather Armor"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "2 Shortswords",
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          [
+            "Light Crossbow",
+            "20 bolts"
+          ],
+          "2 Handaxes"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Dungeoneer's Pack",
+          "Explorer's Pack"
+        ]
+      }
+    ],
+    "languages": [],
+    "features": [
+      "Fighting Style",
+      "Second Wind"
+    ]
+  },
+  "Monk": {
+    "description": "",
+    "hitDice": 8,
+    "unarmoredACBonus": "wisdom",
+    "armorProficiency": [],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged",
+      "Shortswords"
+    ],
+    "toolProficiency": [
+      {
+        "select": 1,
+        "options": [
+          "Alchemist's Supplies",
+          "Brewer's Supplies",
+          "Calligrapher's Supplies",
+          "Carpenter's Tools",
+          "Cobbler's Tools",
+          "Cook's Utensils",
+          "Glassblower's Tools",
+          "Jeweler's Tools",
+          "Leatherworker's Tools",
+          "Mason's Tools",
+          "Painter's Supplies",
+          "Potter's Tools",
+          "Smith's Tools",
+          "Tinker's Tools",
+          "Weaver's Tools",
+          "Woodcarver's Tools",
+          "Bagpipes",
+          "Drum",
+          "Dulcimer",
+          "Flute",
+          "Lute",
+          "Lyre",
+          "Horn",
+          "Pan Flute",
+          "Shawm",
+          "Viol"
+        ]
+      }
+    ],
+    "savingThrowProficiency": [
+      "strength",
+      "dexterity"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "Acrobatics",
+          "Athletics",
+          "History",
+          "Insight",
+          "Religion",
+          "Stealth"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "Shortsword",
+          "simpleMelee",
+          "simpleRanged"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Dungeoneer's Pack",
+          "Explorer's Pack"
+        ]
+      },
+      "10 Darts"
+    ],
+    "languages": [],
+    "features": [
+      "Unarmored Defense",
+      "Martial Arts"
+    ]
+  },
+  "Paladin": {
+    "description": "",
+    "hitDice": 10,
+    "unarmoredACBonus": "",
+    "armorProficiency": [
+      "Light Armor",
+      "Medium Armor",
+      "Heavy Armor",
+      "Shields"
+    ],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged",
+      "martialMelee",
+      "martialRanged"
+    ],
+    "toolProficiency": [],
+    "savingThrowProficiency": [
+      "wisdom",
+      "charisma"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "Athletics",
+          "Insight",
+          "Intimidation",
+          "Medicine",
+          "Persuasion",
+          "Religion"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          [
             {
-              "select": 2,
+              "select": 1,
               "options": [
-                "simpleMelee"
+                "martialMelee",
+                "martialRanged"
               ]
-            }
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Dungeoneer's Pack",
-            "Explorer's Pack"
-          ]
-        },
-        "Longbow",
-        "Quiver of 20 arrows"
-      ],
-      "features": [
-        "Favored Enemy",
-        "Natural Explorer"
-      ]
-    },
-    {
-      "name": "Rogue",
-      "description": "",
-      "hitDice": 8,
-      "armorProficiency": [
-        "Light Armor"
-      ],
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged",
-        "Crossbows, hand",
-        "Longswords",
-        "Rapiers",
-        "Shortswords"
-      ],
-      "toolProficiency": [
-        "Thieves' Tools"
-      ],
-      "savingThrows": [
-        "dexterity",
-        "intelligence"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 4,
-          "options": [
-            "Acrobatics",
-            "Athletics",
-            "Deception",
-            "Insight",
-            "Intimidation",
-            "Investigation",
-            "Perception",
-            "Performance",
-            "Persuasion",
-            "Sleight of Hand",
-            "Stealth"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "Rapier",
-            "Shortsword"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            [
-              "Shortbow",
-              "Quiver of 20 arrows"
-            ],
-            "Shortsword"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Burglar's Pack",
-            "Dungeoneer's Pack",
-            "Explorer's Pack"
-          ]
-        },
-        "Leather Armor",
-        "2 Daggers",
-        "Thieves' Tools"
-      ],
-      "languages": [
-        "Thieves' Cant"
-      ],
-      "features": [
-        "Expertise",
-        "Sneak Attack",
-        "Thieves' Cant"
-      ]
-    },
-    {
-      "name": "Sorcerer",
-      "description": "",
-      "hitDice": 6,
-      "weaponProficiency": [
-        "Daggers",
-        "Darts",
-        "Slings",
-        "Quarterstaffs",
-        "Crossbows, light"
-      ],
-      "savingThrows": [
-        "constitution",
-        "charisma"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "Arcana",
-            "Deception",
-            "Insight",
-            "Intimidation",
-            "Persuasion",
-            "Religion"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            [
-              "Crossbow, light",
-              "20 bolts"
-            ],
-            "simpleMelee",
-            "simpleRanged"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Component Pouch",
-            "Arcane Focus"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Dungeoneer's Pack",
-            "Explorer's Pack"
-          ]
-        },
-        "2 Daggers"
-      ],
-      "features": [
-        "Spellcasting",
-        "Sorcerous Origin"
-      ]
-    },
-    {
-      "name": "Warlock",
-      "description": "",
-      "hitDice": 8,
-      "armorProficiency": [
-        "Light Armor"
-      ],
-      "weaponProficiency": [
-        "simpleMelee",
-        "simpleRanged"
-      ],
-      "savingThrows": [
-        "wisdom",
-        "charisma"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "Arcana",
-            "Deception",
-            "History",
-            "Intimidation",
-            "Investigation",
-            "Nature",
-            "Religion"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            [
-              "Crossbow, light",
-              "20 bolts"
-            ],
-            "simpleMelee",
-            "simpleRanged"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Component Pouch",
-            "Arcane Focus"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Scholar's Pack",
-            "Dungeoneer's Pack"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "simpleMelee",
-            "simpleRanged"
-          ]
-        },
-        "Leather Armor",
-        "2 Daggers"
-      ],
-      "features": [
-        "Otherworldly Patron",
-        "Pact Magic"
-      ]
-    },
-    {
-      "name": "Wizard",
-      "description": "",
-      "hitDice": 6,
-      "weaponProficiency": [
-        "Daggers",
-        "Darts",
-        "Slings",
-        "Quarterstaffs",
-        "Crossbows, light"
-      ],
-      "savingThrows": [
-        "intelligence",
-        "wisdom"
-      ],
-      "skillsProficiency": [
-        {
-          "select": 2,
-          "options": [
-            "Arcana",
-            "History",
-            "Insight",
-            "Investigation",
-            "Medicine",
-            "Religion"
-          ]
-        }
-      ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "Quarterstaff",
-            "Dagger"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Component Pouch",
-            "Arcane Focus"
-          ]
-        },
-        {
-          "select": 1,
-          "options": [
-            "Scholar's Pack",
-            "Explorer's Pack"
-          ]
-        },
-        "Spellbook"
-      ],
-      "features": [
-        "Spellcasting",
-        "Arcane Recovery"
-      ]
-    }
-  ]
+            },
+            "Shield"
+          ],
+          {
+            "select": 2,
+            "options": [
+              "martialMelee",
+              "martialRanged"
+            ]
+          }
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Five Javelins",
+          "simpleMelee"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Priest's Pack",
+          "Explorer's Pack"
+        ]
+      },
+      "Chain Mail",
+      "Holy Symbol"
+    ],
+    "languages": [],
+    "features": [
+      "Divine Sense",
+      "Lay on Hands"
+    ]
+  },
+  "Ranger": {
+    "description": "",
+    "hitDice": 10,
+    "unarmoredACBonus": "",
+    "armorProficiency": [
+      "Light Armor",
+      "Medium Armor",
+      "Shields"
+    ],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged",
+      "martialMelee",
+      "martialRanged"
+    ],
+    "toolProficiency": [],
+    "savingThrowProficiency": [
+      "strength",
+      "dexterity"
+    ],
+    "skillProficiency": [
+      {
+        "select": 3,
+        "options": [
+          "Animal Handling",
+          "Athletics",
+          "Insight",
+          "Investigation",
+          "Nature",
+          "Perception",
+          "Stealth",
+          "Survival"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "Scale Mail",
+          "Leather Armor"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "2 Shortswords",
+          {
+            "select": 2,
+            "options": [
+              "simpleMelee"
+            ]
+          }
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Dungeoneer's Pack",
+          "Explorer's Pack"
+        ]
+      },
+      "Longbow",
+      "Quiver of 20 arrows"
+    ],
+    "languages": [],
+    "features": [
+      "Favored Enemy",
+      "Natural Explorer"
+    ]
+  },
+  "Rogue": {
+    "description": "",
+    "hitDice": 8,
+    "unarmoredACBonus": "",
+    "armorProficiency": [
+      "Light Armor"
+    ],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged",
+      "Hand Crossbow",
+      "Longswords",
+      "Rapiers",
+      "Shortswords"
+    ],
+    "toolProficiency": [
+      "Thieves' Tools"
+    ],
+    "savingThrowProficiency": [
+      "dexterity",
+      "intelligence"
+    ],
+    "skillProficiency": [
+      {
+        "select": 4,
+        "options": [
+          "Acrobatics",
+          "Athletics",
+          "Deception",
+          "Insight",
+          "Intimidation",
+          "Investigation",
+          "Perception",
+          "Performance",
+          "Persuasion",
+          "Sleight of Hand",
+          "Stealth"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "Rapier",
+          "Shortsword"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          [
+            "Shortbow",
+            "Quiver of 20 arrows"
+          ],
+          "Shortsword"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Burglar's Pack",
+          "Dungeoneer's Pack",
+          "Explorer's Pack"
+        ]
+      },
+      "Leather Armor",
+      "2 Daggers",
+      "Thieves' Tools"
+    ],
+    "languages": [
+      "Thieves' Cant"
+    ],
+    "features": [
+      "Expertise",
+      "Sneak Attack",
+      "Thieves' Cant"
+    ]
+  },
+  "Sorcerer": {
+    "description": "",
+    "hitDice": 6,
+    "unarmoredACBonus": "",
+    "armorProficiency": [],
+    "weaponProficiency": [
+      "Daggers",
+      "Darts",
+      "Slings",
+      "Quarterstaffs",
+      "Light Crossbow"
+    ],
+    "toolProficiency": [],
+    "savingThrowProficiency": [
+      "constitution",
+      "charisma"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "Arcana",
+          "Deception",
+          "Insight",
+          "Intimidation",
+          "Persuasion",
+          "Religion"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          [
+            "Light Crossbow",
+            "20 bolts"
+          ],
+          "simpleMelee",
+          "simpleRanged"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Component Pouch",
+          "Arcane Focus"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Dungeoneer's Pack",
+          "Explorer's Pack"
+        ]
+      },
+      "2 Daggers"
+    ],
+    "languages": [],
+    "features": [
+      "Spellcasting",
+      "Sorcerous Origin"
+    ]
+  },
+  "Warlock": {
+    "description": "",
+    "hitDice": 8,
+    "unarmoredACBonus": "",
+    "armorProficiency": [
+      "Light Armor"
+    ],
+    "weaponProficiency": [
+      "simpleMelee",
+      "simpleRanged"
+    ],
+    "toolProficiency": [],
+    "savingThrowProficiency": [
+      "wisdom",
+      "charisma"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "Arcana",
+          "Deception",
+          "History",
+          "Intimidation",
+          "Investigation",
+          "Nature",
+          "Religion"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          [
+            "Light Crossbow",
+            "20 bolts"
+          ],
+          "simpleMelee",
+          "simpleRanged"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Component Pouch",
+          "Arcane Focus"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Scholar's Pack",
+          "Dungeoneer's Pack"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "simpleMelee",
+          "simpleRanged"
+        ]
+      },
+      "Leather Armor",
+      "2 Daggers"
+    ],
+    "languages": [],
+    "features": [
+      "Otherworldly Patron",
+      "Pact Magic"
+    ]
+  },
+  "Wizard": {
+    "description": "",
+    "hitDice": 6,
+    "unarmoredACBonus": "",
+    "armorProficiency": [],
+    "weaponProficiency": [
+      "Daggers",
+      "Darts",
+      "Slings",
+      "Quarterstaffs",
+      "Light Crossbow"
+    ],
+    "toolProficiency": [],
+    "savingThrowProficiency": [
+      "intelligence",
+      "wisdom"
+    ],
+    "skillProficiency": [
+      {
+        "select": 2,
+        "options": [
+          "Arcana",
+          "History",
+          "Insight",
+          "Investigation",
+          "Medicine",
+          "Religion"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "select": 1,
+        "options": [
+          "Quarterstaff",
+          "Dagger"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Component Pouch",
+          "Arcane Focus"
+        ]
+      },
+      {
+        "select": 1,
+        "options": [
+          "Scholar's Pack",
+          "Explorer's Pack"
+        ]
+      },
+      "Spellbook"
+    ],
+    "languages": [],
+    "features": [
+      "Spellcasting",
+      "Arcane Recovery"
+    ]
+  }
 }

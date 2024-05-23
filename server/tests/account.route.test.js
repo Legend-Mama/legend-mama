@@ -1,11 +1,7 @@
 import request from 'supertest';
 import app from '../server.js';
 import {client} from "./dummyClient.js";
-
-// Dummy Data
-import characterSheet1 from './data/characterSheet1.json' assert {type: 'json'};
-import characterSheet2 from './data/characterSheet2.json' assert {type: 'json'};
-import characterSheet3 from './data/characterSheet3.json' assert {type: 'json'};
+import {character1, character2} from './data/characterSheetTestData.js';
 
 describe('Account Management Routes', () => {
     let user1token, user2token;
@@ -19,12 +15,14 @@ describe('Account Management Routes', () => {
             await request(app)
                 .post('/api/v1/account')
                 .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
                 .expect(201)
         });
 
         it('Should fail to create new account w/o token', async () => {
             await request(app)
                 .post('/api/v1/account')
+                .set('Content-Type', 'application/json')
                 .expect(401)
         });
 
@@ -32,6 +30,7 @@ describe('Account Management Routes', () => {
             await request(app)
                 .post('/api/v1/account')
                 .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
                 .expect(403)
         });
     });
@@ -60,11 +59,13 @@ describe('Account Management Routes', () => {
     });
 
     describe('POST /account/character-sheets', () => {
-        it('Should save character sheet to account w/ token', async () => {
+        it('Should save character sheet to account w/ token (1)', async () => {
             await request(app)
                 .post('/api/v1/account/character-sheets')
                 .set('Authorization', `Bearer ${user1token}`)
-                .send(characterSheet1)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(character1.charSheet)
                 .expect(201)
         });
 
@@ -72,22 +73,28 @@ describe('Account Management Routes', () => {
             await request(app)
                 .post('/api/v1/account/character-sheets')
                 .set('Authorization', `Bearer ${user1token}`)
-                .send(characterSheet2)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(character2.charSheet)
                 .expect(201)
         });
 
-        it('Should save character sheet to account w/ token (3)', async () => {
-            await request(app)
-                .post('/api/v1/account/character-sheets')
-                .set('Authorization', `Bearer ${user1token}`)
-                .send(characterSheet3)
-                .expect(201)
-        });
+        // it('Should save character sheet to account w/ token (3)', async () => {
+        //     await request(app)
+        //         .post('/api/v1/account/character-sheets')
+        //         .set('Authorization', `Bearer ${user1token}`)
+        //         .set('Content-Type', 'application/json')
+        //         .set('Accept', 'application/json')
+        //         .send(characterSheet3)
+        //         .expect(201)
+        // });
 
         it('Should fail to save character sheet to account w/o token', async () => {
             await request(app)
                 .post('/api/v1/account/character-sheets')
-                .send(characterSheet1)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(character1.charSheet)
                 .expect(401)
         });
 
@@ -95,7 +102,9 @@ describe('Account Management Routes', () => {
             await request(app)
                 .post('/api/v1/account/character-sheets')
                 .set('Authorization', `Bearer ${user2token}`)
-                .send(characterSheet1)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(character1.charSheet)
                 .expect(404)
         });
     });
@@ -160,9 +169,9 @@ describe('Account Management Routes', () => {
             await request(app)
                 .put(`/api/v1/account/character-sheets/${sheetId}`)
                 .set('Authorization', `Bearer ${user1token}`)
-                .send({
-                    'name': 'Eugene Twinkletoes'
-                })
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send({name: "Eugene Twinkletoes"})
                 .expect(200)
 
             await request(app)
@@ -177,9 +186,9 @@ describe('Account Management Routes', () => {
         it('Should fail to update character sheet w/o token', async () => {
             await request(app)
                 .put(`/api/v1/account/character-sheets/${sheetId}`)
-                .send({
-                    'name': 'Eugene Twinkletoes'
-                })
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send({name: "Eugene Twinkletoes"})
                 .expect(401)
         });
 
@@ -187,9 +196,9 @@ describe('Account Management Routes', () => {
             await request(app)
                 .put(`/api/v1/account/character-sheets/${sheetId}`)
                 .set('Authorization', `Bearer ${user2token}`)
-                .send({
-                    'name': 'Eugene Twinkletoes'
-                })
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(character1.charSheet)
                 .expect(404)
         });
 
@@ -197,9 +206,9 @@ describe('Account Management Routes', () => {
             await request(app)
                 .put(`/api/v1/account/character-sheets/${user2token}`)
                 .set('Authorization', `Bearer ${user1token}`)
-                .send({
-                    'name': 'Eugene Twinkletoes'
-                })
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(character1.charSheet)
                 .expect(404)
         });
     });

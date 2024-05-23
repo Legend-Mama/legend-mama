@@ -4,9 +4,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Dummy Data
-import characterDetails from './data/characterDetails1.json' assert {type: 'json'};
-import characterSheet from './data/characterSheet1.json' assert {type: 'json'};
 import {client} from "./dummyClient.js";
+import {character1, character2} from './data/characterSheetTestData.js';
 
 describe('Character Sheet Editor Routes', () => {
     let user1token, user2token;
@@ -29,14 +28,16 @@ describe('Character Sheet Editor Routes', () => {
             await request(app)
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user1token}`)
-                .send(characterDetails)
-                .expect(201)
+                .set('Content-Type', 'application/json')
+                .send(character1.charDetails)
+                .expect(201, character1.charSheet)
         });
 
         it('Should fail w/o Bearer token', async () => {
             await request(app)
                 .post('/api/v1/character-sheet')
-                .send(characterDetails)
+                .set('Content-Type', 'application/json')
+                .send(character1.charDetails)
                 .expect(401)
         });
 
@@ -71,6 +72,15 @@ describe('Character Sheet Editor Routes', () => {
                 .send(characterDetails)
                 .expect(422)
         });
+
+        it('Should fail w/ invalid request body', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
+                .send({name: "Potato Man"})
+                .expect(400)
+        });
     });
 
     describe('PUT /character-sheet', () => {
@@ -78,15 +88,26 @@ describe('Character Sheet Editor Routes', () => {
             await request(app)
                 .put('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user1token}`)
-                .send(characterSheet)
-                .expect(200)
+                .set('Content-Type', 'application/json')
+                .send(character2.generatedChar)
+                .expect(200, character2.charSheet)
         });
 
         it('Should fail w/o Bearer token', async () => {
             await request(app)
                 .put('/api/v1/character-sheet')
-                .send(characterSheet)
+                .set('Content-Type', 'application/json')
+                .send(character2.generatedChar)
                 .expect(401)
+        });
+
+        it('Should fail w/ invalid request body', async () => {
+            await request(app)
+                .put('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
+                .send({name: "Potato Man"})
+                .expect(400)
         });
     });
 });

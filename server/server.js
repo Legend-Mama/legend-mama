@@ -6,10 +6,16 @@ import characterSheetRouter from './routes/characterSheet.route.js';
 import errorHandler from './middleware/errorHandlers.js';
 import auth from './middleware/authenticate.js';
 import goldBalance from './middleware/goldBalance.js';
+import cors from 'cors';
+
+const corsOptions = {
+  origin: [process.env.CLIENT_URL] // Set to an array of domains we accept requests from
+}
 
 const app = express();
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors(corsOptions));
 
 // Middleware + Routes
 // route, middleware, router

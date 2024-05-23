@@ -27,7 +27,6 @@ export const steps: { title: string; description?: string; icon?: ReactNode }[] 
   { title: "Beliefs & Values", icon: <Reading /> },
   { title: "Personality", icon: <InnerSelf /> },
   { title: "Background", icon: <ScrollQuill /> },
-  { title: "Skills & Equipment", icon: <Backpack /> },
   { title: "Generate Backstory & Character Sheet", icon: <Sparkles /> },
 ] as const;
 
@@ -42,7 +41,7 @@ export default function StepperNav({
     <Stepper
       colorScheme="brand"
       index={activeStep}
-      orientation="vertical"
+      orientation="vertical"  
       alignSelf="center"
       h={600}
       gap={0}
@@ -54,10 +53,10 @@ export default function StepperNav({
         <Step key={idx}>
           <StepIndicator
             style={{
-              ...(idx === 5 && { background: "#C7BFFF" }),
+              ...(idx === 4 && { background: "#C7BFFF" }),
               ...(idx < activeStep
                 ? { color: "#3A2F15" }
-                : idx === 5 // generate backstory & char sheet
+                : idx === 4 // generate backstory & char sheet
                 ? idx > activeStep
                   ? {
                       color: "#C7BFFF",
@@ -81,7 +80,7 @@ export default function StepperNav({
               style={{
                 cursor: "pointer",
                 fontSize: 14,
-                ...(idx === 5 && { color: "#C7BFFF" }),
+                ...(idx === 4 && { color: "#C7BFFF" }),
               }}
               onClick={() => setActiveStep(idx)}
             >
@@ -90,7 +89,7 @@ export default function StepperNav({
           </Box>
           <StepSeparator
             style={{
-              ...(idx === 4 && activeStep === 5 && { background: "#C7BFFF" }),
+              ...(idx === 3 && activeStep === 4 && { background: "#C7BFFF" }),
             }}
           />
         </Step>

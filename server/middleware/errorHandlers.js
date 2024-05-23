@@ -1,3 +1,6 @@
+/**
+ * Used for request bodies that failed validation.
+ */
 export class BadRequestError extends Error {
     constructor(errors, message = "Invalid request") {
         super(message);
@@ -7,6 +10,9 @@ export class BadRequestError extends Error {
     }
 }
 
+/**
+ * Used for insufficient gold balance errors
+ */
 export class UnprocessableError extends Error {
     constructor(message = "Request understood but failed") {
         super(message);
@@ -15,6 +21,9 @@ export class UnprocessableError extends Error {
     }
 }
 
+/**
+ * Used for missing or invalid tokens
+ */
 export class UnauthorizedError extends Error {
     constructor(message = 'Invalid or missing token') {
         super(message);
@@ -23,6 +32,9 @@ export class UnauthorizedError extends Error {
     }
 }
 
+/**
+ * Used when unable to find a resource
+ */
 export class NotFoundError extends Error {
     constructor(message = 'Resource not found') {
         super(message);
@@ -31,6 +43,9 @@ export class NotFoundError extends Error {
     }
 }
 
+/**
+ * Used when trying to access unauthorized resources
+ */
 export class ForbiddenError extends Error {
     constructor(message = "Missing permissions for this account") {
         super(message);
@@ -39,10 +54,17 @@ export class ForbiddenError extends Error {
     }
 }
 
+/**
+ * Entry point for all error handling
+ */
 export default function errorHandler(err, req, res) {
     console.error(`${err.name}: ${err.message}`);  // Log the error for debugging
     if (err.statusCode && err.message && err.name) {
-        res.status(err.statusCode).json({error: err.name, message: err.message});
+        if (err.errors) {
+            res.status(err.statusCode).json({error: err.name, message: err.message, errors: err.errors});
+        } else {
+            res.status(err.statusCode).json({error: err.name, message: err.message});
+        }
     } else {
         // Other errors
         res.status(500).send('Oops - Something went wrong!');

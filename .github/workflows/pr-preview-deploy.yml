@@ -56,8 +56,10 @@ env:
   GAR_LOCATION: ${{ vars.GAR_LOCATION }} # TODO: update Artifact Registry location
   CLIENT_SERVICE: client-${{ github.head_ref }}-${{ github.event.pull_request.number }}
   CLIENT_IMAGE: ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/client-${{ github.head_ref }}-${{ github.event.pull_request.number }}
+  CLIENT_URL: https://client-${{ github.head_ref }}-${{ github.event.pull_request.number }}-ijpuyqrx3a-uc.a.run.app
   SERVER_SERVICE: server-${{ github.head_ref }}-${{ github.event.pull_request.number }}
   SERVER_IMAGE: ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/server-${{ github.head_ref }}-${{ github.event.pull_request.number }}
+  SERVER_URL: https://server-${{ github.head_ref }}-${{ github.event.pull_request.number }}-ijpuyqrx3a-uc.a.run.app
   REGION: ${{ vars.GCR_LOCATION }} # TODO: update Cloud Run service region
 
 jobs:
@@ -100,18 +102,16 @@ jobs:
           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Client Container
-        run: |-
+        run: |- # Pass in url from server preview deployment to use as our API endpoint
           bash -c 'docker pull "${{ env.CLIENT_IMAGE }}:latest" || exit 0'
-          docker build -t "${{ env.CLIENT_IMAGE }}:latest" --cache-from "${{ env.CLIENT_IMAGE }}:latest" ./client
+          docker build -t "${{ env.CLIENT_IMAGE }}:latest" --cache-from "${{ env.CLIENT_IMAGE }}:latest" ./client --build-arg NEXT_PUBLIC_API=${{ env.SERVER_URL }}/api/v1
           docker push "${{ env.CLIENT_IMAGE }}"
 
       - name: Build and Push Server Container
         run: |-
           bash -c 'docker pull "${{ env.SERVER_IMAGE }}:latest" || exit 0'
-          docker build -t "${{ env.SERVER_IMAGE }}:latest" --cache-from "${{ env.SERVER_IMAGE }}:latest" ./server
+          docker build -t "${{ env.SERVER_IMAGE }}:latest" --cache-from "${{ env.SERVER_IMAGE }}:latest" ./server --build-arg CLIENT_URL=${{ env.CLIENT_URL }}
           docker push "${{ env.SERVER_IMAGE }}"
-
-      # END - Docker auth and build
 
       - name: Deploy Client to Cloud Run
         id: deploy-client
