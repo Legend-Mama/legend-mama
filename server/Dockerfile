@@ -18,10 +18,13 @@ RUN npm ci
 
 # Production image, copy all the files and run next
 FROM base AS runner
+ARG CLIENT_URL
 WORKDIR /app
 COPY ./data ./data
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+ENV CLIENT_URL ${CLIENT_URL}
 
 ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodegroup
