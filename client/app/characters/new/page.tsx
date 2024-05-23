@@ -22,7 +22,7 @@ import StepperNav, { steps } from "./StepperNav";
 import readyBtn from "@/public/img/ready-button.png";
 import Image from "next/image";
 
-const { races } = racesJson;
+const races = racesJson as Record<string, any>;
 const { classes } = classesJson;
 
 interface Values {
@@ -516,23 +516,23 @@ function RaceSelect({ values, setValues }: any) {
   return (
     <Flex w="100%" gap={4}>
       <Grid w="50%" gap={2} templateColumns="repeat(2, 1fr)" flexShrink={0}>
-        {races.map((race) => (
+        {Object.keys(races).map((race) => (
           <Button
             secondary
             flexGrow={1}
-            key={race.name}
+            key={race}
             onClick={() =>
-              setValues((v: Values) => ({ ...v, race: race.name }))
+              setValues((v: Values) => ({ ...v, race: race }))
             }
-            highlight={values.race === race.name}
+            highlight={values.race === race}
           >
-            {race.name}
+            {race}
           </Button>
         ))}
       </Grid>
       <Box flexGrow={1} overflow="hidden">
         <Text textAlign="left" fontSize={14}>
-          {races.find((race) => race.name === values.race)?.description ?? "Select an option to learn more."}
+          {races[values.race]?.description ?? "Select an option to learn more."}
         </Text>
       </Box>
     </Flex>
