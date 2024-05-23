@@ -1,0 +1,26 @@
+.ability-table {
+  font-family: var(--font-source-serif);
+  color: #d7c5a0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.ability-table th {
+  color: #e7c26c;
+}
+
+.skills-table {
+  font-family: var(--font-source-serif);
+  color: #d7c5a0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.skills-table th {
+  font-family: var(--font-source-serif);
+  color: #e7c26c;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}

@@ -165,7 +165,7 @@ export class Character1 {
             ideal: "Change. We must help bring about the changes the gods are constantly working in the world. (Chaotic)",
             bond: "I will someday get revenge on the corrupt temple hierarchy who branded me a heretic.",
             flaw: "My piety sometimes leads me to blindly trust those that profess faith in my god.",
-            backstory: "Some fun backstory here"
+            backstory: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Neque egestas congue quisque egestas diam in arcu cursus. Commodo quis imperdiet massa tincidunt. Elit sed vulputate mi sit amet mauris. Ipsum dolor sit amet consectetur adipiscing elit. Tincidunt ornare massa eget egestas purus. Erat pellentesque adipiscing commodo elit. Tincidunt dui ut ornare lectus. Volutpat blandit aliquam etiam erat. Id porta nibh venenatis cras sed felis eget velit. Diam sit amet nisl suscipit adipiscing. Dui id ornare arcu odio ut sem nulla pharetra. Sed blandit libero volutpat sed cras. Justo donec enim diam vulputate. Semper viverra nam libero justo."
         };
     }
 
