@@ -1,0 +1,75 @@
+{
+  "name": "Liliana Willow",
+  "race": "High Elf",
+  "class": "Wizard",
+  "level": 1,
+  "background": {
+    "name": "Acolyte",
+    "specialty": "Shrine Keeper",
+    "description": "You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices.",
+    "skillProficiency": {
+      "insight": 2,
+      "religion": 2
+    },
+    "toolProficiency": [],
+    "languages": ["Elvish", "Celestial"],
+    "equipment": ["holy symbol", "prayer wheel", "incense",
+      "vestments", "set of common clothes", "pouch containing 15gp"],
+    "feature": ["Shelter of the Faithful"]
+  },
+  "alignment": "Neutral Good",
+  "abilityScores": {
+    "strength": 8,
+    "dexterity": 14,
+    "constitution": 12,
+    "intelligence": 16,
+    "wisdom": 13,
+    "charisma": 10
+  },
+  "abilityModifiers": {
+    "strength": -1,
+    "dexterity": 2,
+    "constitution": 1,
+    "intelligence": 3,
+    "wisdom": 1,
+    "charisma": 0
+  },
+  "armorClass": 12,
+  "initiative": 2,
+  "speed": 30,
+  "hitDice": "1d6",
+  "hitPointMax": 7,
+  "proficiencyBonus": 2,
+  "passivePerception": 11,
+  "savingThrows": {
+    "intelligence": 5,
+    "wisdom": 3
+  },
+  "skills": {
+    "arcana": 5,
+    "history": 5,
+    "insight": 3,
+    "religion": 5
+  },
+  "weaponProficiency": ["daggers", "darts", "slings", "quarterstaffs", "light crossbows"],
+  "armorProficiency": [],
+  "toolProficiency": [],
+  "languages": ["Common", "Elvish", "Celestial"],
+  "personalityTraits": [
+    "I can find common ground between the fiercest enemies, empathizing with them and always working toward peace.",
+    "I see omens in every event and action. The gods try to speak to us, we just need to listen."
+  ],
+  "ideal": "Charity. I always try to help those in need, no matter what the personal cost.",
+  "bond": "I will do anything to protect the temple where I served.",
+  "flaw": "I trust too easily, which can lead me into trouble.",
+  "features": [
+    "Spellcasting", "Arcane Recovery",
+    "Darkvision", "Fey Ancestry", "Trance"
+  ],
+  "backstory": "Raised in the tranquil groves of my homeland, I was chosen at a young age to serve in the grand temple. My devotion to my deities drives me to seek knowledge and spread the light of wisdom.",
+  "equipment": [
+    "Wizard's robe", "Spellbook",
+    "holy symbol", "prayer wheel", "incense",
+    "vestments", "set of common clothes", "pouch containing 15gp"
+  ]
+}
