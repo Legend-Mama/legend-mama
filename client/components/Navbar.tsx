@@ -144,7 +144,6 @@ export default function Navbar() {
                 >
                   <GPToken height={30} width={30} glow /> {data.user.goldBalance || "?"} GP
                 </Text>
-                <PiPlusCircleFill fontSize={24} />
                 <PiQuestionFill fontSize={24} />
               </HStack>
 

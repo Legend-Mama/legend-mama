@@ -224,17 +224,13 @@ export default function SignUp() {
             </Text>
           )}
         </Container>
-        <Header as="h2">Pricing Details</Header>
+        <Header as="h2">Usage Details</Header>
         <Text>
           All accounts have 3 gold pieces (<GPToken />
-          GP) to spend on character generation per day. At midnight UTC, if you
-          used any of your free GP, you will be topped off back to <GPToken />3
+          GP) to spend on character generation per day. Every day, if you
+          used any of your GP, you will be topped off back to <GPToken />3
           GP. Legend Mama requires <GPToken />1 GP for each character
-          generation.
-        </Text>
-        <Text>
-          More GP can be purchased if you wish for more, or if you simply wish
-          to support our project!
+          generation or character image generation.
         </Text>
       </Container>
     </>
