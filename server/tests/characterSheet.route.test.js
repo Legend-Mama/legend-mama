@@ -3,7 +3,7 @@ import app from '../server.js';
 import dotenv from "dotenv";
 dotenv.config();
 
-// Dummy Data
+// Dummy Client and Data
 import {client} from "./dummyClient.js";
 import {character1, character2} from './data/characterSheetTestData.js';
 
@@ -15,11 +15,16 @@ describe('Character Sheet Editor Routes', () => {
 
         try {
             await request(app)
-                .post('/api/v1/account')
+                .get('/api/v1/account/gold-balance')
                 .set('Authorization', `Bearer ${user1token}`)
-                .expect(201)
+                .expect(200)
         } catch(err) {
             console.log(err);
+            await request(app)
+                .post('/api/v1/account')
+                .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
+                .expect(201)
         }
     });
 
