@@ -17,7 +17,7 @@ import {
   VStack,
   useSteps,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import StepperNav, { steps } from "./StepperNav";
 import readyBtn from "@/public/img/die.png";
 import Image from "next/image";
@@ -63,7 +63,33 @@ export default function NewCharacter() {
     dislikes: { freetext: true, value: "" },
   });
 
-  const enableSubmitButton = canSubmit(values);
+  const enableSubmitButton = useMemo(() => canSubmit(values), [values]);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const [scrollInfo, setScrollInfo] = useState<{
+    scrollTop: number;
+    scrollBottom: number;
+  }>();
+
+  useEffect(() => {
+    // Attach scroll listener
+    const ref = scrollRef.current;
+    if (!ref) return;
+
+    function scrollHandler(_e: Event) {
+      if (!ref) return;
+      setScrollInfo({
+        scrollTop: ref?.scrollTop,
+        scrollBottom: ref?.scrollHeight - window.innerHeight - ref?.scrollTop,
+      });
+    }
+
+    ref.addEventListener("scroll", scrollHandler);
+    return () => ref?.removeEventListener("scroll", scrollHandler);
+  }, []);
+
+  console.log(scrollInfo);
 
   return (
     <Flex as="main" h="100%" w="100%">
@@ -73,7 +99,14 @@ export default function NewCharacter() {
           setActiveStep={setActiveStepAndScroll}
         />
       </Flex>
-      <Box h="100%" flexGrow={1} overflowY="auto">
+      <Box
+        h="100%"
+        flexGrow={1}
+        overflowY="auto"
+        position="relative"
+        ref={scrollRef}
+        pb={20}
+      >
         <Container maxWidth="container.md">
           <VStack w="100%" mb={8}>
             <Flex
@@ -372,7 +405,8 @@ export default function NewCharacter() {
                   transform="translate(-50%, 0)"
                   textAlign="center"
                 >
-                  Legend Mama requires more information before she can find your adventurer.
+                  Legend Mama requires more information before she can find your
+                  adventurer.
                 </Text>
               </Box>
               <InfoBox mt={6} mb={12}>
@@ -415,6 +449,28 @@ export default function NewCharacter() {
             </Flex>
           </VStack>
         </Container>
+        {/* Upper shadow */}
+        <Box
+          position="fixed"
+          top="0"
+          width="100%"
+          height="20vh"
+          bg="linear-gradient(0deg, #13120F00, #13120F 80%)"
+          opacity={scrollInfo?.scrollTop && scrollInfo?.scrollTop > 300 ? 1 : 0}
+          transition="all 0.4s"
+          pointerEvents="none"
+        />
+        {/* Lower shadow */}
+        <Box
+          position="fixed"
+          bottom="0"
+          width="100%"
+          height="20vh"
+          bg="linear-gradient(#13120F00, #13120F 80%)"
+          opacity={scrollInfo?.scrollBottom === undefined || scrollInfo?.scrollBottom > 300 ? 1 : 0}
+          transition="all 0.4s"
+          pointerEvents="none"
+        />
       </Box>
     </Flex>
   );
