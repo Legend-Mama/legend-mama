@@ -45,32 +45,8 @@ describe('Character Sheet Editor Routes', () => {
             await request(app)
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user2token}`)
-                .send(characterDetails)
+                .send(character1.charDetails)
                 .expect(404)
-        });
-
-        it('Should return a character sheet w/ Bearer token (2)', async () => {
-            await request(app)
-                .post('/api/v1/character-sheet')
-                .set('Authorization', `Bearer ${user1token}`)
-                .send(characterDetails)
-                .expect(201)
-        });
-
-        it('Should return a character sheet w/ Bearer token (3)', async () => {
-            await request(app)
-                .post('/api/v1/character-sheet')
-                .set('Authorization', `Bearer ${user1token}`)
-                .send(characterDetails)
-                .expect(201)
-        });
-
-        it('Should fail w/ insufficient gold balance', async () => {
-            await request(app)
-                .post('/api/v1/character-sheet')
-                .set('Authorization', `Bearer ${user1token}`)
-                .send(characterDetails)
-                .expect(422)
         });
 
         it('Should fail w/ invalid request body', async () => {
@@ -80,6 +56,30 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Content-Type', 'application/json')
                 .send({name: "Potato Man"})
                 .expect(400)
+        });
+
+        it('Should return a character sheet w/ Bearer token (2)', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .send(character1.charDetails)
+                .expect(201, character1.charSheet)
+        });
+
+        it('Should return a character sheet w/ Bearer token (3)', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .send(character1.charDetails)
+                .expect(201, character1.charSheet)
+        });
+
+        it('Should fail w/ insufficient gold balance', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .send(character1.charDetails)
+                .expect(422)
         });
     });
 
