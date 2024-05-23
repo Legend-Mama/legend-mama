@@ -21,6 +21,7 @@ import { useCallback, useState } from "react";
 import StepperNav, { steps } from "./StepperNav";
 import readyBtn from "@/public/img/ready-button.png";
 import Image from "next/image";
+import * as presets from "./presets";
 
 const races = racesJson as Record<string, any>;
 const { classes } = classesJson;
@@ -44,90 +45,6 @@ interface Values {
   likes: { value: string; freetext: boolean };
   dislikes: { value: string; freetext: boolean };
 }
-
-const worldviews = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const ethicalTraits = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const extraversion = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const agreeableness = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const conscientiousness = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const neuroticism = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const opennessToExperience = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const quirks = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const motivations = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const fears = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const likes = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
-
-const dislikes = [
-  { name: "option1", description: "Option 1" },
-  { name: "option2", description: "Option 2" },
-  { name: "option3", description: "Option 3" },
-  { name: "option4", description: "Option 4" },
-];
 
 export default function NewCharacter() {
   const { activeStep, setActiveStep } = useSteps({
@@ -235,7 +152,7 @@ export default function NewCharacter() {
                 }
                 title="How does your character feel about the world?"
                 valueField={values.worldview}
-                options={worldviews}
+                options={presets.worldviews}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -249,7 +166,7 @@ export default function NewCharacter() {
                 }
                 title="What are their guiding principles?"
                 valueField={values.ethicalTraits}
-                options={ethicalTraits}
+                options={presets.ethicalTraits}
               />
             </Flex>
             <Divider mt={8} />
@@ -279,7 +196,7 @@ export default function NewCharacter() {
                 }
                 title="Do they have a lot of friends?"
                 valueField={values.personalityScores.extraversion}
-                options={extraversion}
+                options={presets.extraversion}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -296,7 +213,7 @@ export default function NewCharacter() {
                 }
                 title="Do they get along well with those in need?"
                 valueField={values.personalityScores.agreeableness}
-                options={agreeableness}
+                options={presets.agreeableness}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -313,7 +230,7 @@ export default function NewCharacter() {
                 }
                 title="How much do they plan their adventures?"
                 valueField={values.personalityScores.conscientiousness}
-                options={conscientiousness}
+                options={presets.conscientiousness}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -330,7 +247,7 @@ export default function NewCharacter() {
                 }
                 title="What do they do when faced with great odds?"
                 valueField={values.personalityScores.neuroticism}
-                options={neuroticism}
+                options={presets.neuroticism}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -347,7 +264,7 @@ export default function NewCharacter() {
                 }
                 title="How do they feel about the unknown?"
                 valueField={values.personalityScores.opennessToExperience}
-                options={opennessToExperience}
+                options={presets.opennessToExperience}
               />
             </Flex>
             <Divider mt={8} />
@@ -374,7 +291,7 @@ export default function NewCharacter() {
                 }
                 title="Do they have any unique traits or quirks?"
                 valueField={values.quirks}
-                options={quirks}
+                options={presets.quirks}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -388,7 +305,7 @@ export default function NewCharacter() {
                 }
                 title="What motivates them? Do they have a goal they wish to achieve?"
                 valueField={values.motivations}
-                options={motivations}
+                options={presets.motivations}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -402,7 +319,7 @@ export default function NewCharacter() {
                 }
                 title="What does your character fear?"
                 valueField={values.fears}
-                options={fears}
+                options={presets.fears}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -416,7 +333,7 @@ export default function NewCharacter() {
                 }
                 title="What does your character like?"
                 valueField={values.likes}
-                options={likes}
+                options={presets.likes}
               />
               <FreetextOrButton
                 setValues={(value, freetext) =>
@@ -430,7 +347,7 @@ export default function NewCharacter() {
                 }
                 title="What does your character dislike?"
                 valueField={values.dislikes}
-                options={dislikes}
+                options={presets.dislikes}
               />
             </Flex>
             <Divider mt={8} />
@@ -521,9 +438,7 @@ function RaceSelect({ values, setValues }: any) {
             secondary
             flexGrow={1}
             key={race}
-            onClick={() =>
-              setValues((v: Values) => ({ ...v, race: race }))
-            }
+            onClick={() => setValues((v: Values) => ({ ...v, race: race }))}
             highlight={values.race === race}
           >
             {race}
