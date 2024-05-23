@@ -48,5 +48,40 @@ describe("AICharGen", function () {
       expect(result.name).to.equal(userInput.name);
       expect(result.class).to.equal(userInput.class);
     });
+    it("should handle errors when creating a thread", async function () {
+      sandbox.restore();
+      sandbox
+        .stub(aiCharGen.openai.beta.threads, "create")
+        .throws(new Error("Thread Creation Error"));
+      const result = await aiCharGen.generateChar(mockInput);
+      expect(result).to.be.undefined;
+    });
+    it("should handle errors when creating a message", async function () {
+      sandbox.restore();
+      sandbox
+        .stub(aiCharGen.openai.beta.threads.messages, "create")
+        .throws(new Error("Message Creation Error"));
+      const result = await aiCharGen.generateChar(mockInput);
+      expect(result).to.be.undefined;
+    });
+
+    it("should handle errors during character generation", async function () {
+      sandbox.restore();
+      sandbox
+        .stub(aiCharGen.openai.beta.threads.runs, "createAndPoll")
+        .throws(new Error("Generation Error"));
+      const result = await aiCharGen.generateChar(mockInput);
+      expect(result).to.be.undefined;
+    });
+  });
+  describe("initialize", function () {
+    it("should initialize with provided vectorStoreId and assistantId", async function () {
+      const result = await aiCharGen.initialize({
+        vectorStoreId: "provided_vector_store_id",
+        assistantId: "provided_assistant_id",
+      });
+      expect(result.vectorStoreId).to.equal("provided_vector_store_id");
+      expect(result.assistantId).to.equal("provided_assistant_id");
+    });
   });
 });
