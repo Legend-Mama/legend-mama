@@ -19,32 +19,13 @@ import {
 } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import StepperNav, { steps } from "./StepperNav";
-import readyBtn from "@/public/img/ready-button.png";
+import readyBtn from "@/public/img/die.png";
 import Image from "next/image";
 import * as presets from "./presets";
+import { Values, canSubmit } from "./lib";
 
 const races = racesJson as Record<string, any>;
 const { classes } = classesJson;
-
-interface Values {
-  name: string;
-  race: string;
-  class: string;
-  worldview: { value: string; freetext: boolean };
-  ethicalTraits: { value: string; freetext: boolean };
-  personalityScores: {
-    extraversion: { value: string; freetext: boolean };
-    agreeableness: { value: string; freetext: boolean };
-    conscientiousness: { value: string; freetext: boolean };
-    neuroticism: { value: string; freetext: boolean };
-    opennessToExperience: { value: string; freetext: boolean };
-  };
-  quirks: { value: string; freetext: boolean };
-  motivations: { value: string; freetext: boolean };
-  fears: { value: string; freetext: boolean };
-  likes: { value: string; freetext: boolean };
-  dislikes: { value: string; freetext: boolean };
-}
 
 export default function NewCharacter() {
   const { activeStep, setActiveStep } = useSteps({
@@ -82,6 +63,8 @@ export default function NewCharacter() {
     dislikes: { freetext: true, value: "" },
   });
 
+  const enableSubmitButton = canSubmit(values);
+
   return (
     <Flex as="main" h="100%" w="100%">
       <Flex h="100%" w={300}>
@@ -111,7 +94,7 @@ export default function NewCharacter() {
                 <InputGroup
                   serif
                   onChange={(e) =>
-                    setValues((v) => ({ ...v, name: e.target.name }))
+                    setValues((v) => ({ ...v, name: e.target.value }))
                   }
                 />
               </Box>
@@ -361,27 +344,74 @@ export default function NewCharacter() {
               <Header size="2xl" mb={4}>
                 Generate Backstory & Character Sheet
               </Header>
-              <Header size="3xl" mb={4} textAlign="center" glow>
+              <Header
+                size="3xl"
+                mb={4}
+                textAlign="center"
+                glow={enableSubmitButton}
+                transition="0.8s all"
+              >
                 Are you ready to meet your adventurer?
               </Header>
-              <Text>
-                Legend Mama looks through her mammoth tome of wanderers. At
-                last, she{"'"}s found one that fits your qualifications. Let
-                {"'"}s hear the tale of how they made their mark — if any — on
-                this history of this realm...
-              </Text>
+              <Box position="relative">
+                <Text
+                  opacity={enableSubmitButton ? 1 : 0}
+                  transition="0.6s all"
+                >
+                  Legend Mama looks through her mammoth tome of wanderers. At
+                  last, she{"'"}s found one that fits your qualifications. Let
+                  {"'"}s hear the tale of how they made their mark — if any — on
+                  this history of this realm...
+                </Text>
+                <Text
+                  opacity={enableSubmitButton ? 0 : 1}
+                  transition="0.6s all"
+                  position="absolute"
+                  top={0}
+                  left="50%"
+                  transform="translate(-50%, 0)"
+                  textAlign="center"
+                >
+                  Legend Mama requires more information before she can find your adventurer.
+                </Text>
+              </Box>
               <InfoBox mt={6} mb={12}>
                 Generating this character will spend{" "}
                 <GPToken height={14} width={14} /> 1GP as payment for Legend
                 Mama{"'"}s services. Please ensure you are satisfied with your
                 answers to the above questions before continuing.
               </InfoBox>
-              <Image
-                src={readyBtn}
-                alt="Ready button"
-                style={{ cursor: "pointer" }}
-                onClick={() => console.log(values)}
-              />
+              <Box
+                position="relative"
+                onClick={
+                  enableSubmitButton ? () => console.log(values) : undefined
+                }
+                cursor={enableSubmitButton ? "pointer" : "not-allowed"}
+              >
+                <Image
+                  src={readyBtn}
+                  alt="Ready button"
+                  style={{
+                    opacity: enableSubmitButton ? 1 : 0.5,
+                    filter: enableSubmitButton
+                      ? "drop-shadow(0 0 16px #F1EFBB)"
+                      : "unset",
+                    transition: "all 0.2s",
+                  }}
+                />
+                <Text
+                  color="#2F295F"
+                  fontFamily="var(--font-source-sans)"
+                  fontSize={enableSubmitButton ? 20 : 16}
+                  fontWeight={600}
+                  position="absolute"
+                  top="50%"
+                  left="50%"
+                  transform="translate(-50%, -50%)"
+                >
+                  {enableSubmitButton ? "Ready" : "Incomplete"}
+                </Text>
+              </Box>
             </Flex>
           </VStack>
         </Container>
@@ -407,7 +437,13 @@ function FreetextOrButton({
       <TextArea
         mb={4}
         onChange={(e) => {
-          e.target.value && setValues(e.target.value, true);
+          if (e.target.value) {
+            setValues(e.target.value, true);
+          } else {
+            // field emptied - user can clear the textarea if they selected a preset but make sure not to delete the value so that we preserve the preset selection
+            // clear the value if a preset is not selected
+            if (valueField.freetext) setValues(e.target.value, true);
+          }
         }}
         highlight={valueField.freetext}
         subtle={!valueField.freetext}
