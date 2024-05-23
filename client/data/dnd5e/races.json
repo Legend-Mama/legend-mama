@@ -55,45 +55,6 @@
       ]
     },
     {
-      "name": "Mountain Dwarf",
-      "description": "Dwarves are stout and strong, known for their skill in forging and mining. They value tradition and live in mountainous or underground cities. Dwarves have increased Constitution scores and resistance to poison. They are also proficient with certain weapons and tools, showcasing their craftsmanship. Hill dwarves are a subrace of dwarves who are strong and hardy, accustomed to life in a difficult terrain.",
-      "abilityScoreIncrease": [
-        {"Constitution": 2},
-        {"Stength": 2}
-      ],
-      "speed": 25,
-      "weaponProficiency": [
-        "Battleaxe",
-        "Handaxe",
-        "Light Hammer",
-        "Warhammer"
-      ],
-      "armorProficiency": [
-        "Light armor",
-        "Medium armor"
-      ],
-      "toolProficiency": [
-        {
-          "select": 1,
-          "options": [
-            "artisansTools"
-          ]
-        }
-      ],
-      "languages": [
-        "Common",
-        "Dwarvish"
-      ],
-      "features": [
-        "Darkvision",
-        "Dwarven Resilience",
-        "Dwarven Combat Training",
-        "Artisan's Tool Proficiency",
-        "Stonecunning",
-        "Dwarven Armor Training"
-      ]
-    },
-    {
       "name": "High Elf",
       "description": "Known for their grace and longevity, elves live in natural settings and are often seen as aloof. They come in different kinds, including high elves, wood elves, and dark elves (drow). Elves have keen senses and intuition, reflected in their proficiency in Perception. They also have Fey Ancestry, which grants them advantage on saving throws against being charmed, and immunity to magical sleep.  High elves are a subrace of elves who have a keen mind and mastery over the basics of magic.",
       "abilityScoreIncrease": [
@@ -128,37 +89,6 @@
         "Elf Weapon Training",
         "Cantrip",
         "Extra Language"
-      ],
-      "skillsProficiency": [
-        "Perception"
-      ]
-    },
-    {
-      "name": "Wood Elf",
-      "description": "Known for their grace and longevity, elves live in natural settings and are often seen as aloof. They come in different kinds, including high elves, wood elves, and dark elves (drow). Elves have keen senses and intuition, reflected in their proficiency in Perception. They also have Fey Ancestry, which grants them advantage on saving throws against being charmed, and immunity to magical sleep. Wood Elves are a subrace of elves who have strong senses and intuition, useful for quickly and stealthily navigating their native forests.",
-      "abilityScoreIncrease": [
-        {"Dexterity": 2},
-        {"Wisdom": 1}
-      ],
-      "speed": 35,
-      "weaponProficiency": [
-        "Longsword",
-        "Shortsword",
-        "Shortbow",
-        "Longbow"
-      ],
-      "languages": [
-        "Common",
-        "Elvish"
-      ],
-      "features": [
-        "Darkvision",
-        "Keen Senses",
-        "Fey Ancestry",
-        "Trance",
-        "Elf Weapon Training",
-        "Fleet of Foot",
-        "Mask of the Wild"
       ],
       "skillsProficiency": [
         "Perception"
@@ -241,25 +171,6 @@
         "Brave",
         "Halfling Nimbleness",
         "Naturally Stealthy"
-      ]
-    },
-    {
-      "name": "Stout Halfling",
-      "description": "Small and unassuming, halflings live in pastoral idylls or quiet boroughs. They love peace and comfort but are surprisingly resourceful and brave. Halflings are lucky, which allows them to reroll 1s on d20 rolls once. They are also nimble and can move through the space of larger creatures. Stout Halflings are a subrace of halflings that are very hardy and are commonly referred to as 'stronghearts'.",
-      "abilityScoreIncrease": [
-        {"Dexterity": 2},
-        {"Constitution": 1}
-      ],
-      "speed": 25,
-      "languages": [
-        "Common",
-        "Halfling"
-      ],
-      "features": [
-        "Lucky",
-        "Brave",
-        "Halfling Nimbleness",
-        "Stout Resilience"
       ]
     },
     {
