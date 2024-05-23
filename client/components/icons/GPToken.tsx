@@ -1,5 +1,3 @@
-import { Image } from "@chakra-ui/next-js";
-
 export default function GPToken({ width = 20, height = 20, glow = false, ...props }) {
   return (
     <svg

@@ -1,9 +1,5 @@
-'use client';
-import {
-  FirebaseApp,
-  getApp,
-  initializeApp
-} from "firebase/app";
+"use client";
+import { FirebaseApp, getApp, initializeApp } from "firebase/app";
 import {
   Auth,
   GoogleAuthProvider,
@@ -28,14 +24,16 @@ const firebaseConfig = {
 interface AuthContextType {
   auth: Auth | null;
   loggedIn: boolean;
-  user: User | null;
   providers: { google: GoogleAuthProvider | null };
+  idToken: string | null;
+  user: User | null;
 }
 
 const defaultContext: AuthContextType = {
   auth: null,
   loggedIn: false,
   user: null,
+  idToken: null,
   providers: { google: null },
 } as const;
 
@@ -76,9 +74,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (user) {
         setContext((ctx) => ({ ...ctx, loggedIn: true }));
         setContext((ctx) => ({ ...ctx, user }));
+
+        // Update gold balance & id token
+        user.getIdToken().then((idToken) => {
+          setContext((ctx) => ({ ...ctx, idToken }));
+        });
       } else {
-        setContext((ctx) => ({ ...ctx, loggedIn: false }));
-        setContext((ctx) => ({ ...ctx, user: null }));
+        setContext((ctx) => ({ ...ctx, loggedIn: false, user: null, idToken: null }));
       }
     });
 

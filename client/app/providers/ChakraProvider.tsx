@@ -25,6 +25,20 @@ const theme = extendTheme({
         fontFamily: "var(--font-source-sans)",
       },
     },
+    Stepper: {
+      baseStyle: {
+        stepper: {
+          color: "#E8D3A2",
+          fontFamily: "var(--font-source-sans)",
+        },
+        separator: {
+          bg: "#868584",
+        },
+        indicator: {
+          borderColor: "#868584",
+        },
+      },
+    },
   },
   styles: {
     global: (props: any) => ({
@@ -37,6 +51,7 @@ const theme = extendTheme({
   colors: {
     brand: {
       900: "#EFC665",
+      500: "#E8D3A2",
       800: "#E8D3A2",
     },
     gray: {
@@ -50,10 +65,6 @@ const theme = extendTheme({
   },
 });
 
-export default function ChakraProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function ChakraProvider({ children }: { children: ReactNode }) {
   return <BaseChakraProvider theme={theme}>{children}</BaseChakraProvider>;
 }
