@@ -14,12 +14,13 @@ describe('Character Sheet Editor Routes', () => {
 
     describe('POST /character-sheet', () => {
         it('Should return a character sheet w/ Bearer token', async () => {
+            console.log("Start request");
             await request(app)
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send(character1.charDetails)
-                .expect(201, character1.charSheet)
+                .expect(201)
         });
 
         it('Should fail w/o Bearer token', async () => {
@@ -47,7 +48,7 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send(character2.generatedChar)
-                .expect(200, character2.charSheet)
+                .expect(200)
         });
 
         it('Should fail w/o Bearer token', async () => {

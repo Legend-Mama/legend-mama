@@ -159,60 +159,18 @@ describe('Character Sheet and Associated Objects', () => {
                     "Religion"
                 ],
                 toolProficiency: [],
-                languages: [
-                    {
-                        "select": 2,
-                        "options": [
-                            "Elvish",
-                            "Dwarvish",
-                            "Giant",
-                            "Gnomish",
-                            "Goblin",
-                            "Halfling",
-                            "Orc",
-                            "Abyssal",
-                            "Celestial",
-                            "Draconic",
-                            "Deep Speech",
-                            "Infernal",
-                            "Primordial",
-                            "Sylvan",
-                            "Undercommon"
-                        ]
-                    }
-                ],
+                languages: ["Elvish", "Dwarvish"],
                 feature: {name: "Shelter of the Faithful", description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."}
             };
             const input = {
                 name: "Acolyte",
                 description: "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
-                skillProficiency: [
+                skills: [
                     "Insight",
                     "Religion"
                 ],
-                toolProficiency: [],
-                languages: [
-                    {
-                        "select": 2,
-                        "options": [
-                            "Elvish",
-                            "Dwarvish",
-                            "Giant",
-                            "Gnomish",
-                            "Goblin",
-                            "Halfling",
-                            "Orc",
-                            "Abyssal",
-                            "Celestial",
-                            "Draconic",
-                            "Deep Speech",
-                            "Infernal",
-                            "Primordial",
-                            "Sylvan",
-                            "Undercommon"
-                        ]
-                    }
-                ],
+                tools: [],
+                languages: ["Elvish", "Dwarvish"],
                 feature: {
                     name: "Shelter of the Faithful",
                     description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."
@@ -221,6 +179,83 @@ describe('Character Sheet and Associated Objects', () => {
 
             const returned = new Background(input);
             expect(returned).to.deep.equal(expected);
+        });
+        it('returns object for background with too few skills', () => {
+            const input = {
+                name: "Acolyte",
+                description: "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
+                skills: [
+                    "Insight",
+                ],
+                tools: [],
+                languages: ["Elvish", "Dwarvish"],
+                feature: {
+                    name: "Shelter of the Faithful",
+                    description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."
+                }
+            };
+
+            const returned = new Background(input);
+            expect(returned.skillProficiency).to.have.lengthOf(2);
+        });
+        it('returns object for background with too many skills', () => {
+            const input = {
+                name: "Acolyte",
+                description: "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
+                skills: [
+                    "Insight",
+                    "Medicine",
+                    "Religion"
+                ],
+                tools: [],
+                languages: ["Elvish", "Dwarvish"],
+                feature: {
+                    name: "Shelter of the Faithful",
+                    description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."
+                }
+            };
+
+            const returned = new Background(input);
+            expect(returned.skillProficiency).to.have.lengthOf(2);
+        });
+        it('returns object for background with too few languages or tools', () => {
+            const input = {
+                name: "Acolyte",
+                description: "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
+                skills: [
+                    "Insight",
+                    "Religion"
+                ],
+                tools: [],
+                languages: ["Elvish"],
+                feature: {
+                    name: "Shelter of the Faithful",
+                    description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."
+                }
+            };
+
+            const returned = new Background(input);
+            expect(returned.toolProficiency.concat(returned.languages)).to.have.lengthOf(2);
+        });
+
+        it('returns object for background with too many languages or tools', () => {
+            const input = {
+                name: "Acolyte",
+                description: "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
+                skills: [
+                    "Insight",
+                    "Religion"
+                ],
+                tools: ["Water vehicles"],
+                languages: ["Elvish", "Draconic"],
+                feature: {
+                    name: "Shelter of the Faithful",
+                    description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."
+                }
+            };
+
+            const returned = new Background(input);
+            expect(returned.toolProficiency.concat(returned.languages)).to.have.lengthOf(2);
         });
     });
 

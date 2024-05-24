@@ -1,13 +1,20 @@
 // Input is modeled like generatedChar updated with Race, Class, and Background objects
+import {Background} from "../../models/characterSheet.model.js";
+
 export class Character1 {
     constructor() {
-
         this.charDetails = {
             race: "High Elf",
             class: "Barbarian",
             worldview: "Humanism",
             ethicalTraits: ["Sincere", "Empathetic", "Cowardly", "Trusting"],
-            personalityTraits: ["Ebullient", "Eccentric", "Unflappable", "Inept"],
+            personalityTraits: {
+                extroversion: "Reserved",
+                agreeableness: "Helpful",
+                conscientiousness: "Organized",
+                neuroticism: "Anxious",
+                openness: "Inquisitive"
+            },
             quirks: ["Can't swim"],
             motivations: ["Inner Peace", "Worldly knowledge"],
             fears: ["Loneliness"],
@@ -15,24 +22,25 @@ export class Character1 {
             dislikes: ["Broccoli"],
             backstory: "Create a story similar to the Gentleman Pirate, Stede Bonnet."
         };
+        const background = {
+            name: "Acolyte",
+                description: "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
+                skills: [
+                "Insight",
+                "Religion"
+            ],
+                tools: [],
+                languages: ["Dwarvish", "Giant"],
+                feature: {
+                name: "Shelter of the Faithful",
+                    description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."
+            }
+        };
         this.generatedChar = {
             name: "Captain Flapjack",
             race: "High Elf",
             class: "Barbarian",
-            background: {
-                name: "Acolyte",
-                description: "A character who has spent their life in the service of a temple, learning about their faith, performing sacred rites, and gaining a deep connection with their deity.",
-                skillProficiency: [
-                    "Insight",
-                    "Religion"
-                ],
-                toolProficiency: [],
-                languages: ["Dwarvish", "Giant"],
-                feature: {
-                    name: "Shelter of the Faithful",
-                    description: "Provides the character with significant support from their religious community. As a result, the character and their adventuring party can receive free healing and care at temples and other religious communities associated with their faith, and they can also count on the clergy for support in obtaining information and securing allies."
-                }
-            },
+            background: new Background(background),
             alignment: "Chaotic Good",
             abilityScores: {strength: 8, dexterity: 15, constitution: 13, intelligence: 10, wisdom: 10, charisma: 15},
             racialStatBonus: ["dexterity,2", "intelligence,1"],
@@ -46,7 +54,8 @@ export class Character1 {
             ideal: "Change. We must help bring about the changes the gods are constantly working in the world. (Chaotic)",
             bond: "I will someday get revenge on the corrupt temple hierarchy who branded me a heretic.",
             flaw: "My piety sometimes leads me to blindly trust those that profess faith in my god.",
-            backstory: "Some fun backstory here"
+            backstory: "Some fun backstory here",
+            quote: "The sea calls!"
         };
         this.charSheet = {
             name: "Captain Flapjack",
@@ -165,7 +174,8 @@ export class Character1 {
             ideal: "Change. We must help bring about the changes the gods are constantly working in the world. (Chaotic)",
             bond: "I will someday get revenge on the corrupt temple hierarchy who branded me a heretic.",
             flaw: "My piety sometimes leads me to blindly trust those that profess faith in my god.",
-            backstory: "Some fun backstory here"
+            backstory: "Some fun backstory here",
+            quote: "The sea calls!"
         };
     }
 
@@ -189,7 +199,13 @@ export class Character2 {
             class: "Sorcerer",
             worldview: "Nihilism",
             ethicalTraits: ["Petty", "Modest", "Honest"],
-            personalityTraits: ["Private", "Eccentric", "Brooding", "Intelligent", "Sarcastic"],
+            personalityTraits: {
+                extroversion: "Private",
+                agreeableness: "Reserved",
+                conscientiousness: "Organized",
+                neuroticism: "Anxious",
+                openness: "Inquisitive"
+            },
             quirks: ["Chews on hair"],
             motivations: ["Mastery of Arcane Arts", "Infernal Patron"],
             fears: ["Stagnation"],
@@ -197,24 +213,25 @@ export class Character2 {
             dislikes: ["Loud noises"],
             backstory: "Create a story similar to the Raven from Teen Titans."
         };
+        const background = {
+            name: "Hermit",
+            description: "A character who has lived in seclusion for a long time, either in a sheltered community such as a monastery, or entirely alone, seeking spiritual enlightenment or personal insight.",
+            skills: [
+                "Medicine",
+                "Religion"
+            ],
+            tools: ["Herbalism Kit"],
+            languages: ["Infernal"],
+            feature: {
+                name: "Discovery",
+                description: "The quiet seclusion of your extended hermitage gave you access to a unique and powerful discovery. The exact nature of this revelation depends on the nature of your seclusion."
+            }
+        };
         this.generatedChar = {
             name: "Mystic Raven",
             race: "Half-Orc",
             class: "Sorcerer",
-            background: {
-                name: "Hermit",
-                description: "A character who has lived in seclusion for a long time, either in a sheltered community such as a monastery, or entirely alone, seeking spiritual enlightenment or personal insight.",
-                skillProficiency: [
-                    "Medicine",
-                    "Religion"
-                ],
-                toolProficiency: ["Herbalism Kit"],
-                languages: ["Infernal"],
-                feature: {
-                    name: "Discovery",
-                    description: "The quiet seclusion of your extended hermitage gave you access to a unique and powerful discovery. The exact nature of this revelation depends on the nature of your seclusion."
-                }
-            },
+            background: new Background(background),
             alignment: "Neutral",
             abilityScores: {strength: 10, dexterity: 12, constitution: 14, intelligence: 13, wisdom: 15, charisma: 8},
             racialStatBonus: ["strength,2", "constitution,1"],
@@ -228,7 +245,8 @@ export class Character2 {
             ideal: "Knowledge. The path to power and self-improvement is through knowledge. (Neutral)",
             bond: "I'm still seeking the enlightenment I pursued in my seclusion, and it still eludes me.",
             flaw: "I harbor dark, bloodthirsty thoughts that my isolation and meditation failed to quell.",
-            backstory: "Isolated from society, Mystic Raven sought the truths of the arcane arts within the confines of a dark cave."
+            backstory: "Isolated from society, Mystic Raven sought the truths of the arcane arts within the confines of a dark cave.",
+            quote: "Shh!"
 
         };
         this.charSheet = {
@@ -309,7 +327,8 @@ export class Character2 {
             ideal: "Knowledge. The path to power and self-improvement is through knowledge. (Neutral)",
             bond: "I'm still seeking the enlightenment I pursued in my seclusion, and it still eludes me.",
             flaw: "I harbor dark, bloodthirsty thoughts that my isolation and meditation failed to quell.",
-            backstory: "Isolated from society, Mystic Raven sought the truths of the arcane arts within the confines of a dark cave."
+            backstory: "Isolated from society, Mystic Raven sought the truths of the arcane arts within the confines of a dark cave.",
+            quote: "Shh!"
         };
     }
 

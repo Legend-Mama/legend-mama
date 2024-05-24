@@ -24,8 +24,16 @@ import classes from '../data/dnd5e/classes.json' with {type: 'json'};
 import races from '../data/dnd5e/races.json' with {type: 'json'};
 import tools from '../data/dnd5e/tools.json' with {type: 'json'};
 import weapons from '../data/dnd5e/weapons.json' with {type: 'json'};
+import languages from '../data/dnd5e/languages.json' with {type: 'json'};
 import selectionValidation from "../helpers/selectionValidation.js";
 import pointBuyValidation from "../helpers/pointBuyValidation.js";
+import {nRandomIndices} from "../helpers/utilities.js";
+
+const allSkills = ["Athletics", "Acrobatics", "Sleight of Hand", "Stealth", "Arcana", "History", "Investigation",
+    "Nature", "Religion", "Animal Handling", "Insight", "Medicine", "Perception", "Survival", "Deception", "Intimidation",
+    "Performance", "Persuasion"]
+const allLanguages = Object.keys(languages);
+
 
 /**
  * Looks up relevant Race data
@@ -74,19 +82,63 @@ export class Background {
     constructor(data) {
         this.name = data.name;
         this.description = data.description;
-
-        if (data.skillProficiency.length !== 2) {
-            throw new Error('Requires 2 skill proficiencies');
-        }
-        this.skillProficiency = data.skillProficiency;
-
-        if ((data.toolProficiency.length + data.languages.length) > 2) {
-            throw new Error('Choose a total of 2 tool proficiencies or languages');
-        }
-        this.toolProficiency = data.toolProficiency;
-        this.languages = data.languages;
-
+        this.checkSkillProficiency(data.skills);
+        this.checkToolsAndLanguages(data.tools, data.languages);
         this.feature = data.feature;
+    }
+
+    checkSkillProficiency(skills) {
+        if (skills.length > 2) {
+            // Handle too many skills
+            console.log("Background - Too many skills!");
+
+            this.skillProficiency = [];
+            let inds = nRandomIndices(2, skills.length);
+            for (let ind of inds) {
+                this.skillProficiency.push(skills[ind]);
+            }
+        } else {
+            // Handle too few skills (or skip)
+            this.skillProficiency = skills;
+            let ind;
+            while (this.skillProficiency.length < 2) {
+                console.log("Background - Too few skills!");
+                ind = nRandomIndices(1, allSkills.length);
+                if (!this.skillProficiency.includes(allSkills[ind])) {
+                    this.skillProficiency.push(allSkills[ind]);
+                }
+            }
+        }
+    }
+
+    checkToolsAndLanguages(tools, languages) {
+        if ((tools.length + languages.length) > 2) {
+            // Handle too many tool proficiencies and languages
+            console.log("Background - Too many languages/tools!");
+
+            this.toolProficiency = [];
+            this.languages = [];
+            let inds = nRandomIndices(2, tools.length + languages.length);
+            for (let ind of inds) {
+                if (ind < tools.length) {
+                    this.toolProficiency.push(tools[ind]);
+                } else {
+                    this.languages.push(languages[ind - tools.length]);
+                }
+            }
+        } else {
+            // Handle too few tool proficiencies and languages (or skip)
+            this.toolProficiency = tools;
+            this.languages = languages;
+            let ind;
+            while ((tools.length + languages.length) < 2) {
+                console.log("Background - Too few languages/tools!");
+                ind = nRandomIndices(1, allLanguages.length);
+                if (!this.languages.includes(allLanguages[ind])) {
+                    this.languages.push(allLanguages[ind]);
+                }
+            }
+        }
     }
 }
 
@@ -101,13 +153,14 @@ export class CharacterSheet {
 
         // Pass values through
         this.name = data.name;
-        this.background = new Background(data.background);
+        this.background = data.background;
         this.alignment = data.alignment;
         this.personalityTraits = data.personalityTraits;
         this.ideal = data.ideal;
         this.bond = data.bond;
         this.flaw = data.flaw;
         this.backstory = data.backstory;
+        this.quote = data.quote;
 
         // Get race, class, and ability score details
         this.race = new RaceDetails(data.race);
@@ -268,7 +321,8 @@ export class CharacterSheet {
             ideal: this.ideal,
             bond: this.bond,
             flaw: this.flaw,
-            backstory: this.backstory
+            backstory: this.backstory,
+            quote: this.quote
         };
     }
 
