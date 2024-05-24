@@ -9,16 +9,28 @@ export default function useGoogleSignin() {
 
   const [waitingForGoogle, setWaitingForGoogle] = useState<boolean>(false);
 
-  const handleGoogleSignup = useCallback(() => {
-    setWaitingForGoogle(true);
-    signInWithPopup(auth.auth!, auth.providers.google!)
-      .then((userCredential) => {
-        router.push("/tavern");
-      })
-      .catch((err) => {
-        console.error(err.message);
-        setWaitingForGoogle(false);
+  const handleGoogleSignup = useCallback(async () => {
+    try {
+      setWaitingForGoogle(true);
+      const userCredential = await signInWithPopup(
+        auth.auth!,
+        auth.providers.google!
+      );
+      const idToken = await userCredential.user.getIdToken();
+      const resp = await fetch(process.env.NEXT_PUBLIC_API + "/account", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
       });
+      if (resp.status != 201) {
+        throw "Couldn't create account data";
+      }
+      router.push("/tavern");
+    } catch (err: any) {
+      console.error(err.message);
+      setWaitingForGoogle(false);
+    }
   }, [auth.auth, auth.providers.google, router]);
 
   return { waitingForGoogle, handleGoogleSignup };

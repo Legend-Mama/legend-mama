@@ -1,0 +1,20 @@
+{
+    "name": "Baldur Stonebreaker",
+    "race": "Human",
+    "class": "Paladin",
+    "worldview": "Justice above all, Faith guides my hand",
+    "ethicalTraits": "Courage, Righteousness, Compassion",
+    "personalityScores": {
+        "Extraversion": "Charismatic",
+        "Agreeableness": "Empathetic",
+        "Conscientiousness": "Organized",
+        "Neuroticism": "Determined",
+        "OpennessToExperience": "Principled"
+    },
+    "quirks": "Prays before every battle, Never removes his helmet",
+    "motivations": "Uphold justice, Protect the weak",
+    "fears": "Corruption, Failure",
+    "likes": "Holy scriptures, Sunrises, Training grounds",
+    "dislikes": "Injustice, Deception, Dark magic",
+    "backstory": "Baldur was raised in a monastery, where he was taught the virtues of justice and faith. He swore an oath to protect the innocent and fight against evil. His unwavering faith and combat prowess make him a formidable foe to those who threaten peace."
+}

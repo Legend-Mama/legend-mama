@@ -1,0 +1,20 @@
+{
+    "name": "Lyra Starfire",
+    "race": "Half-Elf",
+    "class": "Bard",
+    "worldview": "Stories shape reality, Emotion is magic",
+    "ethicalTraits": "Creativity, Charisma, Empathy",
+    "personalityScores": {
+        "Extraversion": "Sociable",
+        "Agreeableness": "Friendly",
+        "Conscientiousness": "Unpredictable",
+        "Neuroticism": "Passionate",
+        "OpennessToExperience": "Imaginative"
+    },
+    "quirks": "Always humming a tune, Wears colorful scarves",
+    "motivations": "Create legendary tales, Spread joy through music",
+    "fears": "Silence, Losing her voice",
+    "likes": "Festivals, Storytelling, Music",
+    "dislikes": "Solitude, Censorship, Conflict",
+    "backstory": "Lyra was born to an elven mother and a human father, growing up between two worlds. Her love for music and stories led her to become a bard, using her talents to inspire and entertain. She travels from town to town, weaving tales and songs that captivate all who listen."
+}

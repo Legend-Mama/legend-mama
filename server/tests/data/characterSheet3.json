@@ -1,0 +1,77 @@
+{
+  "name": "Eustace Twinkletoes",
+  "race": "Mountain Dwarf",
+  "class" : "Fighter",
+  "level": 1,
+  "background": {
+    "name": "Sage",
+    "specialty": "Professor",
+    "description": "You spent years learning the lore of the multiverse. You scoured manuscripts, studied scrolls, and listened to the greatest experts on the subjects that interest you. Your efforts have made you a master in your fields of study.",
+    "skillProficiency": {
+      "arcana": 2,
+      "history": 2
+    },
+    "toolProficiency": [],
+    "languages": ["Goblin", "Orc"],
+    "equipment": ["bottle of ink", "quill", "small knife",
+      "letter from a dead colleague posing a question you have not yet been able to answer",
+      "set of common clothes", "pouch containing 10gp"],
+    "feature": ["Researcher"]
+  },
+  "alignment": "Lawful Good",
+  "abilityScores": {
+    "strength": 17,
+    "dexterity": 10,
+    "constitution": 16,
+    "intelligence": 13,
+    "wisdom": 8,
+    "charisma": 12
+  },
+  "abilityModifiers": {
+    "strength": 3,
+    "dexterity": 0,
+    "constitution": 3,
+    "intelligence": 1,
+    "wisdom": -1,
+    "charisma": 1
+  },
+  "armorClass": 10,
+  "initiative": 0,
+  "speed": 25,
+  "hitDice": "1d10",
+  "hitPointMax": 13,
+  "proficiencyBonus": 2,
+  "passivePerception": 9,
+  "savingThrows": {
+    "strength": 5,
+    "constitution": 5
+  },
+  "skills": {
+    "arcana": 3,
+    "athletics": 5,
+    "history": 3,
+    "intimidation": 3
+  },
+  "weaponProficiency": ["simpleMelee","simpleRanged","martialMelee","martialRanged"],
+  "armorProficiency": ["all", "shields"],
+  "toolProficiency": ["Brewer's Supplies"],
+  "languages": ["Common", "Dwarvish", "Goblin", "Orc"],
+  "personalityTraits": [
+    "I've read every book in the world's greatest libraries - or I like to boast that I have.",
+    "There's nothing I like more than a good mystery."
+  ],
+  "ideal": "Knowledge. The path to power and self-improvement is through knowledge.",
+  "bond": "I've been searching my whole life for the answer to a certain question.",
+  "flaw": "I am easily distracted by the promise of information.",
+  "features": [
+    "Fighting Style - Great Weapon Fighting", "Second Wind",
+    "Dark Vision", "Dwarven Resilience", "Stoncunning", "Researcher"
+  ],
+  "backstory": "From the mountains, I have experience crafting exquisite armor and weapons. I seek out the greatest weapons and armor from around the lands to improve my knowledge on how to craft.",
+  "equipment": [
+    "Chain Mail Armor", "Dungeoneer's Pack",
+    "bottle of ink", "quill", "small knife",
+    "letter from a dead colleague posing a question you have not yet been able to answer",
+    "set of common clothes", "pouch containing 10gp"
+  ]
+}

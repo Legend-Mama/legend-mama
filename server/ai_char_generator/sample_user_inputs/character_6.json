@@ -1,0 +1,16 @@
+{
+    "name": "Gorath the Mighty",
+    "race": "Orc",
+    "class": "Barbarian",
+    "worldview": "Might makes right, Survival of the fittest",
+    "ethicalTraits": "Ferocity, Strength, Courage",
+    "personalityScores": {
+        "Extraversion": "Aggressive",
+        "Agreeableness": "Blunt",
+        "Conscientiousness": "Impulsive",
+        "Neuroticism": "Unyielding",
+        "OpennessToExperience": "Unpredictable"
+    },
+    "motivations": "Prove his strength, Dominate his enemies",
+    "fears": "Weakness, Dishonor"
+}

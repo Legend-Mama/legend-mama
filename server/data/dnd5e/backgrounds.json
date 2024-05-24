@@ -1,8 +1,6 @@
 {
-  "backgrounds": [
-    {
-      "name": "Acolyte",
-      "description": "",
+    "Acolyte": {
+      "description": "You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices in order to conduct worshipers into the presence of the divine.",
       "skillsProficiency": [
         "Insight",
         "Religion"
@@ -10,30 +8,33 @@
       "languages": [
         {
           "select": 2,
-          "options": "all"
+          "options": [
+            "Common",
+            "Elvish",
+            "Dwarvish",
+            "Giant",
+            "Gnomish",
+            "Goblin",
+            "Halfling",
+            "Orc",
+            "Abyssal",
+            "Celestial",
+            "Draconic",
+            "Deep Speech",
+            "Infernal",
+            "Primordial",
+            "Sylvan",
+            "Undercommon"
+          ]
         }
       ],
-      "equipment": [
-        "Holy Symbol",
-        {
-          "select": 1,
-          "options": [
-            "Prayer Book",
-            "Prayer Wheel"
-          ]
-        },
-        "5 sticks of incense",
-        "vestments",
-        "common clothes",
-        "pouch containing 15 gp"
-      ],
-      "features": [
-        "Shelther of the Faithful"
-      ]
+      "features": {
+        "name": "Shelther of the Faithful",
+        "description": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells."
+      }
     },
-    {
-      "name": "Criminal/Spy",
-      "description": "",
+  "Criminal/Spy": {
+      "description": "You are an experienced criminal with a history of breaking the law. You have spent a lot of time among other criminals and still have contacts within the criminal underworld. You’re far closer than most people to the world of murder, theft, and violence that pervades the underbelly of civilization, and you have survived up to this point by flouting the rules and regulations of society.",
       "skillsProficiency": [
         "Deception",
         "Stealth"
@@ -42,38 +43,21 @@
         {
           "select": 1,
           "options": [
-            "gamingSet"
+            "Dice Set",
+            "Dragonchess Set",
+            "Playing Card Set",
+            "Three-Dragon Ante Set"
           ]
         },
         "Thieves' Tools"
       ],
-      "equipment": [
-        "crowbar",
-        "set of dark common clothes including a hood",
-        "pouch containing 15 gp"
-      ],
-      "specialty": [
-        {
-          "select": 1,
-          "options": [
-            "Blackmailer",
-            "Burglar",
-            "Enforcer",
-            "Fence",
-            "Highway robber",
-            "Hired killer",
-            "Pickpocket",
-            "Smuggler"
-          ]
-        }
-      ],
-      "features": [
-        "Criminal Contact"
-      ]
+      "features": {
+        "name": "Criminal Contact",
+        "description": "You have a reliable and trustworthy contact who acts as your liaison to a network of other criminals. You know how to get messages to and from your contact, even over great distances; specifically, you know the local messengers, corrupt caravan masters, and seedy sailors who can deliver messages for you."
+      }
     },
-    {
-      "name": "Folk Hero",
-      "description": "",
+  "Folk Hero": {
+      "description": "You come from a humble social rank, but you are destined for so much more. Already the people of your home village regard you as their champion, and your destiny calls you to stand against the tyrants and monsters that threaten the common folk everywhere.",
       "skillsProficiency": [
         "Animal Handling",
         "Survival"
@@ -82,34 +66,33 @@
         {
           "select": 1,
           "options": [
-            "artisansTools"
+            "Alchemist's Supplies",
+            "Brewer's Supplies",
+            "Calligrapher's Supplies",
+            "Carpenter's Tools",
+            "Cobbler's Tools",
+            "Cook's Utensils",
+            "Glassblower's Tools",
+            "Jeweler's Tools",
+            "Leatherworker's Tools",
+            "Mason's Tools",
+            "Painter's Supplies",
+            "Potter's Tools",
+            "Smith's Tools",
+            "Tinker's Tools",
+            "Weaver's Tools",
+            "Woodcarver's Tools"
           ]
         },
-        "vehicles (land)"
+        "Land Vehicles"
       ],
-      "equipment": [
-        {
-          "select": 1,
-          "options": [
-            "artisansTools"
-          ]
-        },
-        "shovel",
-        "iron pot",
-        "set of common clothes",
-        "pouch containing 10 gp"
-      ],
-      "definingEvent": [
-        "I stood up to a tyrant's agents.",
-        "others... how do I want to define this"
-      ],
-      "features": [
-        "Rustic Hospitality"
-      ]
+      "features": {
+        "name": "Rustic Hospitality",
+        "description": "Since you come from the ranks of the common folk, you fit in among them with ease. You can find a place to hide, rest, or recuperate among other commoners, unless you have shown yourself to be a danger to them. They will shield you from the law or anyone else searching for you, though they will not risk their lives for you."
+      }
     },
-    {
-      "name": "Noble",
-      "description": "",
+  "Noble": {
+      "description": "You understand wealth, power, and privilege. You carry a noble title, and your family owns land, collects taxes, and wields significant political influence. You might be a pampered aristocrat unfamiliar with work or discomfort, a former merchant just elevated to the nobility, or a disinherited scoundrel with a disproportionate sense of entitlement. Or you could be an honest, hard-working landowner who cares deeply about the people who live and work on your land, keenly aware of your responsibility to them.",
       "skillsProficiency": [
         "History",
         "Persuasion"
@@ -118,7 +101,10 @@
         {
           "select": 1,
           "options": [
-            "gamingSet"
+            "Dice Set",
+            "Dragonchess Set",
+            "Playing Card Set",
+            "Three-Dragon Ante Set"
           ]
         }
       ],
@@ -126,23 +112,32 @@
         {
           "select": 1,
           "options": [
-            "all"
+            "Common",
+            "Elvish",
+            "Dwarvish",
+            "Giant",
+            "Gnomish",
+            "Goblin",
+            "Halfling",
+            "Orc",
+            "Abyssal",
+            "Celestial",
+            "Draconic",
+            "Deep Speech",
+            "Infernal",
+            "Primordial",
+            "Sylvan",
+            "Undercommon"
           ]
         }
       ],
-      "equipment": [
-        "set of fine clothes",
-        "signet ring",
-        "scroll of pedigree",
-        "purse containing 25 gp"
-      ],
-      "features": [
-        "Position of Privilege"
-      ]
+      "features": {
+        "name": "Position of Privilege",
+        "description": "Thanks to your noble birth, people are inclined to think the best of you. You are welcome in high society, and people assume you have the right to be wherever you are. The common folk make every effort to accommodate you and avoid your displeasure, and other people of high birth treat you as a member of the same social sphere. You can secure an audience with a local noble if you need to."
+      }
     },
-    {
-      "name": "Sage",
-      "description": "",
+  "Sage": {
+      "description": "You spent years learning the lore of the multiverse. You scoured manuscripts, studied scrolls, and listened to the greatest experts on the subjects that interest you. Your efforts have made you a master in your fields of study.",
       "skillsProficiency": [
         "Arcana",
         "History"
@@ -151,40 +146,32 @@
         {
           "select": 2,
           "options": [
-            "all"
+            "Common",
+            "Elvish",
+            "Dwarvish",
+            "Giant",
+            "Gnomish",
+            "Goblin",
+            "Halfling",
+            "Orc",
+            "Abyssal",
+            "Celestial",
+            "Draconic",
+            "Deep Speech",
+            "Infernal",
+            "Primordial",
+            "Sylvan",
+            "Undercommon"
           ]
         }
       ],
-      "equipment": [
-        "bottle of black ink",
-        "quill",
-        "small knife",
-        "letter from a dead colleague posing a question you have not yet been able to answer",
-        "set of common clothes",
-        "pouch containing 10 gp"
-      ],
-      "specialty": [
-        {
-          "select": 1,
-          "options": [
-            "Alchemist",
-            "Astronomer",
-            "Discredited academic",
-            "Librarian",
-            "Professor",
-            "Researcher",
-            "Wizard's apprentice",
-            "Scribe"
-          ]
-        }
-      ],
-      "features": [
-        "Researcher"
-      ]
+      "features": {
+        "name": "Researcher",
+        "description": "When you attempt to learn or recall a piece of lore, if you do not know that information, you often know where and from whom you can obtain it. Usually, this information comes from a library, scriptorium, university, or a sage or other learned person or creature"
+      }
     },
-    {
-      "name": "Soldier",
-      "description": "",
+  "Soldier": {
+      "description": "War has been your life for as long as you care to remember. You trained as a youth, studied the use of weapons and armor, learned basic survival techniques, including how to stay alive on the battlefield. You might have been part of a standing national army or a mercenary company, or perhaps a member of a local militia who rose to prominence during a recent war.",
       "skillsProficiency": [
         "Athletics",
         "Intimidation"
@@ -193,36 +180,17 @@
         {
           "select": 1,
           "options": [
-            "gamingSet"
+            "Dice Set",
+            "Dragonchess Set",
+            "Playing Card Set",
+            "Three-Dragon Ante Set"
           ]
         },
-        "vehicles (land)"
+        "Land Vehicles"
       ],
-      "equipment": [
-        "insignia of rank",
-        "trophy taken from a fallen enemy",
-        "set of bone dice or deck of cards",
-        "set of common clothes",
-        "pouch containing 10 gp"
-      ],
-      "specialty": [
-        {
-          "select": 1,
-          "options": [
-            "Officer",
-            "Scout",
-            "Infantry",
-            "Cavalry",
-            "Healer",
-            "Quartermaster",
-            "Standard bearer",
-            "Support staff"
-          ]
-        }
-      ],
-      "features": [
-        "Military Rank"
-      ]
+      "features": {
+        "name": "Military Rank",
+        "description": "You have a military rank from your career as a soldier. Soldiers loyal to your former military organization still recognize your authority and influence, and they defer to you if they are of a lower rank. You can invoke your rank to exert influence over other soldiers and requisition simple equipment or horses for temporary use. You can also usually gain access to friendly military encampments and fortresses where your rank is recognized."
+      }
     }
-  ]
 }
