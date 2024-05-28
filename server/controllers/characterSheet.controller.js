@@ -5,24 +5,26 @@ Controller for character sheet creation/editing
 import asyncHandler from "express-async-handler";
 import {CharacterSheet} from "../models/characterSheet.model.js";
 import {CharacterDetails} from "../models/characterDetails.model.js";
-
-// Temporary
-import {character1} from '../tests/data/characterSheetTestData.js';
+import charGen from "../charGenEngine.js";
+import {GeneratedCharacter} from "../models/generatedCharacter.model.js";
 
 /**
  * Creates a valid 5e character sheet. Request body is a CharacterDetails object. Checks and calculations based on 5e
  * rules are made.
  */
 export const createCharacterSheet = asyncHandler(async (req, res) => {
-    // TODO: Pass CharacterDetailsModel to GPT library to get GeneratedCharacter object
     const characterDetails = new CharacterDetails(req.body);
-    const generatedCharacter = character1.generatedChar;
+
+    console.time("Requesting from ChatGPT...");
+    const generatedCharacter = await charGen.generateChar(characterDetails);
+    console.timeEnd("Requesting from ChatGPT...");
 
     // Pass to helpers to check and derive fields
-    const charSheet = new CharacterSheet(generatedCharacter);
+    const genChar = new GeneratedCharacter(generatedCharacter);
+    const charSheet = new CharacterSheet(genChar);
 
     console.log("Successfully created character sheet");
-    res.status(201).json(charSheet);
+    res.status(201).json(charSheet.toJSON());
 })
 
 /**
@@ -34,5 +36,5 @@ export const editCharacterSheet = asyncHandler(async (req, res) => {
     const charSheet = new CharacterSheet(req.body);
 
     console.log("Successfully updated character sheet");
-    res.status(200).send(charSheet);
+    res.status(200).json(charSheet.toJSON());
 })

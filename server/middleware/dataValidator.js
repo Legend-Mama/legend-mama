@@ -40,8 +40,6 @@ export const characterDetailsValidationRules = () => {
         // Validating and sanitizing the array attributes
         body('ethicalTraits').isArray({ min: 1 }),
         body('ethicalTraits.*').trim(),
-        body('personalityTraits').isArray({ min: 1 }),
-        body('personalityTraits.*').isString().trim(),
         body('quirks').optional().isArray(),
         body('quirks.*').isString().trim(),
         body('motivations').isArray({ min: 1 }),
@@ -52,6 +50,13 @@ export const characterDetailsValidationRules = () => {
         body('likes.*').isString().trim(),
         body('dislikes').optional().isArray(),
         body('dislikes.*').isString().trim(),
+
+        // Validating and sanitizing the object attributes
+        body("personalityTraits.extroversion").isString().trim(),
+        body("personalityTraits.agreeableness").isString().trim(),
+        body("personalityTraits.conscientiousness").isString().trim(),
+        body("personalityTraits.neuroticism").isString().trim(),
+        body("personalityTraits.openness").isString().trim(),
     ];
 };
 

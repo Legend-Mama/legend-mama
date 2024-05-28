@@ -1,25 +1,41 @@
 import request from 'supertest';
 import app from '../server.js';
+import dotenv from "dotenv";
+dotenv.config();
 
-// Dummy Data
+// Dummy Client and Data
 import {client} from "./dummyClient.js";
 import {character1, character2} from './data/characterSheetTestData.js';
 
 describe('Character Sheet Editor Routes', () => {
     let user1token, user2token;
-    before(() =>{
+    before(async () =>{
         user1token = client.getToken('user1');
         user2token = client.getToken('user2');
+
+        try {
+            await request(app)
+                .get('/api/v1/account/gold-balance')
+                .set('Authorization', `Bearer ${user1token}`)
+                .expect(200)
+        } catch(err) {
+            console.log(err);
+            await request(app)
+                .post('/api/v1/account')
+                .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
+                .expect(201)
+        }
     });
 
     describe('POST /character-sheet', () => {
-        it('Should return a character sheet w/ Bearer token', async () => {
+        it('Should return a character sheet w/ Bearer token (1)', async () => {
             await request(app)
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send(character1.charDetails)
-                .expect(201, character1.charSheet)
+                .expect(201)
         });
 
         it('Should fail w/o Bearer token', async () => {
@@ -30,6 +46,14 @@ describe('Character Sheet Editor Routes', () => {
                 .expect(401)
         });
 
+        it('Should fail w/o account', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user2token}`)
+                .send(character1.charDetails)
+                .expect(404)
+        });
+
         it('Should fail w/ invalid request body', async () => {
             await request(app)
                 .post('/api/v1/character-sheet')
@@ -37,6 +61,30 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Content-Type', 'application/json')
                 .send({name: "Potato Man"})
                 .expect(400)
+        });
+
+        it('Should return a character sheet w/ Bearer token (2)', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .send(character1.charDetails)
+                .expect(201, character1.charSheet)
+        });
+
+        it('Should return a character sheet w/ Bearer token (3)', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .send(character1.charDetails)
+                .expect(201, character1.charSheet)
+        });
+
+        it('Should fail w/ insufficient gold balance', async () => {
+            await request(app)
+                .post('/api/v1/character-sheet')
+                .set('Authorization', `Bearer ${user1token}`)
+                .send(character1.charDetails)
+                .expect(422)
         });
     });
 
@@ -47,7 +95,7 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send(character2.generatedChar)
-                .expect(200, character2.charSheet)
+                .expect(200)
         });
 
         it('Should fail w/o Bearer token', async () => {

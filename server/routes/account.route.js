@@ -4,6 +4,7 @@ Routes for interacting with account resources
 import express from 'express';
 import * as controller from '../controllers/account.controller.js';
 import {characterSheetValidationRules, validate} from "../middleware/dataValidator.js";
+import goldBalance from "../middleware/goldBalance.js";
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.post("/", controller.createAccount);
 router.delete("/", controller.deleteAccount);
 
 // Get account balance
-router.get("/gold-balance", controller.getGoldBalance);
+router.get("/gold-balance", goldBalance, controller.getGoldBalance);
 
 // Save character sheet to account
 router.post("/character-sheets", characterSheetValidationRules(), validate, controller.saveCharacterSheet);
