@@ -47,7 +47,7 @@ describe('Character Illustration Routes', () => {
         });
 
         it('Should fail w/o Bearer token', async () => {
-            const response = await request(app)
+             await request(app)
                 .post('/api/v1/character-illustration')
                 .set('Content-Type', 'application/json')
                 .send({
@@ -71,7 +71,7 @@ describe('Character Illustration Routes', () => {
         });
 
         it('Should return signed URL (2)', async () => {
-            const response = await request(app)
+            await request(app)
                 .post('/api/v1/character-illustration')
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
@@ -84,7 +84,7 @@ describe('Character Illustration Routes', () => {
         });
 
         it('Should return signed URL (3)', async () => {
-            const response = await request(app)
+            await request(app)
                 .post('/api/v1/character-illustration')
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
@@ -111,27 +111,27 @@ describe('Character Illustration Routes', () => {
 
     describe('GET /character-illustration', () => {
         it('Should return signed URL', async () => {
-            const response = await request(app)
+            await request(app)
                 .get(`/api/v1/character-illustration/${illustrationID}`)
                 .set('Authorization', `Bearer ${user1token}`)
                 .expect(200);
         });
 
         it('Should fail w/o Bearer token', async () => {
-            const response = await request(app)
+            await request(app)
                 .get(`/api/v1/character-illustration/${illustrationID}`)
                 .expect(401);
         });
 
         it('Should fail w/ nonexistent account', async () => {
-            const response = await request(app)
+            await request(app)
                 .get(`/api/v1/character-illustration/${illustrationID}`)
                 .set('Authorization', `Bearer ${user2token}`)
                 .expect(200);
         });
 
         it('Should fail with nonexistent image ID', async () => {
-            const response = await request(app)
+            await request(app)
                 .get(`/api/v1/character-illustration/a-nonexistent-image-id`)
                 .set('Authorization', `Bearer ${user1token}`)
                 .expect(404);
