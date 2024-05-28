@@ -12,9 +12,8 @@ before(async () => {
         auth: {uid: 'some-fake-user'}
     });
     console.log(global.testEnv);
-    console.log('>> Clearing Firestore and Auth emulators')
     await global.testEnv.clearFirestore();
-
+    await global.testEnv.clearStorage();
     await fetch('http://localhost:9099/emulator/v1/projects/legend-mama/accounts',
         {method: 'DELETE'});
 
@@ -22,15 +21,18 @@ before(async () => {
     await client.createUser('user1');
     await client.createUser('user2', true);
     await client.createUser('user3');
+
+    console.log('>> Set up finished');
 });
 
 after(async () => {
     console.log('>> Clearing Firestore and Auth emulators')
     await global.testEnv.clearFirestore();
+    await global.testEnv.clearStorage();
     await fetch('http://localhost:9099/emulator/v1/projects/legend-mama/accounts',
         {method: 'DELETE'});
 
     await global.testEnv.cleanup();
-
     client.reset();
+    console.log('>> Tear down finished');
 });

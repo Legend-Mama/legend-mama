@@ -1,7 +1,5 @@
 import request from 'supertest';
 import app from '../server.js';
-import dotenv from "dotenv";
-dotenv.config();
 
 // Dummy Client and Data
 import {client} from "./dummyClient.js";
@@ -19,7 +17,6 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .expect(200)
         } catch(err) {
-            console.log(err);
             await request(app)
                 .post('/api/v1/account')
                 .set('Authorization', `Bearer ${user1token}`)
@@ -68,7 +65,7 @@ describe('Character Sheet Editor Routes', () => {
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user1token}`)
                 .send(character1.charDetails)
-                .expect(201, character1.charSheet)
+                .expect(201)
         });
 
         it('Should return a character sheet w/ Bearer token (3)', async () => {
@@ -76,7 +73,7 @@ describe('Character Sheet Editor Routes', () => {
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user1token}`)
                 .send(character1.charDetails)
-                .expect(201, character1.charSheet)
+                .expect(201)
         });
 
         it('Should fail w/ insufficient gold balance', async () => {

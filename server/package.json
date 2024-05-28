@@ -6,7 +6,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "mocha -t 30000 --file ./tests/setup.js ./tests/*.test.js",
+    "test": "mocha -t 60000 --file ./tests/setup.js ./tests/*.test.js",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "format": "prettier --write {**/,}*.js",

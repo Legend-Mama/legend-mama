@@ -15,16 +15,24 @@ import {GeneratedCharacter} from "../models/generatedCharacter.model.js";
 export const createCharacterSheet = asyncHandler(async (req, res) => {
     const characterDetails = new CharacterDetails(req.body);
 
-    console.time("Requesting from ChatGPT...");
-    const generatedCharacter = await charGen.generateChar(characterDetails);
-    console.timeEnd("Requesting from ChatGPT...");
+    try {
+        console.time("Requesting from ChatGPT...");
+        const generatedCharacter = await charGen.generateChar(characterDetails);
+        console.timeEnd("Requesting from ChatGPT...");
 
-    // Pass to helpers to check and derive fields
-    const genChar = new GeneratedCharacter(generatedCharacter);
-    const charSheet = new CharacterSheet(genChar);
+        // Pass to helpers to check and derive fields
+        const genChar = new GeneratedCharacter(generatedCharacter);
+        const charSheet = new CharacterSheet(genChar);
 
-    console.log("Successfully created character sheet");
-    res.status(201).json(charSheet.toJSON());
+        console.log("Successfully created character sheet");
+        res.status(201).json(charSheet.toJSON());
+
+    } catch (err) {
+        if (err.statusCode === 429) {
+            console.log('Too many requests to ChatGPT');
+        }
+        throw err;
+    }
 })
 
 /**
