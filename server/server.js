@@ -3,6 +3,7 @@ import express from 'express';
 import tempRouter from './routes/temp.route.js';
 import accountRouter from './routes/account.route.js';
 import characterSheetRouter from './routes/characterSheet.route.js';
+import characterIllustrationRouter from './routes/characterIllustration.route.js';
 import errorHandler from './middleware/errorHandlers.js';
 import auth from './middleware/authenticate.js';
 import cors from 'cors';
@@ -21,7 +22,7 @@ app.use(cors(corsOptions));
 app.use('/', tempRouter);
 app.use('/api/v1/account', [auth], accountRouter);
 app.use('/api/v1/character-sheet', [auth], characterSheetRouter);
-app.use('/api/v1/character-illustration', [auth], characterSheetRouter);
+app.use('/api/v1/character-illustration', [auth], characterIllustrationRouter);
 
 // Error Handling
 app.use(errorHandler);

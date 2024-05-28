@@ -119,6 +119,7 @@ export const characterSheetValidationRules = () => {
         body('bond').optional().isString().trim(),
         body('flaw').optional().isString().trim(),
         body('backstory').optional().isString().trim(),
+        body('illustrationID').optional().isString().trim(),
 
         // Validating and sanitizing integer attributes
         body("level").optional().isInt(),
