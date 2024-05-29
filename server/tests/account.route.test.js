@@ -4,17 +4,26 @@ import {client} from "./dummyClient.js";
 import {character1, character2} from './data/characterSheetTestData.js';
 
 describe('Account Management Routes', () => {
-    let user1token, user2token;
+    let user1token, user2token, user3token;
     before(() =>{
         user1token = client.getToken('user1');
         user2token = client.getToken('user2');
+        user3token = client.getToken('user3');
     });
 
     describe('POST /account', () => {
-        it('Should create a new account w/ token', async () => {
+        it('Should create a new account w/ token (1)', async () => {
             await request(app)
                 .post('/api/v1/account')
                 .set('Authorization', `Bearer ${user1token}`)
+                .set('Content-Type', 'application/json')
+                .expect(201)
+        });
+
+        it('Should create a new account w/ token (2)', async () => {
+            await request(app)
+                .post('/api/v1/account')
+                .set('Authorization', `Bearer ${user3token}`)
                 .set('Content-Type', 'application/json')
                 .expect(201)
         });
@@ -78,16 +87,6 @@ describe('Account Management Routes', () => {
                 .send(character2.charSheet)
                 .expect(201)
         });
-
-        // it('Should save character sheet to account w/ token (3)', async () => {
-        //     await request(app)
-        //         .post('/api/v1/account/character-sheets')
-        //         .set('Authorization', `Bearer ${user1token}`)
-        //         .set('Content-Type', 'application/json')
-        //         .set('Accept', 'application/json')
-        //         .send(characterSheet3)
-        //         .expect(201)
-        // });
 
         it('Should fail to save character sheet to account w/o token', async () => {
             await request(app)
@@ -252,7 +251,7 @@ describe('Account Management Routes', () => {
         it('Should delete account w/ token', async () => {
             await request(app)
                 .delete(`/api/v1/account`)
-                .set('Authorization', `Bearer ${user1token}`)
+                .set('Authorization', `Bearer ${user3token}`)
                 .expect(200)
         });
 

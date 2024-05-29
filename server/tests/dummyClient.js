@@ -40,6 +40,24 @@ class ClientLogin {
     getToken(user) {
         return this[user].token;
     }
+
+    reset() {
+        this.user1 = {
+            email: 'user1@example.com',
+            password: 'password',
+            token: undefined
+        };
+        this.user2 = {
+            email: 'user2@example.com',
+            password: 'password',
+            token: undefined
+        };
+        this.user3 = {
+            email: 'user3@example.com',
+            password: 'password',
+            token: undefined
+        };
+    }
 }
 
 export const client = new ClientLogin();
