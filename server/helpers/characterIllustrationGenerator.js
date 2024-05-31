@@ -3,7 +3,7 @@ import OpenAI from "openai";
 export default class CharacterIllustrationGenerator {
     assistantID = 'asst_pK8m6XMIyrKX0J03hHyhj7JB';
     constructor(api_key) {
-        this.openai = new OpenAI(api_key);
+        this.openai = new OpenAI({ apiKey: api_key });
     }
 
     async generatePrompt(data) {
