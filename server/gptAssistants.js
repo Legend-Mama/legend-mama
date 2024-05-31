@@ -1,10 +1,7 @@
 import { AICharGen } from './ai_char_generator/library/AICharGen.js'
 import {SecretManagerServiceClient} from '@google-cloud/secret-manager';
-import dotenv from 'dotenv';
-dotenv.config();
+import CharacterIllustrationGenerator from "./helpers/characterIllustrationGenerator.js";
 const client = new SecretManagerServiceClient();
-const vectorStoreId = "vs_3WaLOhWlKHZtYUjygY88CoGH";
-const assistantId = "asst_RECoDw8dGhucYq5fqVbtr7bn";
 
 /**
  * Get secret from GCP Secret Manager
@@ -24,11 +21,15 @@ async function getOpenAIAPIKey() {
     }
 }
 
-// Initialize charGen
-const charGen = new AICharGen(await getOpenAIAPIKey());
+// Initialize generators
+const api_key = await getOpenAIAPIKey()
+
+const charGen = new AICharGen(api_key);
 await charGen.initialize({
-    vectorStoreId: vectorStoreId,
-    assistantId: assistantId
+    vectorStoreId: 'vs_3WaLOhWlKHZtYUjygY88CoGH',
+    assistantId: 'asst_kmM47YTEiaiQ7hLxx5aTuf9e'
 })
 
-export default charGen;
+const charIllustrationGen = new CharacterIllustrationGenerator(api_key);
+
+export {charGen as default, charIllustrationGen};

@@ -37,7 +37,7 @@ export class Character1 {
             }
         };
         this.generatedChar = {
-            name: "Captain Flapjack",
+            name: "Elion Windrider",
             race: "High Elf",
             class: "Barbarian",
             background: new Background(background),
@@ -54,11 +54,12 @@ export class Character1 {
             ideal: "Change. We must help bring about the changes the gods are constantly working in the world. (Chaotic)",
             bond: "I will someday get revenge on the corrupt temple hierarchy who branded me a heretic.",
             flaw: "My piety sometimes leads me to blindly trust those that profess faith in my god.",
-            backstory: "Some fun backstory here",
+            backstory: "Elion Windrider, a high elf of noble birth, grew weary of his genteel life in the elegant spires of Silvermoon. Captivated by tales of swashbuckling pirates, he abandoned his opulent home to chase a life of adventure on the high seas. Despite his well-intentioned dreams, Elion proved to be more endearing than fearsome. His crew, charmed by his naive bravery and awkward swordplay, nicknamed him the \"Gentle Buccaneer.\"\n" +
+                "\nElion's true struggle lay with his fear of water, an ironic flaw for a pirate. Unable to swim, he clung to the safety of his ship's deck, often delegating boarding parties to his more capable comrades. Despite his cowardice, Elion's genuine kindness and unexpected cunning earned him the loyalty of his crew. They saw in him a leader whose heart, though not made of steel, was bound by an unyielding spirit of adventure.",
             quote: "The sea calls!"
         };
         this.charSheet = {
-            name: "Captain Flapjack",
+            name: "Elion Windrider",
             race: "High Elf",
             class: "Barbarian",
             level: 1,
@@ -174,7 +175,8 @@ export class Character1 {
             ideal: "Change. We must help bring about the changes the gods are constantly working in the world. (Chaotic)",
             bond: "I will someday get revenge on the corrupt temple hierarchy who branded me a heretic.",
             flaw: "My piety sometimes leads me to blindly trust those that profess faith in my god.",
-            backstory: "Some fun backstory here",
+            backstory: "Elion Windrider, a high elf of noble birth, grew weary of his genteel life in the elegant spires of Silvermoon. Captivated by tales of swashbuckling pirates, he abandoned his opulent home to chase a life of adventure on the high seas. Despite his well-intentioned dreams, Elion proved to be more endearing than fearsome. His crew, charmed by his naive bravery and awkward swordplay, nicknamed him the \"Gentle Buccaneer.\"\n" +
+                "\nElion's true struggle lay with his fear of water, an ironic flaw for a pirate. Unable to swim, he clung to the safety of his ship's deck, often delegating boarding parties to his more capable comrades. Despite his cowardice, Elion's genuine kindness and unexpected cunning earned him the loyalty of his crew. They saw in him a leader whose heart, though not made of steel, was bound by an unyielding spirit of adventure.",
             quote: "The sea calls!"
         };
     }

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const assistantInstructions = fs.readFileSync(path.join(__dirname, "assistant-instructions-v2.txt"), 'utf8');
+const assistantInstructions = fs.readFileSync(path.join(__dirname, "assistant-instructions-v1.txt"), 'utf8');
 const vectorStoreFolderPath = path.join(__dirname, "file-search");
 
 dotenv.config();

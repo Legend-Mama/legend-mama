@@ -5,7 +5,7 @@ Controller for character sheet creation/editing
 import asyncHandler from "express-async-handler";
 import {CharacterSheet} from "../models/characterSheet.model.js";
 import {CharacterDetails} from "../models/characterDetails.model.js";
-import charGen from "../charGenEngine.js";
+import charGen from "../gptAssistants.js";
 import {GeneratedCharacter} from "../models/generatedCharacter.model.js";
 
 /**

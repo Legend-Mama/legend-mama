@@ -4,6 +4,7 @@ import app from '../server.js';
 // Dummy Client and Data
 import {client} from "./dummyClient.js";
 import {character1, character2} from './data/characterSheetTestData.js';
+import {firestore} from "../firebase.js";
 
 describe('Character Sheet Editor Routes', () => {
     let user1token, user2token;
@@ -60,23 +61,15 @@ describe('Character Sheet Editor Routes', () => {
                 .expect(400)
         });
 
-        it('Should return a character sheet w/ Bearer token (2)', async () => {
-            await request(app)
-                .post('/api/v1/character-sheet')
-                .set('Authorization', `Bearer ${user1token}`)
-                .send(character1.charDetails)
-                .expect(201)
-        });
-
-        it('Should return a character sheet w/ Bearer token (3)', async () => {
-            await request(app)
-                .post('/api/v1/character-sheet')
-                .set('Authorization', `Bearer ${user1token}`)
-                .send(character1.charDetails)
-                .expect(201)
-        });
-
         it('Should fail w/ insufficient gold balance', async () => {
+            // Manually remove gold
+            const arrayToken = user1token.split('.');
+            const data = JSON.parse(atob(arrayToken[1]));
+            const docRef = firestore.doc(`accounts/${data.user_id}`);
+            await docRef.set({
+                goldBalance: 0
+            });
+
             await request(app)
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user1token}`)

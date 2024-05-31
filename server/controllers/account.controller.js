@@ -4,6 +4,7 @@ Controller for account related operations
 import asyncHandler from "express-async-handler";
 import {firestore} from "../firebase.js";
 import {NotFoundError, ForbiddenError} from "../middleware/errorHandlers.js";
+import {downloadImage, uploadFromMemory} from "../helpers/cloudStoreOperations.js";
 
 /**
  * Create a new user account which stores their gold balance and saved character sheets.
@@ -67,6 +68,11 @@ export const saveCharacterSheet = asyncHandler(async (req, res) => {
     const account = await accountRef.get();
 
     if (account.exists) {
+        if ((req.body.charImage !== '') && (req.body.charImage !== undefined)) {
+            const buffer = await downloadImage(req.body.charImage);
+            req.body.charImage = await uploadFromMemory(buffer).catch(console.error);
+        }
+
         const docRef = firestore.collection(`accounts/${req.uid}/characterSheets`).doc();
         await docRef.create(req.body);
 
@@ -142,6 +148,11 @@ export const updateCharacterSheet = asyncHandler(async (req, res) => {
     const account = await accountRef.get();
 
     if (account.exists) {
+        if ((req.body.charImage !== '') && (req.body.charImage !== undefined) && (req.body.charImage.length !== 36)) {
+            const buffer = await downloadImage(req.body.charImage);
+            req.body.charImage = await uploadFromMemory(buffer).catch(console.error);
+        }
+
         const character_sheet_id = req.params["character_sheet_id"];
         const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
         const sheet = await docRef.get();
