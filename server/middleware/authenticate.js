@@ -1,15 +1,21 @@
-//https://cloud.google.com/run/docs/tutorials/identity-platform#server
 import {firebaseAuth} from '../firebase.js';
 import {ForbiddenError, UnauthorizedError} from "./errorHandlers.js";
 import asyncHandler from "express-async-handler";
 
-
+/**
+ * Manual JWT token decoding
+ * @param token - valid JWT token
+ * @returns {string} - decoded JWT payload
+ */
 function devDecodeToken(token) {
     const arrayToken = token.split('.');
     return JSON.parse(atob(arrayToken[1]));
 }
 
-// Extract and verify Id Token from header
+/**
+ * Authenticate a JWT token with the Firebase platform.
+ * https://cloud.google.com/run/docs/tutorials/identity-platform#server
+ */
 const authenticateJWT = asyncHandler(async (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (authHeader) {

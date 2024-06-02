@@ -4,8 +4,12 @@ Controller for account related operations
 import asyncHandler from "express-async-handler";
 import {firestore} from "../firebase.js";
 import {NotFoundError, ForbiddenError} from "../middleware/errorHandlers.js";
+import {downloadImage, uploadFromMemory} from "../helpers/cloudStoreOperations.js";
 
-export const createAccount = asyncHandler(async (req, res, next) => {
+/**
+ * Create a new user account which stores their gold balance and saved character sheets.
+ */
+export const createAccount = asyncHandler(async (req, res) => {
     const docRef = firestore.doc(`accounts/${req.uid}`);
     const doc = await docRef.get();
 
@@ -22,7 +26,10 @@ export const createAccount = asyncHandler(async (req, res, next) => {
     }
 })
 
-export const deleteAccount = asyncHandler(async (req, res, next) => {
+/**
+ * Delete a user's account.
+ */
+export const deleteAccount = asyncHandler(async (req, res) => {
     const docRef = firestore.doc(`accounts/${req.uid}`);
     try {
         await docRef.delete({exists: true});
@@ -35,7 +42,10 @@ export const deleteAccount = asyncHandler(async (req, res, next) => {
     }
 })
 
-export const getGoldBalance = asyncHandler(async (req, res, next) => {
+/**
+ * Get the gold balance for a user.
+ */
+export const getGoldBalance = asyncHandler(async (req, res) => {
     const docRef = firestore.doc(`accounts/${req.uid}`);
     const doc = await docRef.get();
 
@@ -48,11 +58,21 @@ export const getGoldBalance = asyncHandler(async (req, res, next) => {
     }
 })
 
-export const saveCharacterSheet = asyncHandler(async (req, res, next) => {
+/**
+ * Save a character sheet to a user's account. Character sheet is assumed to have been created with the Character Sheet
+ * Editor so no checks are performed against it. Request body should match the CharacterSheet object. Invalid fields are
+ * ignored.
+ */
+export const saveCharacterSheet = asyncHandler(async (req, res) => {
     const accountRef = firestore.doc(`accounts/${req.uid}`);
     const account = await accountRef.get();
 
     if (account.exists) {
+        if ((req.body.charImage !== '') && (req.body.charImage !== undefined)) {
+            const buffer = await downloadImage(req.body.charImage);
+            req.body.charImage = await uploadFromMemory(buffer).catch(console.error);
+        }
+
         const docRef = firestore.collection(`accounts/${req.uid}/characterSheets`).doc();
         await docRef.create(req.body);
 
@@ -64,7 +84,10 @@ export const saveCharacterSheet = asyncHandler(async (req, res, next) => {
     }
 })
 
-export const listCharacterSheets = asyncHandler(async (req, res, next) => {
+/**
+ * List user's saved character sheets. Returns an array of objects with sheet ID and sheet's character name.
+ */
+export const listCharacterSheets = asyncHandler(async (req, res) => {
     const accountRef = firestore.doc(`accounts/${req.uid}`);
     const account = await accountRef.get();
 
@@ -92,7 +115,10 @@ export const listCharacterSheets = asyncHandler(async (req, res, next) => {
     }
 })
 
-export const getCharacterSheet = asyncHandler(async (req, res, next) => {
+/**
+ * Get a saved character sheet.
+ */
+export const getCharacterSheet = asyncHandler(async (req, res) => {
     const accountRef = firestore.doc(`accounts/${req.uid}`);
     const account = await accountRef.get();
 
@@ -112,11 +138,21 @@ export const getCharacterSheet = asyncHandler(async (req, res, next) => {
     }
 })
 
-export const updateCharacterSheet = asyncHandler(async (req, res, next) => {
+/**
+ * Update a character sheet to a user's account. Character sheet is assumed to have been created with the Character Sheet
+ * Editor so no checks are performed against it. Request body can have any fields listed in CharacterSheets. Invalid
+ * fields are ignored.
+ */
+export const updateCharacterSheet = asyncHandler(async (req, res) => {
     const accountRef = firestore.doc(`accounts/${req.uid}`);
     const account = await accountRef.get();
 
     if (account.exists) {
+        if ((req.body.charImage !== '') && (req.body.charImage !== undefined) && (req.body.charImage.length !== 36)) {
+            const buffer = await downloadImage(req.body.charImage);
+            req.body.charImage = await uploadFromMemory(buffer).catch(console.error);
+        }
+
         const character_sheet_id = req.params["character_sheet_id"];
         const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
         const sheet = await docRef.get();
@@ -134,7 +170,10 @@ export const updateCharacterSheet = asyncHandler(async (req, res, next) => {
     }
 })
 
-export const deleteCharacterSheet = asyncHandler(async (req, res, next) => {
+/**
+ * Delete a character sheet in a user's account.
+ */
+export const deleteCharacterSheet = asyncHandler(async (req, res) => {
     const accountRef = firestore.doc(`accounts/${req.uid}`);
     const account = await accountRef.get();
 

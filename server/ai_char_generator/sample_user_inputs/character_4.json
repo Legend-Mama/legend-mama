@@ -1,0 +1,20 @@
+{
+    "name": "Nyx Shadowstep",
+    "race": "Tiefling",
+    "class": "Warlock",
+    "worldview": "Power is everything, Secrecy is safety",
+    "ethicalTraits": "Cunning, Ambition, Determination",
+    "personalityScores": {
+        "Extraversion": "Secretive",
+        "Agreeableness": "Manipulative",
+        "Conscientiousness": "Meticulous",
+        "Neuroticism": "Resilient",
+        "OpennessToExperience": "Inventive"
+    },
+    "quirks": "Whispers to his shadow, Keeps a journal of dark rituals",
+    "motivations": "Gain ultimate power, Uncover forbidden secrets",
+    "fears": "Powerlessness, Exposure",
+    "likes": "Dark places, Arcane symbols, Forbidden knowledge",
+    "dislikes": "Light, Naivety, Authority",
+    "backstory": "Nyx was born under ominous circumstances, marked by his infernal heritage. His quest for power led him to form a pact with a dark entity, granting him formidable magical abilities. He navigates the world through shadows, always seeking to expand his power and knowledge."
+}

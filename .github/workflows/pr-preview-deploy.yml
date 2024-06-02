@@ -1,4 +1,6 @@
-# This workflow build and push a Docker container to Google Artifact Registry and deploy it on Cloud Run when a commit is pushed to the "main" branch
+# Builds and deploys branch when a PR is opened or updated with new commits
+# 
+# Below comments are from the original GitHub Action: https://github.com/google-github-actions/deploy-cloudrun
 #
 # Overview:
 #

@@ -1,51 +1,47 @@
 {
-  "martial": {
-    "melee": [
-      "Battleaxe",
-      "Flail",
-      "Glaive",
-      "Greataxe",
-      "Greatsword",
-      "Halberd",
-      "Lance",
-      "Longsword",
-      "Maul",
-      "Morningstar",
-      "Pike",
-      "Rapier",
-      "Scimitar",
-      "Shortsword",
-      "Trident",
-      "War pick",
-      "Warhammer",
-      "Whip"
-    ],
-    "ranged": [
-      "Blowgun",
-      "Crossbow, hand",
-      "Crossbow, heavy",
-      "Longbow",
-      "Net"
-    ]
-  },
-  "simple": {
-    "melee": [
-      "Club",
-      "Dagger",
-      "Greatclub",
-      "Handaxe",
-      "Javelin",
-      "Light hammer",
-      "Mace",
-      "Quarterstaff",
-      "Sickle",
-      "Spear"
-    ],
-    "ranged": [
-      "Crossbow, light",
-      "Dart",
-      "Shortbow",
-      "Sling"
-    ]
-  }
+  "martialMelee": [
+    "Battleaxe",
+    "Flail",
+    "Glaive",
+    "Greataxe",
+    "Greatsword",
+    "Halberd",
+    "Lance",
+    "Longsword",
+    "Maul",
+    "Morningstar",
+    "Pike",
+    "Rapier",
+    "Scimitar",
+    "Shortsword",
+    "Trident",
+    "War pick",
+    "Warhammer",
+    "Whip"
+  ],
+  "martialRanged": [
+    "Blowgun",
+    "Hand Crossbow",
+    "Heavy Crossbow",
+    "Longbow",
+    "Net"
+  ],
+  "simpleMelee": [
+    "Club",
+    "Dagger",
+    "Greatclub",
+    "Handaxe",
+    "Javelin",
+    "Light Hammer",
+    "Mace",
+    "Quarterstaff",
+    "Sickle",
+    "Spear"
+  ],
+  "simpleRanged": [
+    "Light Crossbow",
+    "Dart",
+    "Shortbow",
+    "Sling"
+  ]
 }
