@@ -114,7 +114,6 @@ describe('Character Illustration Routes', () => {
                 .expect(200);
 
             charImage = response.body.charImage;
-            console.log(`Look up this character preview: ${charImage}`);
 
             await request(app)
                 .get(`/api/v1/character-illustration/${charImage}`)
