@@ -17,7 +17,7 @@ export const ethicalTraits = [
   "Follow the wisdom and traditions of those of the past",
 ];
 
-export const extraversion = [
+export const extroversion = [
   "Prefers solitude, enjoys quiet activities and introspection",
   "Enjoys socializing, seeks out new experiences and interactions",
   "Feels energized by time alone, prefers deeper conversations",
@@ -49,7 +49,7 @@ export const neuroticism = [
   "Emotionally steady, maintains a consistent mood regardless of circumstances",
 ];
 
-export const opennessToExperience = [
+export const openness = [
   "Prefers familiar experiences and routines, values stability",
   "Enjoys exploring new ideas and trying novel experiences",
   "Prefers to spend time alone, values deep introspection",

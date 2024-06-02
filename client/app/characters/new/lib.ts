@@ -9,11 +9,11 @@ export interface Values {
   worldview: FreeTextOptionValue;
   ethicalTraits: FreeTextOptionValue;
   personalityScores: {
-    extraversion: FreeTextOptionValue;
+    extroversion: FreeTextOptionValue;
     agreeableness: FreeTextOptionValue;
     conscientiousness: FreeTextOptionValue;
     neuroticism: FreeTextOptionValue;
-    opennessToExperience: FreeTextOptionValue;
+    openness: FreeTextOptionValue;
   };
   quirks: FreeTextOptionValue;
   motivations: FreeTextOptionValue;
@@ -39,18 +39,27 @@ export function canSubmit(formValues: Values) {
   const keys = Object.keys(formValues) as (keyof Values)[];
   for (const key of keys) {
     const val = formValues[key];
-    if (isStringVal(val) && val === "") {
-      // Check string values are filled out
-      return false;
-    } else if (isFreeTextOptionVal(val) && val.value === "") {
-      // Check free text option values have values
-      return false;
-    } else if (key === "personalityScores") {
-      // Check nested personalityScores object has values for all its freetext options
-      for (const personalityVal of Object.values(
-        val as Values["personalityScores"]
-      )) {
-        if (personalityVal.value === "") return false;
+    const reqKeys = [
+      "worldview",
+      "ethicalTraits",
+      "personalityScores",
+      "motivations",
+      "fears",
+    ];
+    if (reqKeys.includes(key)) {
+      if (isStringVal(val) && val === "") {
+        // Check string values are filled out
+        return false;
+      } else if (isFreeTextOptionVal(val) && val.value === "") {
+        // Check free text option values have values
+        return false;
+      } else if (key === "personalityScores") {
+        // Check nested personalityScores object has values for all its freetext options
+        for (const personalityVal of Object.values(
+          val as Values["personalityScores"]
+        )) {
+          if (personalityVal.value === "") return false;
+        }
       }
     }
   }
@@ -64,20 +73,24 @@ export async function submitCharacterCreationForm(
 ) {
   // Convert to CharacterDetails
   const characterDetails = {
-    name: formValues.name,
-    race: formValues.race,
-    class: formValues.class,
-    worldView: formValues.worldview.value,
-    ethicalTraits: formValues.ethicalTraits.value,
-    personalityTraits: Object.entries(formValues.personalityScores).map(
-      ([trait, description]) => `${trait}: ${description.value}`
-    ), // TODO: make sure this fits the input we use for GPT - currently it creates an array like ["opennessToExperience: I'm always open to new things", ...]
-    quirks: formValues.quirks.value,
-    motivations: formValues.motivations.value,
-    fears: formValues.fears.value,
-    likes: formValues.likes.value,
-    dislikes: formValues.dislikes.value,
-    backstory: formValues.dislikes.value,
+    name: formValues.name || undefined,
+    race: formValues.race || undefined,
+    class: formValues.class || undefined,
+    worldview: formValues.worldview.value,
+    ethicalTraits: [formValues.ethicalTraits.value],
+    personalityTraits: {
+      extroversion: formValues.personalityScores.extroversion.value,
+      agreeableness: formValues.personalityScores.agreeableness.value,
+      conscientiousness: formValues.personalityScores.conscientiousness.value,
+      neuroticism: formValues.personalityScores.neuroticism.value,
+      openness: formValues.personalityScores.openness.value,
+    },
+    quirks: formValues.quirks.value || undefined,
+    motivations: [formValues.motivations.value],
+    fears: [formValues.fears.value],
+    likes: formValues.likes.value || undefined,
+    dislikes: formValues.dislikes.value || undefined,
+    backstory: formValues.dislikes.value || undefined,
   };
 
   const resp = await fetch(process.env.NEXT_PUBLIC_API + "/character-sheet", {
@@ -88,5 +101,6 @@ export async function submitCharacterCreationForm(
     },
     body: JSON.stringify(characterDetails),
   });
+  console.log(resp.json())
   return resp;
 }

@@ -62,11 +62,11 @@ export default function NewCharacter() {
     worldview: { freetext: true, value: "" },
     ethicalTraits: { freetext: true, value: "" },
     personalityScores: {
-      extraversion: { freetext: true, value: "" },
+      extroversion: { freetext: true, value: "" },
       agreeableness: { freetext: true, value: "" },
       conscientiousness: { freetext: true, value: "" },
       neuroticism: { freetext: true, value: "" },
-      opennessToExperience: { freetext: true, value: "" },
+      openness: { freetext: true, value: "" },
     },
     quirks: { freetext: true, value: "" },
     motivations: { freetext: true, value: "" },
@@ -107,7 +107,11 @@ export default function NewCharacter() {
       {!userData.user.goldBalance ? (
         <VStack width="100%" mt={20}>
           <Header>Not Enough GP Tokens</Header>
-          <Text>Unfortunately, you don{"'"}t have enough GP to create another character. Please come back in ~24 hours, when your GP is reset to 3GP.</Text>
+          <Text>
+            Unfortunately, you don{"'"}t have enough GP to create another
+            character. Please come back in ~24 hours, when your GP is reset to
+            3GP.
+          </Text>
         </VStack>
       ) : (
         <>
@@ -140,7 +144,17 @@ export default function NewCharacter() {
                   </Header>
                   <Box w="100%" textAlign="center">
                     <Header mb={4}>
-                      What{"'"}s your character{"'"}s name?
+                      What{"'"}s your character{"'"}s name?{" "}
+                      <em
+                        style={{
+                          fontFamily: "var(--font-source-sans)",
+                          fontSize: 24,
+                          fontWeight: "normal",
+                          opacity: 0.8,
+                        }}
+                      >
+                        {"("}Optional{")"}
+                      </em>
                     </Header>
                     <InputGroup
                       serif
@@ -151,13 +165,33 @@ export default function NewCharacter() {
                   </Box>
                   <Box w="100%" textAlign="center">
                     <Header mb={4}>
-                      What{"'"}s your character{"'"}s race?
+                      What{"'"}s your character{"'"}s race?{" "}
+                      <em
+                        style={{
+                          fontFamily: "var(--font-source-sans)",
+                          fontSize: 24,
+                          fontWeight: "normal",
+                          opacity: 0.8,
+                        }}
+                      >
+                        {"("}Optional{")"}
+                      </em>
                     </Header>
                     <RaceSelect values={values} setValues={setValues} />
                   </Box>
                   <Box w="100%" textAlign="center">
                     <Header mb={4}>
-                      What{"'"}s your character{"'"}s class?
+                      What{"'"}s your character{"'"}s class?{" "}
+                      <em
+                        style={{
+                          fontFamily: "var(--font-source-sans)",
+                          fontSize: 24,
+                          fontWeight: "normal",
+                          opacity: 0.8,
+                        }}
+                      >
+                        {"("}Optional{")"}
+                      </em>
                     </Header>
                     <ClassSelect values={values} setValues={setValues} />
                   </Box>
@@ -221,7 +255,7 @@ export default function NewCharacter() {
                         ...v,
                         personalityScores: {
                           ...v.personalityScores,
-                          extraversion: {
+                          extroversion: {
                             value,
                             freetext,
                           },
@@ -229,8 +263,8 @@ export default function NewCharacter() {
                       }))
                     }
                     title="Do they have a lot of friends?"
-                    valueField={values.personalityScores.extraversion}
-                    options={presets.extraversion}
+                    valueField={values.personalityScores.extroversion}
+                    options={presets.extroversion}
                   />
                   <FreetextOrButton
                     setValues={(value, freetext) =>
@@ -289,7 +323,7 @@ export default function NewCharacter() {
                         ...v,
                         personalityScores: {
                           ...v.personalityScores,
-                          opennessToExperience: {
+                          openness: {
                             value,
                             freetext,
                           },
@@ -297,8 +331,8 @@ export default function NewCharacter() {
                       }))
                     }
                     title="How do they feel about the unknown?"
-                    valueField={values.personalityScores.opennessToExperience}
-                    options={presets.opennessToExperience}
+                    valueField={values.personalityScores.openness}
+                    options={presets.openness}
                   />
                 </Flex>
                 <Divider mt={8} />
@@ -314,6 +348,7 @@ export default function NewCharacter() {
                     Background
                   </Header>
                   <FreetextOrButton
+                    optional
                     setValues={(value, freetext) =>
                       setValues((v) => ({
                         ...v,
@@ -328,6 +363,7 @@ export default function NewCharacter() {
                     options={presets.backstory}
                   />
                   <FreetextOrButton
+                    optional
                     setValues={(value, freetext) =>
                       setValues((v) => ({
                         ...v,
@@ -370,6 +406,7 @@ export default function NewCharacter() {
                     options={presets.fears}
                   />
                   <FreetextOrButton
+                    optional
                     setValues={(value, freetext) =>
                       setValues((v) => ({
                         ...v,
@@ -384,6 +421,7 @@ export default function NewCharacter() {
                     options={presets.likes}
                   />
                   <FreetextOrButton
+                    optional
                     setValues={(value, freetext) =>
                       setValues((v) => ({
                         ...v,
@@ -451,7 +489,14 @@ export default function NewCharacter() {
                   <Box
                     position="relative"
                     onClick={
-                      enableSubmitButton ? async () => token.idToken && await submitCharacterCreationForm(values, token.idToken) : undefined
+                      enableSubmitButton
+                        ? async () =>
+                            token.idToken &&
+                            (await submitCharacterCreationForm(
+                              values,
+                              token.idToken
+                            ))
+                        : undefined
                     }
                     cursor={enableSubmitButton ? "pointer" : "not-allowed"}
                   >
@@ -523,15 +568,34 @@ function FreetextOrButton({
   setValues,
   valueField,
   options,
+  optional,
 }: {
   title: string;
   setValues: (val: string, freetext: boolean) => void;
   valueField: { freetext: boolean; value: string };
   options: string[];
+  optional?: boolean;
 }) {
   return (
     <Box w="100%" textAlign="center">
-      <Header mb={4}>{title}</Header>
+      <Header mb={4}>
+        {title}
+        {optional && (
+          <>
+            {" "}
+            <em
+              style={{
+                fontFamily: "var(--font-source-sans)",
+                fontSize: 24,
+                fontWeight: "normal",
+                opacity: 0.8,
+              }}
+            >
+              {"("}Optional{")"}
+            </em>
+          </>
+        )}
+      </Header>
       <TextArea
         mb={4}
         onChange={(e) => {
@@ -573,7 +637,12 @@ function RaceSelect({ values, setValues }: any) {
             secondary
             flexGrow={1}
             key={race}
-            onClick={() => setValues((v: Values) => ({ ...v, race: race }))}
+            onClick={() =>
+              setValues((v: Values) => ({
+                ...v,
+                race: v.race === race ? null : race,
+              }))
+            }
             highlight={values.race === race}
           >
             {race}
@@ -597,7 +666,12 @@ function ClassSelect({ values, setValues }: any) {
           secondary
           flexGrow={1}
           key={cls.name}
-          onClick={() => setValues((v: Values) => ({ ...v, class: cls.name }))}
+          onClick={() =>
+            setValues((v: Values) => ({
+              ...v,
+              class: v.class === cls.name ? null : cls.name,
+            }))
+          }
           highlight={values.class === cls.name}
         >
           {cls.name}
