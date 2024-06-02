@@ -1,5 +1,5 @@
 import {firebaseAuth} from '../firebase.js';
-import {ForbiddenError, UnauthorizedError} from "./errorHandlers.js";
+import {ForbiddenError, NotFoundError, UnauthorizedError} from "./errorHandlers.js";
 import asyncHandler from "express-async-handler";
 
 /**
@@ -44,6 +44,14 @@ const authenticateJWT = asyncHandler(async (req, res, next) => {
                 throw new ForbiddenError();
             }
         }
+
+        // Check they are creating an account or already have an account
+        try {
+            await firebaseAuth.getUser(req.uid);
+        } catch (err) {
+            throw new NotFoundError("Account doesn't exist");
+        }
+
         next();
 
     } else {
