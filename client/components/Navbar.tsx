@@ -131,7 +131,7 @@ export default function Navbar() {
           {auth.loggedIn && (
             <Box w="100%">
               <HStack color="brand.800" fontSize={20} mx="auto" w="fit-content">
-                {data.error ? (
+                {data.state.error ? (
                   <Text>Error fetching account data.</Text>
                 ) : (
                   <>
@@ -141,10 +141,10 @@ export default function Navbar() {
                       mb={0}
                     >
                       <GPToken height={30} width={30} glow />{" "}
-                      {data.loading ? (
+                      {data.state.loading ? (
                         <Spinner size="sm" />
                       ) : (
-                        data.user.goldBalance || "?"
+                        data.state.user.goldBalance ?? "?"
                       )}{" "}
                       GP
                     </Text>

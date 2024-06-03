@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Header from "./typography/Header";
 import Button from "./Button";
 
-type CharacterShortList = DataContextType["user"]["charSheets"];
+type CharacterShortList = DataContextType["state"]["user"]["charSheets"];
 type CharacterShort = CharacterShortList[number];
 
 export default function CharactersList({
@@ -21,7 +21,7 @@ export default function CharactersList({
   const router = useRouter();
 
   const data = useContext(DataContext);
-  return data.loading ? (
+  return data.state.loading ? (
     <Flex flexWrap="wrap" gap={18} justifyContent="center">
       {[0, 1, 2, 3].map((num) => (
         <CharCard char={{} as any} key={num} mini={mini} loading />
@@ -30,10 +30,10 @@ export default function CharactersList({
   ) : (
     <Flex flexWrap="wrap" gap={18} justifyContent="center" alignItems="center">
       <CharCard char={{} as any} newButton mini={mini} />
-      {data.user.charSheets.slice(0, max ?? undefined).map((char) => (
+      {data.state.user.charSheets.slice(0, max ?? undefined).map((char) => (
         <CharCard char={char} key={char.id} mini={mini} />
       ))}
-      {max != null && data.user.charSheets.length > 0 && (
+      {max != null && data.state.user.charSheets.length > 0 && (
         <Button secondary onClick={() => router.push("/characters")}>
           View All
         </Button>
@@ -116,7 +116,7 @@ export function CharCard({
           textOverflow="ellipsis"
           overflow="hidden"
         >
-          {char.name} asd awds a awdas dsadas daasdasds f dsfsd adsdas
+          {char.name}
         </Text>
       )}
     </Flex>

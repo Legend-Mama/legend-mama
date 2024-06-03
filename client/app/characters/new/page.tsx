@@ -3,13 +3,34 @@
 import Header from "@/components/typography/Header";
 import Text from "@/components/typography/Text";
 import { Flex, Spinner } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import CharCreateForm from "./CharCreateForm";
 import Hourglass from "@/components/icons/Hourglass";
 import Button from "@/components/Button";
 import { PageSteps, Values } from "./lib";
 import CharacterSheet from "@/lib/CharacterSheet";
 import CharacterSheetPreview from "./CharSheetPreview";
+
+const DEFAULT_VALUES = {
+  name: "",
+  race: "",
+  class: "",
+  worldview: { freetext: true, value: "" },
+  ethicalTraits: { freetext: true, value: "" },
+  personalityScores: {
+    extroversion: { freetext: true, value: "" },
+    agreeableness: { freetext: true, value: "" },
+    conscientiousness: { freetext: true, value: "" },
+    neuroticism: { freetext: true, value: "" },
+    openness: { freetext: true, value: "" },
+  },
+  quirks: { freetext: true, value: "" },
+  motivations: { freetext: true, value: "" },
+  fears: { freetext: true, value: "" },
+  likes: { freetext: true, value: "" },
+  dislikes: { freetext: true, value: "" },
+  backstory: { freetext: true, value: "" },
+} as const;
 
 export default function NewCharacter() {
   const [pageStep, setPageStep] = useState<
@@ -18,26 +39,15 @@ export default function NewCharacter() {
 
   const [charSheet, setCharSheet] = useState<CharacterSheet>();
 
-  const [values, setValues] = useState<Values>({
-    name: "",
-    race: "",
-    class: "",
-    worldview: { freetext: true, value: "" },
-    ethicalTraits: { freetext: true, value: "" },
-    personalityScores: {
-      extroversion: { freetext: true, value: "" },
-      agreeableness: { freetext: true, value: "" },
-      conscientiousness: { freetext: true, value: "" },
-      neuroticism: { freetext: true, value: "" },
-      openness: { freetext: true, value: "" },
+  const [values, setValues] = useState<Values>(DEFAULT_VALUES);
+
+  const handleNewForm = useCallback(
+    () => {
+      setValues(DEFAULT_VALUES);
+      setPageStep(PageSteps.form);
     },
-    quirks: { freetext: true, value: "" },
-    motivations: { freetext: true, value: "" },
-    fears: { freetext: true, value: "" },
-    likes: { freetext: true, value: "" },
-    dislikes: { freetext: true, value: "" },
-    backstory: { freetext: true, value: "" },
-  });
+    []
+  )
 
   switch (pageStep) {
     case PageSteps.form:
@@ -47,7 +57,7 @@ export default function NewCharacter() {
     case PageSteps.error:
       return <Error setPageStep={setPageStep} />;
     case PageSteps.charSheet:
-      return <CharacterSheetPreview charSheet={charSheet!} />
+      return <CharacterSheetPreview charSheet={charSheet!} handleNewForm={handleNewForm} />
   }
 }
 

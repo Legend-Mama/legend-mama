@@ -9,6 +9,7 @@ import InfoBox from "@/components/InfoBox";
 import { saveCharacterSheet } from "./new/lib";
 import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
+import { DataContext } from "../providers/DataProvider";
 
 function hideNonRenderable(val: unknown) {
   if (typeof val !== "number" && typeof val !== "string") {
@@ -37,6 +38,7 @@ export default function CharacterSheetTemplate({
   const [saveErr, setSaveErr] = useState(false);
 
   const authContext = useContext(AuthContext);
+  const data = useContext(DataContext);
   return (
     <Container maxWidth="container.lg" as="main" py={4}>
       {isPreview && !saved && <InfoBox justifyContent="center" mb={8}>
@@ -84,10 +86,12 @@ export default function CharacterSheetTemplate({
                       );
                       setSaveErr(false);
                       setSaved(true);
+                      
                     } catch {
                       setSaveErr(true);
                     } finally {
                       setSaving(false);
+                      data.refresh();
                     }
                   }}
                 >

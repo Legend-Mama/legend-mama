@@ -101,11 +101,11 @@ export default function CharCreateForm({
 
   return (
     <Flex as="main" h="100%" w="100%">
-      {userData.loading ? (
+      {userData.state.loading ? (
         <VStack width="100%" mt={20}>
           <Spinner size="xl" color="white" />
         </VStack>
-      ) : !userData.user.goldBalance ? (
+      ) : !userData.state.user.goldBalance ? (
         <VStack width="100%" mt={20}>
           <Header>Not Enough GP Tokens</Header>
           <Text>
