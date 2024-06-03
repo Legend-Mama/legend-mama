@@ -10,17 +10,23 @@ import {
 } from "react";
 import { AuthContext } from "./AuthProvider";
 import { usePathname } from "next/navigation";
+import CharacterSheet from "@/lib/CharacterSheet";
 
 interface DataContextType {
   user: {
     goldBalance: number | null;
+    charSheets: { id: string; name: string }[];
   };
   refresh: () => Promise<void>;
+  loading: boolean;
+  error: boolean;
 }
 
 const defaultContext: DataContextType = {
-  user: { goldBalance: null },
+  user: { goldBalance: null, charSheets: [] },
   refresh: async () => {},
+  loading: true,
+  error: false,
 } as const;
 
 export const DataContext = createContext<DataContextType>(defaultContext);
@@ -38,23 +44,67 @@ export function DataProvider({ children }: { children: ReactNode }) {
       return; // Allow signup to finish initializing user before trying to fetch data
     }
     if (auth.loggedIn && auth.idToken) {
+      setContext((ctx) => ({ ...ctx, loading: true }));
+
+      const promises = [];
+
       // Update gold balance & id token
-      const resp = await fetch(
-        process.env.NEXT_PUBLIC_API + "/account/gold-balance",
-        {
-          headers: {
-            Authorization: `Bearer ${auth.idToken}`,
-          },
-        }
+      promises.push(
+        (async () => {
+          try {
+            const resp = await fetch(
+              process.env.NEXT_PUBLIC_API + "/account/gold-balance",
+              {
+                headers: {
+                  Authorization: `Bearer ${auth.idToken}`,
+                },
+              }
+            );
+            if (resp.status !== 200) throw "Error";
+            return await resp.json();
+          } catch {
+            return null;
+          }
+        })()
       );
-      if (resp.status != 200) {
+
+      // Get character sheets
+      promises.push(
+        (async () => {
+          try {
+            const resp = await fetch(
+              process.env.NEXT_PUBLIC_API + "/account/character-sheets",
+              {
+                headers: {
+                  Authorization: `Bearer ${auth.idToken}`,
+                },
+              }
+            );
+            if (resp.status !== 200) throw "Error";
+            return await resp.json();
+          } catch {
+            return null;
+          }
+        })()
+      );
+
+      const [goldData, charSheetData] = await Promise.all(promises);
+
+      if (!goldData || !charSheetData) {
         console.error("Error while fetching account data");
+        setContext((ctx) => ({
+          ...ctx,
+          loading: false,
+          error: true,
+        }));
         return;
       }
-      const respData = await resp.json();
+
       setContext((ctx) => ({
         ...ctx,
-        user: { goldBalance: respData.goldBalance },
+        user: { goldBalance: goldData.goldBalance, charSheets: charSheetData },
+        loading: false,
+        error: false,
       }));
     }
   }, [auth.idToken, auth.loggedIn, dontFetch]);
