@@ -84,7 +84,7 @@ export default function Navbar() {
                     New Character
                   </Header>
                 </Link>
-                <Link href="/account" _hover={{ textDecoration: "unset" }}>
+                {/* <Link href="/account" _hover={{ textDecoration: "unset" }}>
                   <Header
                     as="h1"
                     size="lg"
@@ -105,7 +105,7 @@ export default function Navbar() {
                   >
                     Help
                   </Header>
-                </Link>
+                </Link> */}
               </>
             ) : (
               <>
