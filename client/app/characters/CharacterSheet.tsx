@@ -1,10 +1,14 @@
 import Button from "@/components/Button";
 import Header from "@/components/typography/Header";
 import Text from "@/components/typography/Text";
-import { Box, Container, Flex } from "@chakra-ui/react";
+import { Box, Container, Flex, Spinner } from "@chakra-ui/react";
 import { BiPlusCircle } from "react-icons/bi";
 import { AbilityScoreTable, SkillsTable } from "./[characterId]/Tables";
 import CharacterSheet from "@/lib/CharacterSheet";
+import InfoBox from "@/components/InfoBox";
+import { saveCharacterSheet } from "./new/lib";
+import { useContext, useState } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 
 function hideNonRenderable(val: unknown) {
   if (typeof val !== "number" && typeof val !== "string") {
@@ -21,13 +25,26 @@ function hideNonRenderableArr(val: unknown) {
 }
 
 export default function CharacterSheetTemplate({
+  isPreview,
   charSheet,
 }: {
   charSheet: CharacterSheet;
+  isPreview?: boolean;
 }) {
-  
+  // For preview
+  const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveErr, setSaveErr] = useState(false);
+
+  const authContext = useContext(AuthContext);
   return (
-    <Container maxWidth="container.lg" as="main" py={12}>
+    <Container maxWidth="container.lg" as="main" py={4}>
+      {isPreview && !saved && <InfoBox justifyContent="center" mb={8}>
+        <em style={{ fontSize: 16 }}>
+          Do not navigate away from this page without clicking save, or your
+          character will be lost!
+        </em>
+      </InfoBox>}
       <Flex gap={4}>
         {/* Name, bio, share, print */}
         <Box>
@@ -37,17 +54,46 @@ export default function CharacterSheetTemplate({
                 {hideNonRenderable(charSheet.name)}
               </Header>
               <Text fontSize={16} fontWeight={500}>
-                Level {hideNonRenderable(charSheet.level)} {hideNonRenderable(charSheet.class)} {hideNonRenderable(charSheet.race)}
+                Level {hideNonRenderable(charSheet.level)}{" "}
+                {hideNonRenderable(charSheet.class)}{" "}
+                {hideNonRenderable(charSheet.race)}
               </Text>
               <Text mb={4} fontSize={16} fontWeight={500}>
                 <em>{hideNonRenderable(charSheet.background.description)}</em>
               </Text>
-              <Text fontSize={14}>{hideNonRenderable(charSheet.backstory)}</Text>
+              <Text fontSize={14}>
+                {hideNonRenderable(charSheet.backstory)}
+              </Text>
             </Box>
             <Box flexShrink={0}>
               {/* <Button secondary w="100%" mb={2}>
                 Share
               </Button> */}
+              {isPreview && (
+                <Button
+                  disabled={!authContext.idToken || saved}
+                  w="100%"
+                  mb={2}
+                  onClick={async () => {
+                    if (!authContext.idToken || saved) return;
+                    setSaving(true);
+                    try {
+                      await saveCharacterSheet(
+                        charSheet,
+                        authContext.idToken
+                      );
+                      setSaveErr(false);
+                      setSaved(true);
+                    } catch {
+                      setSaveErr(true);
+                    } finally {
+                      setSaving(false);
+                    }
+                  }}
+                >
+                  { saved ? "Saved" : saving ? <span><Spinner size="xs" />  Saving...</span> : saveErr ? "Error, click to try again" : "Save"}
+                </Button>
+              )}
               <Button secondary w="100%">
                 Print
               </Button>
@@ -66,9 +112,14 @@ export default function CharacterSheetTemplate({
           justifyContent="center"
           flexDir="column"
           transform="rotate(1deg)"
+          px={8}
         >
-          <BiPlusCircle color="#D7C5A0" size={32} />
-          <Text>Todo: click here to generate image</Text>
+          {!isPreview && <BiPlusCircle color="#D7C5A0" size={32} />}
+          <Text textAlign="center">
+            {isPreview
+              ? "Save this character sheet if you want to generate an image."
+              : "Generate an image!"}
+          </Text>
         </Flex>
       </Flex>
       {/* Big stats */}

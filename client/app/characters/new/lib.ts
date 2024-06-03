@@ -1,3 +1,5 @@
+import CharacterSheet from "@/lib/CharacterSheet";
+
 type FreeTextOptionValue = { value: string; freetext: boolean };
 
 type NestedFreeTextOptionsValue = Record<string, FreeTextOptionValue>;
@@ -115,4 +117,25 @@ export async function submitCharacterCreationForm(
     throw "Invalid response";
   }
   return await resp.json();
+}
+
+/**
+ * Saves a character sheet to the user's account
+ */
+export async function saveCharacterSheet(
+  charSheet: CharacterSheet,
+  authToken: string
+) {
+  const resp = await fetch(process.env.NEXT_PUBLIC_API + "/account/character-sheets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`,
+    },
+    body: JSON.stringify(charSheet),
+  });
+  if (resp.status !== 201) {
+    throw "Invalid response";
+  }
+  return true;
 }

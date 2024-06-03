@@ -6,6 +6,7 @@ export default function Button({
   children,
   secondary,
   highlight = false,
+  disabled,
   ...props
 }: {
   children: ReactNode;
@@ -22,13 +23,18 @@ export default function Button({
       color={highlight ? "#3A2F15" : "#EBE1D4"}
       fontSize="smaller"
       borderRadius={10}
-      _hover={{
-        backgroundColor: secondary ? "gray.900" : "gray.700",
-        ...(highlight && { color: "#EBE1D4" }),
-      }}
+      _hover={
+        !disabled
+          ? {
+              backgroundColor: secondary ? "gray.900" : "gray.700",
+              ...(highlight && { color: "#EBE1D4" }),
+            }
+          : {}
+      }
       {...props}
       sx={{
         ...(glow && { filter: "drop-shadow(0 0 16px #f1efbb)" }),
+        ...(disabled && { cursor: "not-allowed", opacity: 0.5 }),
         ...props.sx,
       }}
     >
