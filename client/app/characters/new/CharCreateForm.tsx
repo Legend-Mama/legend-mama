@@ -14,6 +14,7 @@ import {
   Divider,
   Flex,
   Grid,
+  Spinner,
   VStack,
   useSteps,
 } from "@chakra-ui/react";
@@ -100,7 +101,11 @@ export default function CharCreateForm({
 
   return (
     <Flex as="main" h="100%" w="100%">
-      {!userData.user.goldBalance ? (
+      {userData.loading ? (
+        <VStack width="100%" mt={20}>
+          <Spinner size="xl" color="white" />
+        </VStack>
+      ) : !userData.user.goldBalance ? (
         <VStack width="100%" mt={20}>
           <Header>Not Enough GP Tokens</Header>
           <Text>
