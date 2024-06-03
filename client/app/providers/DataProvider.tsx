@@ -12,7 +12,7 @@ import { AuthContext } from "./AuthProvider";
 import { usePathname } from "next/navigation";
 import CharacterSheet from "@/lib/CharacterSheet";
 
-interface DataContextType {
+export interface DataContextType {
   user: {
     goldBalance: number | null;
     charSheets: { id: string; name: string }[];
