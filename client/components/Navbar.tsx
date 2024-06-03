@@ -19,12 +19,6 @@ export default function Navbar() {
   const router = useRouter();
   const url = usePathname();
 
-  const handleLogout = useCallback(() => {
-    signOut(auth.auth!)
-      .then(() => router.push("/"))
-      .catch((err) => console.error(err.message));
-  }, [auth.auth, router]);
-
   return (
     <Box
       h="100%"
@@ -167,7 +161,7 @@ export default function Navbar() {
               </HStack>
 
               <Button
-                onClick={handleLogout}
+                onClick={() => router.push("/auth/logout")}
                 mt={4}
                 w="100%"
                 secondary

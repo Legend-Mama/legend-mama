@@ -18,6 +18,7 @@ export interface DataContextType {
     charSheets: { id: string; name: string }[];
   };
   refresh: () => Promise<void>;
+  clearData: () => Promise<void>;
   loading: boolean;
   error: boolean;
 }
@@ -25,6 +26,7 @@ export interface DataContextType {
 const defaultContext: DataContextType = {
   user: { goldBalance: null, charSheets: [] },
   refresh: async () => {},
+  clearData: async () => {},
   loading: true,
   error: false,
 } as const;
@@ -37,7 +39,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   // Keep dontFetch outside of fetchData callback - we don't want the URL to be a dependency of the hook because it will trigger fetchData to be updated, which in turn triggers the useEffect to refetch data
   // We don't want to refetch data every time the URL changes!
-  const dontFetch = url === "/auth/signup" || url === "/auth/login";
+  const dontFetch = url === "/auth/signup" || url === "/auth/login" || url === "/auth/logout";
 
   const fetchData = useCallback(async () => {
     if (dontFetch) {
@@ -112,6 +114,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [context, setContext] = useState<DataContextType>(() => ({
     ...defaultContext,
     refresh: fetchData,
+    clearData: async () => {
+      setContext(defaultContext);
+    }
   }));
 
   useEffect(() => {

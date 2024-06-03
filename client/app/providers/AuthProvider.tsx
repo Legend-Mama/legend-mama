@@ -7,6 +7,7 @@ import {
   connectAuthEmulator,
   getAuth,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import { ReactNode, createContext, useMemo, useState } from "react";
 
@@ -27,6 +28,7 @@ interface AuthContextType {
   providers: { google: GoogleAuthProvider | null };
   idToken: string | null;
   user: User | null;
+  logoutAuth: () => Promise<void>;
 }
 
 const defaultContext: AuthContextType = {
@@ -35,6 +37,7 @@ const defaultContext: AuthContextType = {
   user: null,
   idToken: null,
   providers: { google: null },
+  logoutAuth: async () => {},
 } as const;
 
 export const AuthContext = createContext<AuthContextType>(defaultContext);
@@ -80,9 +83,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setContext((ctx) => ({ ...ctx, idToken }));
         });
       } else {
-        setContext((ctx) => ({ ...ctx, loggedIn: false, user: null, idToken: null }));
+        setContext((ctx) => ({
+          ...ctx,
+          loggedIn: false,
+          user: null,
+          idToken: null,
+        }));
       }
     });
+
+    ctx.logoutAuth = async () => {
+      await signOut(ctx.auth!);
+      setContext((existing) => ({
+        ...existing,
+        loggedIn: false,
+        user: null,
+        idToken: null,
+      }));
+    };
 
     return ctx;
   });
