@@ -18,7 +18,7 @@ import {
   Spinner,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { BiPlusCircle } from "react-icons/bi";
 import { AuthContext } from "../providers/AuthProvider";
 import { DataContext } from "../providers/DataProvider";
@@ -29,6 +29,8 @@ import {
   saveCharacterSheet,
   updateCharacterSheet,
 } from "./lib";
+import { useReactToPrint } from "react-to-print";
+import { CharacterSheetPrint } from "./CharacterSheetPrint";
 
 function hideNonRenderable(val: unknown) {
   if (typeof val !== "number" && typeof val !== "string") {
@@ -66,55 +68,55 @@ export default function CharacterSheetTemplate({
 
   const hasGp =
     data.state.user.goldBalance != null && data.state.user.goldBalance > 0;
-    
-    // Image gen
-    const [imgUrl, setImgUrl] = useState("");
-    const [loadingImage, setLoadingImage] = useState(false);
-    const [imgErr, setImgErr] = useState(false);
-    const {
-      isOpen: imgGenModalOpen,
-      onOpen: onOpenImgGenModal,
-      onClose: onCloseImgGenModal,
-    } = useDisclosure();
-    
-    // Fetch image
-    useEffect(() => {
-      async function run() {
-        if (charSheet.charImage && authContext.idToken) {
-          try {
-            setLoadingImage(true);
-            const { url } = await getCharacterImage(
-              charSheet.charImage,
-              authContext.idToken
-            );
-            setImgUrl(url);
-          } catch {
-            setImgErr(true);
-          } finally {
-            setLoadingImage(false);
-          }
+
+  // Image gen
+  const [imgUrl, setImgUrl] = useState("");
+  const [loadingImage, setLoadingImage] = useState(false);
+  const [imgErr, setImgErr] = useState(false);
+  const {
+    isOpen: imgGenModalOpen,
+    onOpen: onOpenImgGenModal,
+    onClose: onCloseImgGenModal,
+  } = useDisclosure();
+
+  // Fetch image
+  useEffect(() => {
+    async function run() {
+      if (charSheet.charImage && authContext.idToken) {
+        try {
+          setLoadingImage(true);
+          const { url } = await getCharacterImage(
+            charSheet.charImage,
+            authContext.idToken
+          );
+          setImgUrl(url);
+        } catch {
+          setImgErr(true);
+        } finally {
+          setLoadingImage(false);
         }
       }
-      void run();
-    }, [authContext.idToken, charSheet.charImage]);
+    }
+    void run();
+  }, [authContext.idToken, charSheet.charImage]);
 
-    const canGenerateImage = hasGp && !isPreview && !imgUrl;
-    
-    const generateImageAndSave = useCallback(async () => {
-      if (!authContext.idToken || !charSheet || !id) return;
-      setLoadingImage(true);
-      try {
-        const { url } = await generateCharacterImage(
-          charSheet,
-          authContext.idToken
-        );
-        if (typeof url !== "string") throw "Error";
-        await updateCharacterSheet(
+  const canGenerateImage = hasGp && !isPreview && !imgUrl && !loadingImage;
+
+  const generateImageAndSave = useCallback(async () => {
+    if (!authContext.idToken || !charSheet || !id) return;
+    setLoadingImage(true);
+    try {
+      const { url } = await generateCharacterImage(
+        charSheet,
+        authContext.idToken
+      );
+      if (typeof url !== "string") throw "Error";
+      await updateCharacterSheet(
         id,
         { ...charSheet, charImage: url },
         authContext.idToken
       );
-      
+
       // Refresh charSheet
       void getCharSheet();
     } catch {
@@ -123,6 +125,11 @@ export default function CharacterSheetTemplate({
       setLoadingImage(false);
     }
   }, [authContext.idToken, charSheet, getCharSheet, id]);
+
+  const printRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current as any,
+  });
 
   return (
     <Container maxWidth="container.lg" as="main" py={4}>
@@ -191,7 +198,7 @@ export default function CharacterSheetTemplate({
                   )}
                 </Button>
               )}
-              <Button secondary w="100%">
+              <Button secondary w="100%" onClick={handlePrint}>
                 Print
               </Button>
             </Box>
@@ -225,8 +232,10 @@ export default function CharacterSheetTemplate({
           {canGenerateImage && <BiPlusCircle color="#D7C5A0" size={32} />}
           <Text textAlign="center">
             {isPreview
-              ? "Save this character sheet if you want to generate an image." :
-              canGenerateImage ? "Generate an image!" : null}
+              ? "Save this character sheet if you want to generate an image."
+              : canGenerateImage
+              ? "Generate an image!"
+              : null}
           </Text>
           {!isPreview && !imgUrl && (
             <InfoBox w="80%" justifyContent="center" textAlign="center">
@@ -440,6 +449,13 @@ export default function CharacterSheetTemplate({
           </Box>
         </Flex>
       </Flex>
+      {/* Print contents - hidden */}
+      <div style={{ position: "absolute", top: 0, left: 0, display: "none" }}>
+        <CharacterSheetPrint
+          charSheet={charSheet}
+          ref={printRef}
+        />
+      </div>
     </Container>
   );
 }

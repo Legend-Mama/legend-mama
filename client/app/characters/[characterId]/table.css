@@ -24,3 +24,17 @@
   font-weight: 600;
   text-align: left;
 }
+
+.ability-table.print {
+  color: black !important;
+  th {
+    color: black !important;
+  }
+}
+
+.skills-table.print {
+  color: black !important;
+  th {
+    color: black !important;
+  }
+}

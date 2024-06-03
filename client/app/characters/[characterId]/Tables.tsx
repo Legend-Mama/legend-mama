@@ -1,8 +1,17 @@
-import tableStyles from "./table.module.css";
+import "./table.css";
 
-export function AbilityScoreTable({ charSheet }: { charSheet: any }) {
+export function AbilityScoreTable({
+  charSheet,
+  print,
+}: {
+  charSheet: any;
+  print?: boolean;
+}) {
   return (
-    <table style={{ width: "100%" }} className={tableStyles["ability-table"]}>
+    <table
+      style={{ width: "100%" }}
+      className={print ? "print " + "ability-table" : "ability-table"}
+    >
       <thead>
         <tr>
           <th />
@@ -53,9 +62,18 @@ export function AbilityScoreTable({ charSheet }: { charSheet: any }) {
   );
 }
 
-export function SkillsTable({ charSheet }: { charSheet: any }) {
+export function SkillsTable({
+  charSheet,
+  print,
+}: {
+  charSheet: any;
+  print?: boolean;
+}) {
   return (
-    <table style={{ width: "100%" }} className={tableStyles["skills-table"]}>
+    <table
+      style={{ width: "100%" }}
+      className={print ? "print " + "skills-table" : "skills-table"}
+    >
       <tbody>
         <tr>
           <th>Acrobatics (Dex):</th>
@@ -128,7 +146,7 @@ export function SkillsTable({ charSheet }: { charSheet: any }) {
         <tr>
           <th>Survival (Wis):</th>
           <td>{charSheet.skills["Survival"]}</td>
-        </tr>        
+        </tr>
       </tbody>
     </table>
   );
