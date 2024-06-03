@@ -1,15 +1,16 @@
 import Button from "@/components/Button";
+import InfoBox from "@/components/InfoBox";
+import GPToken from "@/components/icons/GPToken";
 import Header from "@/components/typography/Header";
 import Text from "@/components/typography/Text";
-import { Box, Container, Flex, Spinner } from "@chakra-ui/react";
-import { BiPlusCircle } from "react-icons/bi";
-import { AbilityScoreTable, SkillsTable } from "./[characterId]/Tables";
 import CharacterSheet from "@/lib/CharacterSheet";
-import InfoBox from "@/components/InfoBox";
-import { saveCharacterSheet } from "./lib";
+import { Box, Container, Flex, Spinner } from "@chakra-ui/react";
 import { useContext, useState } from "react";
+import { BiPlusCircle } from "react-icons/bi";
 import { AuthContext } from "../providers/AuthProvider";
 import { DataContext } from "../providers/DataProvider";
+import { AbilityScoreTable, SkillsTable } from "./[characterId]/Tables";
+import { saveCharacterSheet } from "./lib";
 
 function hideNonRenderable(val: unknown) {
   if (typeof val !== "number" && typeof val !== "string") {
@@ -39,14 +40,21 @@ export default function CharacterSheetTemplate({
 
   const authContext = useContext(AuthContext);
   const data = useContext(DataContext);
+
+  const hasGp =
+    data.state.user.goldBalance != null && data.state.user.goldBalance > 0;
+  const canGenerateImage = hasGp && !isPreview;
+
   return (
     <Container maxWidth="container.lg" as="main" py={4}>
-      {isPreview && !saved && <InfoBox justifyContent="center" mb={8}>
-        <em style={{ fontSize: 16 }}>
-          Do not navigate away from this page without clicking save, or your
-          character will be lost!
-        </em>
-      </InfoBox>}
+      {isPreview && !saved && (
+        <InfoBox justifyContent="center" mb={8}>
+          <em style={{ fontSize: 16 }}>
+            Do not navigate away from this page without clicking save, or your
+            character will be lost!
+          </em>
+        </InfoBox>
+      )}
       <Flex gap={4}>
         {/* Name, bio, share, print */}
         <Box>
@@ -80,13 +88,9 @@ export default function CharacterSheetTemplate({
                     if (!authContext.idToken || saved) return;
                     setSaving(true);
                     try {
-                      await saveCharacterSheet(
-                        charSheet,
-                        authContext.idToken
-                      );
+                      await saveCharacterSheet(charSheet, authContext.idToken);
                       setSaveErr(false);
                       setSaved(true);
-                      
                     } catch {
                       setSaveErr(true);
                     } finally {
@@ -95,7 +99,17 @@ export default function CharacterSheetTemplate({
                     }
                   }}
                 >
-                  { saved ? "Saved" : saving ? <span><Spinner size="xs" />  Saving...</span> : saveErr ? "Error, click to try again" : "Save"}
+                  {saved ? (
+                    "Saved"
+                  ) : saving ? (
+                    <span>
+                      <Spinner size="xs" /> Saving...
+                    </span>
+                  ) : saveErr ? (
+                    "Error, click to try again"
+                  ) : (
+                    "Save"
+                  )}
                 </Button>
               )}
               <Button secondary w="100%">
@@ -117,13 +131,36 @@ export default function CharacterSheetTemplate({
           flexDir="column"
           transform="rotate(1deg)"
           px={8}
+          gap={2}
+          filter="drop-shadow(0 0 0px #585342)"
+          _hover={{
+            ...(canGenerateImage && {
+              filter: "drop-shadow(0 0 6px #585342)",
+              cursor: "pointer",
+            }),
+          }}
+          transition="all 0.2s"
         >
-          {!isPreview && <BiPlusCircle color="#D7C5A0" size={32} />}
+          {canGenerateImage && <BiPlusCircle color="#D7C5A0" size={32} />}
           <Text textAlign="center">
             {isPreview
               ? "Save this character sheet if you want to generate an image."
               : "Generate an image!"}
           </Text>
+          {!isPreview && (
+            <InfoBox w="80%" justifyContent="center" textAlign="center">
+              {hasGp ? (
+                <>
+                  Image generation costs <GPToken height={14} width={14} /> 1GP.
+                </>
+              ) : (
+                <>
+                  You don{"'"}t have <GPToken height={14} width={14} /> GP to
+                  generate an image.
+                </>
+              )}
+            </InfoBox>
+          )}
         </Flex>
       </Flex>
       {/* Big stats */}
