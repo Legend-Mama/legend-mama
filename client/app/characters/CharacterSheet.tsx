@@ -53,9 +53,9 @@ export default function CharacterSheetTemplate({
   id,
 }: {
   charSheet: CharacterSheet;
-  getCharSheet: () => Promise<void>;
   isPreview?: boolean;
   /** Used for existing char sheet view */
+  getCharSheet?: () => Promise<void>;
   id?: string;
 }) {
   const authContext = useContext(AuthContext);
@@ -118,7 +118,7 @@ export default function CharacterSheetTemplate({
       );
 
       // Refresh charSheet
-      void getCharSheet();
+      void getCharSheet!();
     } catch {
       setImgErr(true);
     } finally {
