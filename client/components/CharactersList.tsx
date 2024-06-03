@@ -2,11 +2,14 @@
 
 import { DataContext, DataContextType } from "@/app/providers/DataProvider";
 import { Box, Flex, Skeleton, Spinner } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import Text from "./typography/Text";
 import { useRouter } from "next/navigation";
 import Header from "./typography/Header";
 import Button from "./Button";
+import CharacterSheet from "@/lib/CharacterSheet";
+import { getCharacterImage, getCharacterSheetById } from "@/app/characters/lib";
+import { AuthContext } from "@/app/providers/AuthProvider";
 
 type CharacterShortList = DataContextType["state"]["user"]["charSheets"];
 type CharacterShort = CharacterShortList[number];
@@ -21,7 +24,58 @@ export default function CharactersList({
   const router = useRouter();
 
   const data = useContext(DataContext);
-  return data.state.loading ? (
+  const auth = useContext(AuthContext);
+
+  const chars = useMemo(
+    () => data.state.user.charSheets.slice(0, max ?? undefined),
+    [data.state.user.charSheets, max]
+  );
+
+  const [loading, setLoading] = useState(true);
+
+  const [characters, setCharacters] = useState<
+    Record<string, { charSheet: CharacterSheet; image: string }>
+  >({});
+
+  useEffect(() => {
+    async function run() {
+      if (!auth.idToken) return;
+
+      setLoading(true);
+
+      const promises: Promise<void>[] = [];
+      chars.forEach((char) => {
+        promises.push(
+          (async () => {
+            const character: { charSheet?: CharacterSheet; image?: string } =
+              {};
+            const charSheet = await getCharacterSheetById(
+              char.id,
+              auth.idToken!
+            );
+            character.charSheet = charSheet;
+
+            if (charSheet.charImage) {
+              const { url } = await getCharacterImage(
+                charSheet.charImage,
+                auth.idToken!
+              );
+              character.image = url;
+            } else {
+              character.image = "";
+            }
+            setCharacters((x) => ({ ...x, [char.id]: character as any }));
+          })()
+        );
+      });
+
+      await Promise.all(promises);
+      setLoading(false);
+    }
+    void run();
+  }, [auth.idToken, chars]);
+
+  return data.state.loading || loading ? (
     <Flex flexWrap="wrap" gap={18} justifyContent="center">
       {[0, 1, 2, 3].map((num) => (
         <CharCard char={{} as any} key={num} mini={mini} loading />
@@ -30,8 +84,8 @@ export default function CharactersList({
   ) : (
     <Flex flexWrap="wrap" gap={18} justifyContent="center" alignItems="center">
       <CharCard char={{} as any} newButton mini={mini} />
-      {data.state.user.charSheets.slice(0, max ?? undefined).map((char) => (
-        <CharCard char={char} key={char.id} mini={mini} />
+      {Object.entries(characters).map(([id, char]) => (
+        <CharCard char={char} key={id} mini={mini} id={id} />
       ))}
       {max != null && data.state.user.charSheets.length > 0 && (
         <Button secondary onClick={() => router.push("/characters")}>
@@ -47,9 +101,11 @@ export function CharCard({
   mini,
   loading,
   newButton,
+  id,
   ...props
 }: {
-  char: CharacterShort;
+  char: { charSheet: CharacterSheet; image: string };
+  id?: string;
   mini?: boolean;
   loading?: boolean;
   newButton?: boolean;
@@ -72,12 +128,13 @@ export function CharCard({
           cursor: "pointer",
         }),
       }}
-      bg="#231F17"
+      bg={char.image ? `url(${char.image})` : "#231F17"}
+      bgSize="cover"
       transition="all 0.2s"
       {...props}
       onClick={() => {
         if (!loading) {
-          router.push(newButton ? "/characters/new" : `/characters/${char.id}`);
+          router.push(newButton ? "/characters/new" : `/characters/${id}`);
         }
       }}
     >
@@ -116,7 +173,7 @@ export function CharCard({
           textOverflow="ellipsis"
           overflow="hidden"
         >
-          {char.name}
+          {char.charSheet.name}
         </Text>
       )}
     </Flex>
