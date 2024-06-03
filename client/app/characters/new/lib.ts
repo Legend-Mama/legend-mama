@@ -23,6 +23,13 @@ export interface Values {
   backstory: FreeTextOptionValue;
 }
 
+export enum PageSteps {
+  "form",
+  "loading",
+  "error",
+  "charSheet",
+}
+
 function isStringVal(value: Values[keyof Values]): value is string {
   return typeof value === "string";
 }
@@ -67,6 +74,9 @@ export function canSubmit(formValues: Values) {
   return true;
 }
 
+/**
+ * Submits character creation details in schema format. Returns null if non-successful response.
+ */
 export async function submitCharacterCreationForm(
   formValues: Values,
   authToken: string
@@ -85,11 +95,11 @@ export async function submitCharacterCreationForm(
       neuroticism: formValues.personalityScores.neuroticism.value,
       openness: formValues.personalityScores.openness.value,
     },
-    quirks: formValues.quirks.value || undefined,
+    quirks: [formValues.quirks.value] || undefined,
     motivations: [formValues.motivations.value],
     fears: [formValues.fears.value],
-    likes: formValues.likes.value || undefined,
-    dislikes: formValues.dislikes.value || undefined,
+    likes: [formValues.likes.value] || undefined,
+    dislikes: [formValues.dislikes.value] || undefined,
     backstory: formValues.dislikes.value || undefined,
   };
 
@@ -101,6 +111,8 @@ export async function submitCharacterCreationForm(
     },
     body: JSON.stringify(characterDetails),
   });
-  console.log(resp.json())
-  return resp;
+  if (resp.status !== 201) {
+    throw "Invalid response";
+  }
+  return await resp.json();
 }

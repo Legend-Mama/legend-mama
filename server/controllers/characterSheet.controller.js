@@ -20,6 +20,7 @@ export const createCharacterSheet = asyncHandler(async (req, res) => {
         const generatedCharacter = await charGen.generateChar(characterDetails);
         console.timeEnd("Requesting from ChatGPT...");
 
+        console.log("Generated character from GPT:", generatedCharacter);
         // Pass to helpers to check and derive fields
         const genChar = new GeneratedCharacter(generatedCharacter);
         const charSheet = new CharacterSheet(genChar);
