@@ -126,16 +126,40 @@ export async function saveCharacterSheet(
   charSheet: CharacterSheet,
   authToken: string
 ) {
-  const resp = await fetch(process.env.NEXT_PUBLIC_API + "/account/character-sheets", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${authToken}`,
-    },
-    body: JSON.stringify(charSheet),
-  });
+  const resp = await fetch(
+    process.env.NEXT_PUBLIC_API + "/account/character-sheets",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(charSheet),
+    }
+  );
   if (resp.status !== 201) {
     throw "Invalid response";
   }
   return true;
+}
+
+/**
+ * Gets full character sheet owned by an account by its ID
+ */
+export async function getCharacterSheetById(
+  id: string,
+  authToken: string
+): Promise<CharacterSheet> {
+  const resp = await fetch(
+    process.env.NEXT_PUBLIC_API + "/account/character-sheets/" + id,
+    {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+  if (resp.status !== 200) {
+    throw "Invalid response";
+  }
+  return await resp.json();
 }

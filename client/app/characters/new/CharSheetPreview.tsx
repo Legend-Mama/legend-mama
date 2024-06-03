@@ -4,7 +4,7 @@ import { Box, Container } from "@chakra-ui/react";
 import Text from "@/components/typography/Text";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useContext } from "react";
-import { PageSteps } from "./lib";
+import { PageSteps } from "../lib";
 import { DataContext } from "@/app/providers/DataProvider";
 
 export default function CharacterSheetPreview({

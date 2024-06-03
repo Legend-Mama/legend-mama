@@ -6,7 +6,7 @@ import { BiPlusCircle } from "react-icons/bi";
 import { AbilityScoreTable, SkillsTable } from "./[characterId]/Tables";
 import CharacterSheet from "@/lib/CharacterSheet";
 import InfoBox from "@/components/InfoBox";
-import { saveCharacterSheet } from "./new/lib";
+import { saveCharacterSheet } from "./lib";
 import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { DataContext } from "../providers/DataProvider";

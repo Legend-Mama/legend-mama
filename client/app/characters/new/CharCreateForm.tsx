@@ -37,7 +37,7 @@ import {
   Values,
   canSubmit,
   submitCharacterCreationForm,
-} from "./lib";
+} from "../lib";
 import { DataContext } from "@/app/providers/DataProvider";
 import { AuthContext } from "@/app/providers/AuthProvider";
 

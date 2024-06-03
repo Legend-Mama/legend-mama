@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import CharCreateForm from "./CharCreateForm";
 import Hourglass from "@/components/icons/Hourglass";
 import Button from "@/components/Button";
-import { PageSteps, Values } from "./lib";
+import { PageSteps, Values } from "../lib";
 import CharacterSheet from "@/lib/CharacterSheet";
 import CharacterSheetPreview from "./CharSheetPreview";
 
