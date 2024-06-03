@@ -2,9 +2,9 @@
 Controller for account related operations
  */
 import asyncHandler from "express-async-handler";
-import {firestore} from "../firebase.js";
-import {NotFoundError, ForbiddenError} from "../middleware/errorHandlers.js";
-import {downloadImage, uploadFromMemory} from "../helpers/cloudStoreOperations.js";
+import { firestore } from "../firebase.js";
+import { NotFoundError, ForbiddenError } from "../middleware/errorHandlers.js";
+import { downloadImage, uploadFromMemory } from "../helpers/cloudStoreOperations.js";
 
 /**
  * Create a new user account which stores their gold balance and saved character sheets.
@@ -32,7 +32,7 @@ export const createAccount = asyncHandler(async (req, res) => {
 export const deleteAccount = asyncHandler(async (req, res) => {
     const docRef = firestore.doc(`accounts/${req.uid}`);
     try {
-        await docRef.delete({exists: true});
+        await docRef.delete({ exists: true });
 
         const successMsg = "Account deleted successfully";
         console.log(successMsg);
@@ -52,7 +52,7 @@ export const getGoldBalance = asyncHandler(async (req, res) => {
     if (doc.exists) {
         const goldBalance = doc.get("goldBalance");
         console.log(`Account gold balance: ${goldBalance}`);
-        res.status(200).json({'goldBalance': goldBalance});
+        res.status(200).json({ 'goldBalance': goldBalance });
     } else {
         throw new NotFoundError("Account doesn't exist");
     }
@@ -94,6 +94,12 @@ export const listCharacterSheets = asyncHandler(async (req, res) => {
     if (account.exists) {
         const colRef = firestore.collection(`accounts/${req.uid}/characterSheets`);
         const docRefs = await colRef.listDocuments();
+
+        // No sheets exist
+        if (!docRefs?.length) {
+            return res.status(200).json([]);
+        }
+
         const docs = await firestore.getAll(...docRefs);
 
         let sheets = [];
@@ -181,7 +187,7 @@ export const deleteCharacterSheet = asyncHandler(async (req, res) => {
         const character_sheet_id = req.params["character_sheet_id"];
         const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
         try {
-            await docRef.delete({exists: true});
+            await docRef.delete({ exists: true });
 
             const successMsg = "Character sheet successfully deleted";
             console.log(successMsg);
