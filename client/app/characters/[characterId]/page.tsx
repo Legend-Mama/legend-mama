@@ -6,7 +6,7 @@ import Text from "@/components/typography/Text";
 import { Box, Container, Flex, Spinner } from "@chakra-ui/react";
 import { BiPlusCircle } from "react-icons/bi";
 import { AbilityScoreTable, SkillsTable } from "./Tables";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import CharacterSheet from "@/lib/CharacterSheet";
 import { AuthContext } from "@/app/providers/AuthProvider";
 import { getCharacterSheetById } from "../lib";
@@ -24,28 +24,26 @@ export default function CharacterView({
     "loading"
   );
 
-  useEffect(() => {
-    async function run() {
-      if (!auth?.idToken || !auth?.loggedIn) return;
-      try {
-        setStatus("loading");
-        const charSheet = await getCharacterSheetById(
-          characterId,
-          auth.idToken
-        );
-        setCharSheet(charSheet);
-        setStatus("ready");
-      } catch {
-        setStatus("error");
-      }
+  const getCharSheet = useCallback(async () => {
+    if (!auth?.idToken || !auth?.loggedIn) return;
+    try {
+      setStatus("loading");
+      const charSheet = await getCharacterSheetById(characterId, auth.idToken);
+      setCharSheet(charSheet);
+      setStatus("ready");
+    } catch {
+      setStatus("error");
     }
-    void run();
   }, [auth.idToken, auth?.loggedIn, characterId]);
+
+  useEffect(() => {
+    void getCharSheet();
+  }, [getCharSheet]);
 
   return (
     <Box py={8}>
       {status === "ready" ? (
-        <CharacterSheetTemplate charSheet={charSheet!} />
+        <CharacterSheetTemplate charSheet={charSheet!} id={characterId} getCharSheet={getCharSheet} />
       ) : status === "loading" ? (
         <Flex h={400} w="100%" alignItems="center" justifyContent="center">
           <Spinner size="xl" color="white" />

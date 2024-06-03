@@ -73,6 +73,12 @@ export const saveCharacterSheet = asyncHandler(async (req, res) => {
 export const listCharacterSheets = asyncHandler(async (req, res) => {
     const colRef = firestore.collection(`accounts/${req.uid}/characterSheets`);
     const docRefs = await colRef.listDocuments();
+
+    // No sheets exist
+    if (!docRefs?.length) {
+        return res.status(200).json([]);
+    }
+
     const docs = await firestore.getAll(...docRefs);
 
     let sheets = [];

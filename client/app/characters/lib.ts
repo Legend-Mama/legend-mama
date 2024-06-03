@@ -144,6 +144,31 @@ export async function saveCharacterSheet(
 }
 
 /**
+ * Replace a character sheet with an updated version. Only updated fields need to be sent.
+ */
+export async function updateCharacterSheet(
+  id: string,
+  charSheet: CharacterSheet,
+  authToken: string
+) {
+  const resp = await fetch(
+    process.env.NEXT_PUBLIC_API + "/account/character-sheets/" + id,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(charSheet),
+    }
+  );
+  if (resp.status !== 200) {
+    throw "Invalid response";
+  }
+  return true;
+}
+
+/**
  * Gets full character sheet owned by an account by its ID
  */
 export async function getCharacterSheetById(
@@ -152,6 +177,57 @@ export async function getCharacterSheetById(
 ): Promise<CharacterSheet> {
   const resp = await fetch(
     process.env.NEXT_PUBLIC_API + "/account/character-sheets/" + id,
+    {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+  if (resp.status !== 200) {
+    throw "Invalid response";
+  }
+  return await resp.json();
+}
+
+/**
+ * Generates a character image and returns URL to image
+ */
+export async function generateCharacterImage(
+  charSheet: CharacterSheet,
+  authToken: string
+): Promise<{ url: string }> {
+  const body = {
+    race: charSheet.race,
+    class: charSheet.class,
+    backstory: charSheet.backstory,
+  };
+
+  const resp = await fetch(
+    process.env.NEXT_PUBLIC_API + "/character-illustration",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(body),
+    }
+  );
+  if (resp.status !== 201) {
+    throw "Invalid response";
+  }
+  return await resp.json();
+}
+
+/**
+ * Generates a character image and returns URL to image
+ */
+export async function getCharacterImage(
+  charImageId: CharacterSheet["charImage"],
+  authToken: string
+): Promise<{ url: string }> {
+  const resp = await fetch(
+    process.env.NEXT_PUBLIC_API + "/character-illustration/" + charImageId,
     {
       headers: {
         Authorization: `Bearer ${authToken}`,

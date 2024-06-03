@@ -1,6 +1,8 @@
 "use client";
 import {
+  Dispatch,
   ReactNode,
+  SetStateAction,
   createContext,
   useCallback,
   useContext,
@@ -113,7 +115,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
       setState((exist) => ({
         ...exist,
-        user: { goldBalance: goldData.goldBalance, charSheets: charSheetData },
+        user: {
+          goldBalance: goldData.goldBalance,
+          charSheets: charSheetData,
+        },
         loading: false,
         error: false,
       }));

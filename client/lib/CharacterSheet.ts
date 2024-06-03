@@ -35,4 +35,5 @@ export default interface CharacterSheet {
   speed: number;
   toolProficiency: string[];
   weaponProficiency: string[];
+  charImage?: string;
 }

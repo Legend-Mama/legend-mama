@@ -4,13 +4,31 @@ import GPToken from "@/components/icons/GPToken";
 import Header from "@/components/typography/Header";
 import Text from "@/components/typography/Text";
 import CharacterSheet from "@/lib/CharacterSheet";
-import { Box, Container, Flex, Spinner } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import {
+  Box,
+  Container,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spinner,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { BiPlusCircle } from "react-icons/bi";
 import { AuthContext } from "../providers/AuthProvider";
 import { DataContext } from "../providers/DataProvider";
 import { AbilityScoreTable, SkillsTable } from "./[characterId]/Tables";
-import { saveCharacterSheet } from "./lib";
+import {
+  generateCharacterImage,
+  getCharacterImage,
+  saveCharacterSheet,
+  updateCharacterSheet,
+} from "./lib";
 
 function hideNonRenderable(val: unknown) {
   if (typeof val !== "number" && typeof val !== "string") {
@@ -29,21 +47,82 @@ function hideNonRenderableArr(val: unknown) {
 export default function CharacterSheetTemplate({
   isPreview,
   charSheet,
+  getCharSheet,
+  id,
 }: {
   charSheet: CharacterSheet;
+  getCharSheet: () => Promise<void>;
   isPreview?: boolean;
+  /** Used for existing char sheet view */
+  id?: string;
 }) {
-  // For preview
+  const authContext = useContext(AuthContext);
+  const data = useContext(DataContext);
+
+  // For preview - save button
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveErr, setSaveErr] = useState(false);
 
-  const authContext = useContext(AuthContext);
-  const data = useContext(DataContext);
-
   const hasGp =
     data.state.user.goldBalance != null && data.state.user.goldBalance > 0;
-  const canGenerateImage = hasGp && !isPreview;
+    
+    // Image gen
+    const [imgUrl, setImgUrl] = useState("");
+    const [loadingImage, setLoadingImage] = useState(false);
+    const [imgErr, setImgErr] = useState(false);
+    const {
+      isOpen: imgGenModalOpen,
+      onOpen: onOpenImgGenModal,
+      onClose: onCloseImgGenModal,
+    } = useDisclosure();
+    
+    // Fetch image
+    useEffect(() => {
+      async function run() {
+        if (charSheet.charImage && authContext.idToken) {
+          try {
+            setLoadingImage(true);
+            const { url } = await getCharacterImage(
+              charSheet.charImage,
+              authContext.idToken
+            );
+            setImgUrl(url);
+          } catch {
+            setImgErr(true);
+          } finally {
+            setLoadingImage(false);
+          }
+        }
+      }
+      void run();
+    }, [authContext.idToken, charSheet.charImage]);
+
+    const canGenerateImage = hasGp && !isPreview && !imgUrl;
+    
+    const generateImageAndSave = useCallback(async () => {
+      if (!authContext.idToken || !charSheet || !id) return;
+      setLoadingImage(true);
+      try {
+        const { url } = await generateCharacterImage(
+          charSheet,
+          authContext.idToken
+        );
+        if (typeof url !== "string") throw "Error";
+        await updateCharacterSheet(
+        id,
+        { ...charSheet, charImage: url },
+        authContext.idToken
+      );
+      
+      // Refresh charSheet
+      void getCharSheet();
+    } catch {
+      setImgErr(true);
+    } finally {
+      setLoadingImage(false);
+    }
+  }, [authContext.idToken, charSheet, getCharSheet, id]);
 
   return (
     <Container maxWidth="container.lg" as="main" py={4}>
@@ -120,7 +199,8 @@ export default function CharacterSheetTemplate({
         </Box>
         {/* Image card */}
         <Flex
-          bg="#231F17"
+          bg={imgUrl ? `url(${imgUrl})` : "#231F17"}
+          backgroundSize="cover"
           h={500}
           w={400}
           flexShrink={0}
@@ -140,14 +220,15 @@ export default function CharacterSheetTemplate({
             }),
           }}
           transition="all 0.2s"
+          onClick={canGenerateImage ? onOpenImgGenModal : undefined}
         >
           {canGenerateImage && <BiPlusCircle color="#D7C5A0" size={32} />}
           <Text textAlign="center">
             {isPreview
-              ? "Save this character sheet if you want to generate an image."
-              : "Generate an image!"}
+              ? "Save this character sheet if you want to generate an image." :
+              canGenerateImage ? "Generate an image!" : null}
           </Text>
-          {!isPreview && (
+          {!isPreview && !imgUrl && (
             <InfoBox w="80%" justifyContent="center" textAlign="center">
               {hasGp ? (
                 <>
@@ -163,6 +244,37 @@ export default function CharacterSheetTemplate({
           )}
         </Flex>
       </Flex>
+      {/* Image generation confirmation modal */}
+      <Modal isOpen={imgGenModalOpen} onClose={onCloseImgGenModal}>
+        <ModalOverlay />
+        <ModalContent bg="#231F17" minW="500px" minH="200px">
+          <ModalHeader>
+            <Text fontFamily="var(--font-source-sans)" fontSize="inherit">
+              Confirm Image Generation
+            </Text>
+          </ModalHeader>
+          <ModalCloseButton color="brand.800" />
+          <ModalBody minW="500px">
+            <Text>
+              Generating a new image of your character will use{" "}
+              <GPToken height={14} width={14} /> 1GP.
+            </Text>
+          </ModalBody>
+          <ModalFooter gap={2}>
+            <Button onClick={onCloseImgGenModal} secondary>
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                void generateImageAndSave();
+                onCloseImgGenModal();
+              }}
+            >
+              Confirm
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       {/* Big stats */}
       <Flex
         w="100%"
