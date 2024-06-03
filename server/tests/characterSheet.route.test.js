@@ -6,6 +6,15 @@ import {client} from "./dummyClient.js";
 import {character1, character2} from './data/characterSheetTestData.js';
 import {firestore} from "../firebase.js";
 
+async function setGoldBalance(token, balance) {
+    const arrayToken = token.split('.');
+    const data = JSON.parse(atob(arrayToken[1]));
+    const docRef = firestore.doc(`accounts/${data.user_id}`);
+    await docRef.set({
+        goldBalance: balance
+    });
+}
+
 describe('Character Sheet Editor Routes', () => {
     let user1token, user2token;
     before(async () =>{
@@ -16,13 +25,16 @@ describe('Character Sheet Editor Routes', () => {
             await request(app)
                 .get('/api/v1/account/gold-balance')
                 .set('Authorization', `Bearer ${user1token}`)
-                .expect(200)
+                .expect(200);
+
+            await setGoldBalance(user1token, 3);
+
         } catch(err) {
             await request(app)
                 .post('/api/v1/account')
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
-                .expect(201)
+                .expect(201);
         }
     });
 
@@ -33,7 +45,7 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send(character1.charDetails)
-                .expect(201)
+                .expect(201);
         });
 
         it('Should fail w/o Bearer token', async () => {
@@ -41,7 +53,7 @@ describe('Character Sheet Editor Routes', () => {
                 .post('/api/v1/character-sheet')
                 .set('Content-Type', 'application/json')
                 .send(character1.charDetails)
-                .expect(401)
+                .expect(401);
         });
 
         it('Should fail w/o account', async () => {
@@ -49,7 +61,7 @@ describe('Character Sheet Editor Routes', () => {
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user2token}`)
                 .send(character1.charDetails)
-                .expect(404)
+                .expect(404);
         });
 
         it('Should fail w/ invalid request body', async () => {
@@ -58,23 +70,18 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send({name: "Potato Man"})
-                .expect(400)
+                .expect(400);
         });
 
         it('Should fail w/ insufficient gold balance', async () => {
             // Manually remove gold
-            const arrayToken = user1token.split('.');
-            const data = JSON.parse(atob(arrayToken[1]));
-            const docRef = firestore.doc(`accounts/${data.user_id}`);
-            await docRef.set({
-                goldBalance: 0
-            });
+            await setGoldBalance(user1token, 0);
 
             await request(app)
                 .post('/api/v1/character-sheet')
                 .set('Authorization', `Bearer ${user1token}`)
                 .send(character1.charDetails)
-                .expect(422)
+                .expect(422);
         });
     });
 
@@ -85,7 +92,7 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send(character2.generatedChar)
-                .expect(200)
+                .expect(200);
         });
 
         it('Should fail w/o Bearer token', async () => {
@@ -93,7 +100,7 @@ describe('Character Sheet Editor Routes', () => {
                 .put('/api/v1/character-sheet')
                 .set('Content-Type', 'application/json')
                 .send(character2.generatedChar)
-                .expect(401)
+                .expect(401);
         });
 
         it('Should fail w/ invalid request body', async () => {
@@ -102,7 +109,7 @@ describe('Character Sheet Editor Routes', () => {
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
                 .send({name: "Potato Man"})
-                .expect(400)
+                .expect(400);
         });
     });
 });

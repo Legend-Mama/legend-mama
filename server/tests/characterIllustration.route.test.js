@@ -4,6 +4,16 @@ import {client} from "./dummyClient.js";
 import {character1} from "./data/characterSheetTestData.js";
 import {firestore} from "../firebase.js";
 
+async function setGoldBalance(token, balance) {
+    const arrayToken = token.split('.');
+    const data = JSON.parse(atob(arrayToken[1]));
+    const docRef = firestore.doc(`accounts/${data.user_id}`);
+    await docRef.set({
+        goldBalance: balance
+    });
+}
+
+
 describe('Character Illustration Routes', () => {
     let user1token, user2token, response;
     before(async () => {
@@ -15,13 +25,16 @@ describe('Character Illustration Routes', () => {
             await request(app)
                 .get('/api/v1/account/gold-balance')
                 .set('Authorization', `Bearer ${user1token}`)
-                .expect(200)
+                .expect(200);
+
+            await setGoldBalance(user1token, 3);
+
         } catch(err) {
             await request(app)
                 .post('/api/v1/account')
                 .set('Authorization', `Bearer ${user1token}`)
                 .set('Content-Type', 'application/json')
-                .expect(201)
+                .expect(201);
         }
     });
 
@@ -39,13 +52,6 @@ describe('Character Illustration Routes', () => {
                 .expect(201);
 
             character1.charSheet.charImage = response.body.url;
-            await request(app)
-                .post('/api/v1/account/character-sheets')
-                .set('Authorization', `Bearer ${user1token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json')
-                .send(character1.charSheet)
-                .expect(201)
         });
 
         it('Should fail w/o Bearer token', async () => {
@@ -69,17 +75,12 @@ describe('Character Illustration Routes', () => {
                     'class':character1.charSheet.class,
                     'backstory': character1.charSheet.backstory
                 })
-                .expect(404)
+                .expect(404);
         });
 
         it('Should fail w/ insufficient gold balance', async () => {
             // Manually remove gold
-            const arrayToken = user1token.split('.');
-            const data = JSON.parse(atob(arrayToken[1]));
-            const docRef = firestore.doc(`accounts/${data.user_id}`);
-            await docRef.set({
-                goldBalance: 0
-            });
+            await setGoldBalance(user1token, 0);
 
             await request(app)
                 .post('/api/v1/character-illustration')
@@ -89,24 +90,28 @@ describe('Character Illustration Routes', () => {
                     'class':character1.charSheet.class,
                     'backstory': character1.charSheet.backstory
                 })
-                .expect(422)
+                .expect(422);
         });
     });
 
     describe('GET /character-illustration', () => {
-        let sheetId, charImage;
+        let sheetID, charImage;
 
         it('Should return signed URL', async () => {
-            let response = await request(app)
-                .get('/api/v1/account/character-sheets')
-                .set('Authorization', `Bearer ${user1token}`)
-                .expect(200)
-
-            sheetId = response.body[0].id;
             response = await request(app)
-                .get(`/api/v1/account/character-sheets/${sheetId}`)
+                .post('/api/v1/account/character-sheets')
                 .set('Authorization', `Bearer ${user1token}`)
-                .expect(200)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(character1.charSheet)
+                .expect(201);
+
+            sheetID = response.body.sheetID;
+
+            response = await request(app)
+                .get(`/api/v1/account/character-sheets/${sheetID}`)
+                .set('Authorization', `Bearer ${user1token}`)
+                .expect(200);
 
             charImage = response.body.charImage;
 
@@ -126,7 +131,7 @@ describe('Character Illustration Routes', () => {
             await request(app)
                 .get(`/api/v1/character-illustration/${charImage}`)
                 .set('Authorization', `Bearer ${user2token}`)
-                .expect(200);
+                .expect(404);
         });
 
         it('Should fail with nonexistent image ID', async () => {

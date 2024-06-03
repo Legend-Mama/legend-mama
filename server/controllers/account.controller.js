@@ -31,15 +31,11 @@ export const createAccount = asyncHandler(async (req, res) => {
  */
 export const deleteAccount = asyncHandler(async (req, res) => {
     const docRef = firestore.doc(`accounts/${req.uid}`);
-    try {
-        await docRef.delete({ exists: true });
+    await docRef.delete({exists: true});
 
-        const successMsg = "Account deleted successfully";
-        console.log(successMsg);
-        res.status(200).send(successMsg);
-    } catch (err) {
-        throw new NotFoundError("Account doesn't exist");
-    }
+    const successMsg = "Account deleted successfully";
+    console.log(successMsg);
+    res.status(200).send(successMsg);
 })
 
 /**
@@ -48,14 +44,9 @@ export const deleteAccount = asyncHandler(async (req, res) => {
 export const getGoldBalance = asyncHandler(async (req, res) => {
     const docRef = firestore.doc(`accounts/${req.uid}`);
     const doc = await docRef.get();
-
-    if (doc.exists) {
-        const goldBalance = doc.get("goldBalance");
-        console.log(`Account gold balance: ${goldBalance}`);
-        res.status(200).json({ 'goldBalance': goldBalance });
-    } else {
-        throw new NotFoundError("Account doesn't exist");
-    }
+    const goldBalance = doc.get("goldBalance");
+    console.log(`Account gold balance: ${goldBalance}`);
+    res.status(200).json({'goldBalance': goldBalance});
 })
 
 /**
@@ -64,83 +55,55 @@ export const getGoldBalance = asyncHandler(async (req, res) => {
  * ignored.
  */
 export const saveCharacterSheet = asyncHandler(async (req, res) => {
-    const accountRef = firestore.doc(`accounts/${req.uid}`);
-    const account = await accountRef.get();
-
-    if (account.exists) {
-        if ((req.body.charImage !== '') && (req.body.charImage !== undefined)) {
-            const buffer = await downloadImage(req.body.charImage);
-            req.body.charImage = await uploadFromMemory(buffer).catch(console.error);
-        }
-
-        const docRef = firestore.collection(`accounts/${req.uid}/characterSheets`).doc();
-        await docRef.create(req.body);
-
-        const successMsg = "Character sheet successfully saved";
-        console.log(successMsg);
-        res.status(201).send(successMsg);
-    } else {
-        throw new NotFoundError("Account doesn't exist");
+    if ((req.body.charImage !== '') && (req.body.charImage !== undefined)) {
+        const buffer = await downloadImage(req.body.charImage);
+        req.body.charImage = await uploadFromMemory(buffer).catch(console.error);
     }
+
+    const docRef = firestore.collection(`accounts/${req.uid}/characterSheets`).doc();
+    await docRef.create(req.body);
+
+    console.log(`Character sheet successfully saved: ${docRef.id}`);
+    res.status(201).json({sheetID: docRef.id});
 })
 
 /**
  * List user's saved character sheets. Returns an array of objects with sheet ID and sheet's character name.
  */
 export const listCharacterSheets = asyncHandler(async (req, res) => {
-    const accountRef = firestore.doc(`accounts/${req.uid}`);
-    const account = await accountRef.get();
+    const colRef = firestore.collection(`accounts/${req.uid}/characterSheets`);
+    const docRefs = await colRef.listDocuments();
+    const docs = await firestore.getAll(...docRefs);
 
-    if (account.exists) {
-        const colRef = firestore.collection(`accounts/${req.uid}/characterSheets`);
-        const docRefs = await colRef.listDocuments();
-
-        // No sheets exist
-        if (!docRefs?.length) {
-            return res.status(200).json([]);
+    let sheets = [];
+    for (let doc of docs) {
+        if (doc.exists) {
+            sheets.push({
+                id: doc.id,
+                name: doc.get('name')
+            });
+        } else {
+            throw new NotFoundError();
         }
-
-        const docs = await firestore.getAll(...docRefs);
-
-        let sheets = [];
-        for (let doc of docs) {
-            if (doc.exists) {
-                sheets.push({
-                    id: doc.id,
-                    name: doc.get('name')
-                });
-            } else {
-                throw new NotFoundError();
-            }
-        }
-
-        console.log(`All saved character sheets: ${sheets}`);
-        res.status(200).json(sheets);
-    } else {
-        throw new NotFoundError("Account doesn't exist");
     }
+
+    console.log(`All saved character sheets: ${sheets}`);
+    res.status(200).json(sheets);
 })
 
 /**
  * Get a saved character sheet.
  */
 export const getCharacterSheet = asyncHandler(async (req, res) => {
-    const accountRef = firestore.doc(`accounts/${req.uid}`);
-    const account = await accountRef.get();
+    const character_sheet_id = req.params["character_sheet_id"];
+    const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
+    const doc = await docRef.get();
 
-    if (account.exists) {
-        const character_sheet_id = req.params["character_sheet_id"];
-        const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
-        const doc = await docRef.get();
-
-        if (doc.exists) {
-            console.log(`Saved character sheet: ${doc.data()}`);
-            res.status(200).json(doc.data());
-        } else {
-            throw new NotFoundError("Character sheet doesn't exist");
-        }
+    if (doc.exists) {
+        console.log(`Saved character sheet: ${doc.data()}`);
+        res.status(200).json(doc.data());
     } else {
-        throw new NotFoundError("Account doesn't exist");
+        throw new NotFoundError("Character sheet doesn't exist");
     }
 })
 
@@ -150,29 +113,22 @@ export const getCharacterSheet = asyncHandler(async (req, res) => {
  * fields are ignored.
  */
 export const updateCharacterSheet = asyncHandler(async (req, res) => {
-    const accountRef = firestore.doc(`accounts/${req.uid}`);
-    const account = await accountRef.get();
+    if ((req.body.charImage !== '') && (req.body.charImage !== undefined) && (req.body.charImage.length !== 36)) {
+        const buffer = await downloadImage(req.body.charImage);
+        req.body.charImage = await uploadFromMemory(buffer).catch(console.error);
+    }
 
-    if (account.exists) {
-        if ((req.body.charImage !== '') && (req.body.charImage !== undefined) && (req.body.charImage.length !== 36)) {
-            const buffer = await downloadImage(req.body.charImage);
-            req.body.charImage = await uploadFromMemory(buffer).catch(console.error);
-        }
+    const character_sheet_id = req.params["character_sheet_id"];
+    const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
+    const sheet = await docRef.get();
+    if (sheet.exists) {
+        await docRef.update(req.body);
 
-        const character_sheet_id = req.params["character_sheet_id"];
-        const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
-        const sheet = await docRef.get();
-        if (sheet.exists) {
-            await docRef.update(req.body);
-
-            const successMsg = "Character sheet successfully updated";
-            console.log(successMsg);
-            res.status(200).send(successMsg);
-        } else {
-            throw new NotFoundError("Character sheet doesn't exist");
-        }
+        const successMsg = "Character sheet successfully updated";
+        console.log(successMsg);
+        res.status(200).send(successMsg);
     } else {
-        throw new NotFoundError("Account doesn't exist");
+        throw new NotFoundError("Character sheet doesn't exist");
     }
 })
 
@@ -180,22 +136,15 @@ export const updateCharacterSheet = asyncHandler(async (req, res) => {
  * Delete a character sheet in a user's account.
  */
 export const deleteCharacterSheet = asyncHandler(async (req, res) => {
-    const accountRef = firestore.doc(`accounts/${req.uid}`);
-    const account = await accountRef.get();
+    const character_sheet_id = req.params["character_sheet_id"];
+    const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
+    try {
+        await docRef.delete({exists: true});
 
-    if (account.exists) {
-        const character_sheet_id = req.params["character_sheet_id"];
-        const docRef = firestore.doc(`accounts/${req.uid}/characterSheets/${character_sheet_id}`);
-        try {
-            await docRef.delete({ exists: true });
-
-            const successMsg = "Character sheet successfully deleted";
-            console.log(successMsg);
-            res.status(200).send(successMsg);
-        } catch (err) {
-            throw new NotFoundError("Character sheet doesn't exist");
-        }
-    } else {
-        throw new NotFoundError("Account doesn't exits");
+        const successMsg = "Character sheet successfully deleted";
+        console.log(successMsg);
+        res.status(200).send(successMsg);
+    } catch (err) {
+        throw new NotFoundError("Character sheet doesn't exist");
     }
 })
