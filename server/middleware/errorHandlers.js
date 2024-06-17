@@ -57,7 +57,7 @@ export class ForbiddenError extends Error {
 /**
  * Entry point for all error handling
  */
-export default function errorHandler(err, req, res) {
+export default function errorHandler(err, req, res, next) {
     // Log the error for debugging
     console.log(`${err.statusCode} ${err.name}: ${err.message}`);
     if (err.statusCode && err.message && err.name) {
