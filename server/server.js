@@ -11,6 +11,8 @@ import cors from 'cors';
 const corsOptions = {
   origin: [process.env.CLIENT_URL] // Set to an array of domains we accept requests from
 }
+console.log(`Accepting requests from: ${process.env.CLIENT_URL}`)
+
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
