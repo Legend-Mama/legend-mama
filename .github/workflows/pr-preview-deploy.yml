@@ -77,16 +77,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Check if pull request number exists
-        if: ${{ github.event.pull_request.number != null }}
-        run: |- 
-          echo "CLIENT_SERVICE=client-${{ github.head_ref }}-${{ github.event.pull_request.number }}" >> "$GITHUB_ENV"
-          echo "CLIENT_IMAGE=${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/client-${{ github.head_ref }}-${{ github.event.pull_request.number }}" >> "$GITHUB_ENV"
-          echo "CLIENT_URL=https://client-${{ github.head_ref }}-${{ github.event.pull_request.number }}-ijpuyqrx3a-uc.a.run.app" >> $GITHUB_ENV
-          echo "SERVER_SERVICE=server-${{ github.head_ref }}-${{ github.event.pull_request.number }}" >> $GITHUB_ENV
-          echo "SERVER_IMAGE=${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/development/server-${{ github.head_ref }}-${{ github.event.pull_request.number }}" >> "$GITHUB_ENV"
-          echo "SERVER_URL=https://server-${{ github.head_ref }}-${{ github.event.pull_request.number }}-ijpuyqrx3a-uc.a.run.app" >> "$GITHUB_ENV"
-
       - name: Google Auth
         id: auth
         uses: 'google-github-actions/auth@v2'
